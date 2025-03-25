@@ -2373,16 +2373,45 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {
       form: {
-        name: null,
-        nid: null,
-        phone: null,
-        email: null,
-        joining_date: null,
-        photo: null,
+        job_number: null,
+        salesperson: null,
+        stand_name: null,
+        show_name: null,
         materials: [{
           quantity: '',
-          description: ''
-        }]
+          description: '',
+          width: '',
+          height: '',
+          total_sqm: '',
+          banner_type: '',
+          outsourced: '',
+          machine: '',
+          print_medium_sqm: '',
+          total_print_medium: '',
+          ink_sqm: '',
+          total_ink: '',
+          pdfp: '',
+          total_pinnacle: '',
+          silicon_welt_length: '',
+          sw_unit_price_m: '',
+          total_silicon_welt: '',
+          flat_chonk_length: '',
+          fc_unit_price_m: '',
+          total_flat_chonk: '',
+          eyelets_length: '',
+          eyelets_unit_price_m: '',
+          total_eyelets: '',
+          web_vel_length: '',
+          webvel_unit_price_m: '',
+          total_webvel: '',
+          pullup_unit_price: '',
+          pullup_total_hardware: '',
+          pullup_unit_price_sqm: '',
+          total_magnetic: '',
+          consumables: '',
+          unit_price_item: ''
+        }],
+        total_amount: null
       },
       errors: {}
     };
@@ -2391,7 +2420,158 @@ __webpack_require__.r(__webpack_exports__);
     addMaterials: function addMaterials() {
       this.form.materials.push({
         quantity: '',
-        description: ''
+        description: '',
+        width: '',
+        height: '',
+        total_sqm: '',
+        banner_type: '',
+        outsourced: '',
+        machine: '',
+        print_medium_sqm: '',
+        total_print_medium: '',
+        ink_sqm: '',
+        total_ink: '',
+        pdfp: '',
+        total_pinnacle: '',
+        silicon_welt_length: '',
+        sw_unit_price_m: '',
+        total_silicon_welt: '',
+        flat_chonk_length: '',
+        fc_unit_price_m: '',
+        total_flat_chonk: '',
+        eyelets_length: '',
+        eyelets_unit_price_m: '',
+        total_eyelets: '',
+        web_vel_length: '',
+        webvel_unit_price_m: '',
+        total_webvel: '',
+        pullup_unit_price: '',
+        pullup_total_hardware: '',
+        pullup_unit_price_sqm: '',
+        total_magnetic: '',
+        consumables: '',
+        unit_price_item: ''
+      });
+    },
+    removeMaterials: function removeMaterials(index) {
+      this.form.materials.splice(index, 1);
+    },
+    jobcardInsert: function jobcardInsert() {
+      var _this = this;
+      axios.post('/api/employee', this.form).then(function () {
+        _this.$router.push({
+          name: 'employees'
+        });
+        _helpers_Notification__WEBPACK_IMPORTED_MODULE_0__["default"].success();
+      })["catch"](function (error) {
+        return _this.errors = error.response.data.errors;
+      });
+    }
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/job_cards/EditJobcards.vue?vue&type=script&lang=js":
+/*!********************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/job_cards/EditJobcards.vue?vue&type=script&lang=js ***!
+  \********************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _helpers_Notification__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../helpers/Notification */ "./resources/js/helpers/Notification.js");
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  created: function created() {
+    if (!User.loggedIn()) {
+      this.$router.push({
+        name: '/'
+      });
+    }
+  },
+  data: function data() {
+    return {
+      form: {
+        job_number: null,
+        salesperson: null,
+        stand_name: null,
+        show_name: null,
+        materials: [{
+          quantity: '',
+          description: '',
+          width: '',
+          height: '',
+          total_sqm: '',
+          banner_type: '',
+          outsourced: '',
+          machine: '',
+          print_medium_sqm: '',
+          total_print_medium: '',
+          ink_sqm: '',
+          total_ink: '',
+          pdfp: '',
+          total_pinnacle: '',
+          silicon_welt_length: '',
+          sw_unit_price_m: '',
+          total_silicon_welt: '',
+          flat_chonk_length: '',
+          fc_unit_price_m: '',
+          total_flat_chonk: '',
+          eyelets_length: '',
+          eyelets_unit_price_m: '',
+          total_eyelets: '',
+          web_vel_length: '',
+          webvel_unit_price_m: '',
+          total_webvel: '',
+          pullup_unit_price: '',
+          pullup_total_hardware: '',
+          pullup_unit_price_sqm: '',
+          total_magnetic: '',
+          consumables: '',
+          unit_price_item: ''
+        }],
+        total_amount: total_amount
+      },
+      errors: {}
+    };
+  },
+  methods: {
+    addMaterials: function addMaterials() {
+      this.form.materials.push({
+        quantity: '',
+        description: '',
+        width: '',
+        height: '',
+        total_sqm: '',
+        banner_type: '',
+        outsourced: '',
+        machine: '',
+        print_medium_sqm: '',
+        total_print_medium: '',
+        ink_sqm: '',
+        total_ink: '',
+        pdfp: '',
+        total_pinnacle: '',
+        silicon_welt_length: '',
+        sw_unit_price_m: '',
+        total_silicon_welt: '',
+        flat_chonk_length: '',
+        fc_unit_price_m: '',
+        total_flat_chonk: '',
+        eyelets_length: '',
+        eyelets_unit_price_m: '',
+        total_eyelets: '',
+        web_vel_length: '',
+        webvel_unit_price_m: '',
+        total_webvel: '',
+        pullup_unit_price: '',
+        pullup_total_hardware: '',
+        pullup_unit_price_sqm: '',
+        total_magnetic: '',
+        consumables: '',
+        unit_price_item: ''
       });
     },
     removeMaterials: function removeMaterials(index) {
@@ -4253,7 +4433,7 @@ var render = function render() {
   }, [_c("div", {
     staticClass: "login-form"
   }, [_vm._m(0), _vm._v(" "), _c("form", {
-    staticClass: "user",
+    staticClass: "jobcard",
     attrs: {
       enctype: "multipart/form-data"
     },
@@ -4446,7 +4626,858 @@ var render = function render() {
       }
     }), _vm._v(" "), _vm.errors.description ? _c("small", {
       staticClass: "text-danger"
-    }, [_vm._v("\n                                                    " + _vm._s(_vm.errors.description[0]) + "\n                                                ")]) : _vm._e()])])]);
+    }, [_vm._v("\n                                                    " + _vm._s(_vm.errors.description[0]) + "\n                                                ")]) : _vm._e()])]), _vm._v(" "), _c("div", {
+      staticClass: "pt-2 form-row align-items-center"
+    }, [_c("div", {
+      staticClass: "col-md-4"
+    }, [_c("input", {
+      directives: [{
+        name: "model",
+        rawName: "v-model",
+        value: material.width,
+        expression: "material.width"
+      }],
+      staticClass: "form-control",
+      attrs: {
+        type: "text",
+        id: "exampleInputEmail",
+        "aria-describedby": "emailHelp",
+        placeholder: "Width"
+      },
+      domProps: {
+        value: material.width
+      },
+      on: {
+        input: function input($event) {
+          if ($event.target.composing) return;
+          _vm.$set(material, "width", $event.target.value);
+        }
+      }
+    }), _vm._v(" "), _vm.errors.width ? _c("small", {
+      staticClass: "text-danger"
+    }, [_vm._v("\n                                                    " + _vm._s(_vm.errors.width[0]) + "\n                                                ")]) : _vm._e()]), _vm._v(" "), _c("div", {
+      staticClass: "col-md-4"
+    }, [_c("input", {
+      directives: [{
+        name: "model",
+        rawName: "v-model",
+        value: material.height,
+        expression: "material.height"
+      }],
+      staticClass: "form-control",
+      attrs: {
+        type: "text",
+        id: "exampleInputEmail",
+        "aria-describedby": "emailHelp",
+        placeholder: "Height"
+      },
+      domProps: {
+        value: material.height
+      },
+      on: {
+        input: function input($event) {
+          if ($event.target.composing) return;
+          _vm.$set(material, "height", $event.target.value);
+        }
+      }
+    }), _vm._v(" "), _vm.errors.height ? _c("small", {
+      staticClass: "text-danger"
+    }, [_vm._v("\n                                                    " + _vm._s(_vm.errors.height[0]) + "\n                                                ")]) : _vm._e()]), _vm._v(" "), _c("div", {
+      staticClass: "col-md-4"
+    }, [_c("input", {
+      directives: [{
+        name: "model",
+        rawName: "v-model",
+        value: material.total_sqm,
+        expression: "material.total_sqm"
+      }],
+      staticClass: "form-control",
+      attrs: {
+        type: "text",
+        id: "exampleInputEmail",
+        "aria-describedby": "emailHelp",
+        placeholder: "Total m²"
+      },
+      domProps: {
+        value: material.total_sqm
+      },
+      on: {
+        input: function input($event) {
+          if ($event.target.composing) return;
+          _vm.$set(material, "total_sqm", $event.target.value);
+        }
+      }
+    }), _vm._v(" "), _vm.errors.total_sqm ? _c("small", {
+      staticClass: "text-danger"
+    }, [_vm._v("\n                                                    " + _vm._s(_vm.errors.total_sqm[0]) + "\n                                                ")]) : _vm._e()])]), _vm._v(" "), _c("div", {
+      staticClass: "pt-2 form-row align-items-center"
+    }, [_c("div", {
+      staticClass: "col-md-4"
+    }, [_c("input", {
+      directives: [{
+        name: "model",
+        rawName: "v-model",
+        value: material.banner_type,
+        expression: "material.banner_type"
+      }],
+      staticClass: "form-control",
+      attrs: {
+        type: "text",
+        id: "exampleInputEmail",
+        "aria-describedby": "emailHelp",
+        placeholder: "Fabric Banner Type"
+      },
+      domProps: {
+        value: material.banner_type
+      },
+      on: {
+        input: function input($event) {
+          if ($event.target.composing) return;
+          _vm.$set(material, "banner_type", $event.target.value);
+        }
+      }
+    }), _vm._v(" "), _vm.errors.banner_type ? _c("small", {
+      staticClass: "text-danger"
+    }, [_vm._v("\n                                                    " + _vm._s(_vm.errors.banner_type[0]) + "\n                                                ")]) : _vm._e()]), _vm._v(" "), _c("div", {
+      staticClass: "col-md-4"
+    }, [_c("label", {
+      attrs: {
+        "for": "outsourced"
+      }
+    }, [_vm._v("Out-sourced: ")]), _vm._v(" "), _c("select", {
+      directives: [{
+        name: "model",
+        rawName: "v-model",
+        value: material.outsourced,
+        expression: "material.outsourced"
+      }],
+      attrs: {
+        name: "outsourced",
+        id: "outsourced"
+      },
+      on: {
+        change: function change($event) {
+          var $$selectedVal = Array.prototype.filter.call($event.target.options, function (o) {
+            return o.selected;
+          }).map(function (o) {
+            var val = "_value" in o ? o._value : o.value;
+            return val;
+          });
+          _vm.$set(material, "outsourced", $event.target.multiple ? $$selectedVal : $$selectedVal[0]);
+        }
+      }
+    }, [_c("option", {
+      attrs: {
+        value: "true"
+      }
+    }, [_vm._v("Yes")]), _vm._v(" "), _c("option", {
+      attrs: {
+        selected: "selected",
+        value: "false"
+      }
+    }, [_vm._v("No")])]), _vm._v(" "), _vm.errors.outsourced ? _c("small", {
+      staticClass: "text-danger"
+    }, [_vm._v("\n                                                    " + _vm._s(_vm.errors.outsourced[0]) + "\n                                                ")]) : _vm._e()]), _vm._v(" "), _c("div", {
+      staticClass: "col-md-4"
+    }, [_c("input", {
+      directives: [{
+        name: "model",
+        rawName: "v-model",
+        value: material.machine,
+        expression: "material.machine"
+      }],
+      staticClass: "form-control",
+      attrs: {
+        type: "text",
+        id: "exampleInputEmail",
+        "aria-describedby": "emailHelp",
+        placeholder: "Machine"
+      },
+      domProps: {
+        value: material.machine
+      },
+      on: {
+        input: function input($event) {
+          if ($event.target.composing) return;
+          _vm.$set(material, "machine", $event.target.value);
+        }
+      }
+    }), _vm._v(" "), _vm.errors.machine ? _c("small", {
+      staticClass: "text-danger"
+    }, [_vm._v("\n                                                    " + _vm._s(_vm.errors.machine[0]) + "\n                                                ")]) : _vm._e()])]), _vm._v(" "), _c("div", {
+      staticClass: "pt-2 form-row align-items-center"
+    }, [_c("div", {
+      staticClass: "col-md-3"
+    }, [_c("input", {
+      directives: [{
+        name: "model",
+        rawName: "v-model",
+        value: material.print_medium_sqm,
+        expression: "material.print_medium_sqm"
+      }],
+      staticClass: "form-control",
+      attrs: {
+        type: "text",
+        id: "exampleInputEmail",
+        "aria-describedby": "emailHelp",
+        placeholder: "Print Medium / m²"
+      },
+      domProps: {
+        value: material.print_medium_sqm
+      },
+      on: {
+        input: function input($event) {
+          if ($event.target.composing) return;
+          _vm.$set(material, "print_medium_sqm", $event.target.value);
+        }
+      }
+    }), _vm._v(" "), _vm.errors.print_medium_sqm ? _c("small", {
+      staticClass: "text-danger"
+    }, [_vm._v("\n                                                    " + _vm._s(_vm.errors.print_medium_sqm[0]) + "\n                                                ")]) : _vm._e()]), _vm._v(" "), _c("div", {
+      staticClass: "col-md-3"
+    }, [_c("input", {
+      directives: [{
+        name: "model",
+        rawName: "v-model",
+        value: material.total_print_medium,
+        expression: "material.total_print_medium"
+      }],
+      staticClass: "form-control",
+      attrs: {
+        type: "text",
+        id: "exampleInputEmail",
+        "aria-describedby": "emailHelp",
+        placeholder: "Total Print Medium"
+      },
+      domProps: {
+        value: material.total_print_medium
+      },
+      on: {
+        input: function input($event) {
+          if ($event.target.composing) return;
+          _vm.$set(material, "total_print_medium", $event.target.value);
+        }
+      }
+    }), _vm._v(" "), _vm.errors.total_print_medium ? _c("small", {
+      staticClass: "text-danger"
+    }, [_vm._v("\n                                                    " + _vm._s(_vm.errors.total_print_medium[0]) + "\n                                                ")]) : _vm._e()]), _vm._v(" "), _c("div", {
+      staticClass: "col-md-3"
+    }, [_c("input", {
+      directives: [{
+        name: "model",
+        rawName: "v-model",
+        value: material.ink_sqm,
+        expression: "material.ink_sqm"
+      }],
+      staticClass: "form-control",
+      attrs: {
+        type: "text",
+        id: "exampleInputEmail",
+        "aria-describedby": "emailHelp",
+        placeholder: "Ink / m²"
+      },
+      domProps: {
+        value: material.ink_sqm
+      },
+      on: {
+        input: function input($event) {
+          if ($event.target.composing) return;
+          _vm.$set(material, "ink_sqm", $event.target.value);
+        }
+      }
+    }), _vm._v(" "), _vm.errors.ink_sqm ? _c("small", {
+      staticClass: "text-danger"
+    }, [_vm._v("\n                                                    " + _vm._s(_vm.errors.ink_sqm[0]) + "\n                                                ")]) : _vm._e()]), _vm._v(" "), _c("div", {
+      staticClass: "col-md-3"
+    }, [_c("input", {
+      directives: [{
+        name: "model",
+        rawName: "v-model",
+        value: material.total_ink,
+        expression: "material.total_ink"
+      }],
+      staticClass: "form-control",
+      attrs: {
+        type: "text",
+        id: "exampleInputEmail",
+        "aria-describedby": "emailHelp",
+        placeholder: "Total Ink"
+      },
+      domProps: {
+        value: material.total_ink
+      },
+      on: {
+        input: function input($event) {
+          if ($event.target.composing) return;
+          _vm.$set(material, "total_ink", $event.target.value);
+        }
+      }
+    }), _vm._v(" "), _vm.errors.total_ink ? _c("small", {
+      staticClass: "text-danger"
+    }, [_vm._v("\n                                                    " + _vm._s(_vm.errors.total_ink[0]) + "\n                                                ")]) : _vm._e()])]), _vm._v(" "), _c("div", {
+      staticClass: "pt-2 form-row align-items-center"
+    }, [_c("div", {
+      staticClass: "col-md-6"
+    }, [_c("label", {
+      attrs: {
+        "for": "outsourced"
+      }
+    }, [_vm._v("Pinnacle Digital Fabric Printing:")]), _vm._v(" "), _c("select", {
+      directives: [{
+        name: "model",
+        rawName: "v-model",
+        value: material.pdfp,
+        expression: "material.pdfp"
+      }],
+      attrs: {
+        name: "outsourced",
+        id: "outsourced"
+      },
+      on: {
+        change: function change($event) {
+          var $$selectedVal = Array.prototype.filter.call($event.target.options, function (o) {
+            return o.selected;
+          }).map(function (o) {
+            var val = "_value" in o ? o._value : o.value;
+            return val;
+          });
+          _vm.$set(material, "pdfp", $event.target.multiple ? $$selectedVal : $$selectedVal[0]);
+        }
+      }
+    }, [_c("option", {
+      attrs: {
+        value: "true"
+      }
+    }, [_vm._v("Yes")]), _vm._v(" "), _c("option", {
+      attrs: {
+        selected: ""
+      }
+    }, [_vm._v("No")])]), _vm._v(" "), _vm.errors.pdfp ? _c("small", {
+      staticClass: "text-danger"
+    }, [_vm._v("\n                                                    " + _vm._s(_vm.errors.pdfp[0]) + "\n                                                ")]) : _vm._e()]), _vm._v(" "), _c("div", {
+      staticClass: "col-md-6"
+    }, [_c("input", {
+      directives: [{
+        name: "model",
+        rawName: "v-model",
+        value: material.total_pinnacle,
+        expression: "material.total_pinnacle"
+      }],
+      staticClass: "form-control",
+      attrs: {
+        type: "text",
+        id: "exampleInputEmail",
+        "aria-describedby": "emailHelp",
+        placeholder: "Total Pinnacle"
+      },
+      domProps: {
+        value: material.total_pinnacle
+      },
+      on: {
+        input: function input($event) {
+          if ($event.target.composing) return;
+          _vm.$set(material, "total_pinnacle", $event.target.value);
+        }
+      }
+    }), _vm._v(" "), _vm.errors.total_pinnacle ? _c("small", {
+      staticClass: "text-danger"
+    }, [_vm._v("\n                                                    " + _vm._s(_vm.errors.total_pinnacle[0]) + "\n                                                ")]) : _vm._e()])]), _vm._v(" "), _c("div", {
+      staticClass: "pt-2 form-row align-items-center"
+    }, [_c("div", {
+      staticClass: "col-md-4"
+    }, [_c("input", {
+      directives: [{
+        name: "model",
+        rawName: "v-model",
+        value: material.silicon_welt_length,
+        expression: "material.silicon_welt_length"
+      }],
+      staticClass: "form-control",
+      attrs: {
+        type: "text",
+        id: "exampleInputEmail",
+        "aria-describedby": "emailHelp",
+        placeholder: "Silicon Welt Length"
+      },
+      domProps: {
+        value: material.silicon_welt_length
+      },
+      on: {
+        input: function input($event) {
+          if ($event.target.composing) return;
+          _vm.$set(material, "silicon_welt_length", $event.target.value);
+        }
+      }
+    }), _vm._v(" "), _vm.errors.silicon_welt_length ? _c("small", {
+      staticClass: "text-danger"
+    }, [_vm._v("\n                                                    " + _vm._s(_vm.errors.silicon_welt_length[0]) + "\n                                                ")]) : _vm._e()]), _vm._v(" "), _c("div", {
+      staticClass: "col-md-4"
+    }, [_c("input", {
+      directives: [{
+        name: "model",
+        rawName: "v-model",
+        value: material.sw_unit_price_m,
+        expression: "material.sw_unit_price_m"
+      }],
+      staticClass: "form-control",
+      attrs: {
+        type: "text",
+        id: "exampleInputEmail",
+        "aria-describedby": "emailHelp",
+        placeholder: "Unit Price / m"
+      },
+      domProps: {
+        value: material.sw_unit_price_m
+      },
+      on: {
+        input: function input($event) {
+          if ($event.target.composing) return;
+          _vm.$set(material, "sw_unit_price_m", $event.target.value);
+        }
+      }
+    }), _vm._v(" "), _vm.errors.sw_unit_price_m ? _c("small", {
+      staticClass: "text-danger"
+    }, [_vm._v("\n                                                    " + _vm._s(_vm.errors.sw_unit_price_m[0]) + "\n                                                ")]) : _vm._e()]), _vm._v(" "), _c("div", {
+      staticClass: "col-md-4"
+    }, [_c("input", {
+      directives: [{
+        name: "model",
+        rawName: "v-model",
+        value: material.total_silicon_welt,
+        expression: "material.total_silicon_welt"
+      }],
+      staticClass: "form-control",
+      attrs: {
+        type: "text",
+        id: "exampleInputEmail",
+        "aria-describedby": "emailHelp",
+        placeholder: "Total Silicon Welt"
+      },
+      domProps: {
+        value: material.total_silicon_welt
+      },
+      on: {
+        input: function input($event) {
+          if ($event.target.composing) return;
+          _vm.$set(material, "total_silicon_welt", $event.target.value);
+        }
+      }
+    }), _vm._v(" "), _vm.errors.total_silicon_welt ? _c("small", {
+      staticClass: "text-danger"
+    }, [_vm._v("\n                                                    " + _vm._s(_vm.errors.total_silicon_welt[0]) + "\n                                                ")]) : _vm._e()])]), _vm._v(" "), _c("div", {
+      staticClass: "pt-2 form-row align-items-center"
+    }, [_c("div", {
+      staticClass: "col-md-4"
+    }, [_c("input", {
+      directives: [{
+        name: "model",
+        rawName: "v-model",
+        value: material.flat_chonk_length,
+        expression: "material.flat_chonk_length"
+      }],
+      staticClass: "form-control",
+      attrs: {
+        type: "text",
+        id: "exampleInputEmail",
+        "aria-describedby": "emailHelp",
+        placeholder: "Flat Chonk Length"
+      },
+      domProps: {
+        value: material.flat_chonk_length
+      },
+      on: {
+        input: function input($event) {
+          if ($event.target.composing) return;
+          _vm.$set(material, "flat_chonk_length", $event.target.value);
+        }
+      }
+    }), _vm._v(" "), _vm.errors.flat_chonk_length ? _c("small", {
+      staticClass: "text-danger"
+    }, [_vm._v("\n                                                    " + _vm._s(_vm.errors.flat_chonk_length[0]) + "\n                                                ")]) : _vm._e()]), _vm._v(" "), _c("div", {
+      staticClass: "col-md-4"
+    }, [_c("input", {
+      directives: [{
+        name: "model",
+        rawName: "v-model",
+        value: material.fc_unit_price_m,
+        expression: "material.fc_unit_price_m"
+      }],
+      staticClass: "form-control",
+      attrs: {
+        type: "text",
+        id: "exampleInputEmail",
+        "aria-describedby": "emailHelp",
+        placeholder: "Unit Price / m"
+      },
+      domProps: {
+        value: material.fc_unit_price_m
+      },
+      on: {
+        input: function input($event) {
+          if ($event.target.composing) return;
+          _vm.$set(material, "fc_unit_price_m", $event.target.value);
+        }
+      }
+    }), _vm._v(" "), _vm.errors.fc_unit_price_m ? _c("small", {
+      staticClass: "text-danger"
+    }, [_vm._v("\n                                                    " + _vm._s(_vm.errors.fc_unit_price_m[0]) + "\n                                                ")]) : _vm._e()]), _vm._v(" "), _c("div", {
+      staticClass: "col-md-4"
+    }, [_c("input", {
+      directives: [{
+        name: "model",
+        rawName: "v-model",
+        value: material.total_flat_chonk,
+        expression: "material.total_flat_chonk"
+      }],
+      staticClass: "form-control",
+      attrs: {
+        type: "text",
+        id: "exampleInputEmail",
+        "aria-describedby": "emailHelp",
+        placeholder: "Total Flat Chonk"
+      },
+      domProps: {
+        value: material.total_flat_chonk
+      },
+      on: {
+        input: function input($event) {
+          if ($event.target.composing) return;
+          _vm.$set(material, "total_flat_chonk", $event.target.value);
+        }
+      }
+    }), _vm._v(" "), _vm.errors.total_flat_chonk ? _c("small", {
+      staticClass: "text-danger"
+    }, [_vm._v("\n                                                    " + _vm._s(_vm.errors.total_flat_chonk[0]) + "\n                                                ")]) : _vm._e()])]), _vm._v(" "), _c("div", {
+      staticClass: "pt-2 form-row align-items-center"
+    }, [_c("div", {
+      staticClass: "col-md-4"
+    }, [_c("input", {
+      directives: [{
+        name: "model",
+        rawName: "v-model",
+        value: material.eyelets_length,
+        expression: "material.eyelets_length"
+      }],
+      staticClass: "form-control",
+      attrs: {
+        type: "text",
+        id: "exampleInputEmail",
+        "aria-describedby": "emailHelp",
+        placeholder: "Eyelets Length"
+      },
+      domProps: {
+        value: material.eyelets_length
+      },
+      on: {
+        input: function input($event) {
+          if ($event.target.composing) return;
+          _vm.$set(material, "eyelets_length", $event.target.value);
+        }
+      }
+    }), _vm._v(" "), _vm.errors.eyelets_length ? _c("small", {
+      staticClass: "text-danger"
+    }, [_vm._v("\n                                                    " + _vm._s(_vm.errors.eyelets_length[0]) + "\n                                                ")]) : _vm._e()]), _vm._v(" "), _c("div", {
+      staticClass: "col-md-4"
+    }, [_c("input", {
+      directives: [{
+        name: "model",
+        rawName: "v-model",
+        value: material.eyelets_unit_price_m,
+        expression: "material.eyelets_unit_price_m"
+      }],
+      staticClass: "form-control",
+      attrs: {
+        type: "text",
+        id: "exampleInputEmail",
+        "aria-describedby": "emailHelp",
+        placeholder: "Unit Price / m"
+      },
+      domProps: {
+        value: material.eyelets_unit_price_m
+      },
+      on: {
+        input: function input($event) {
+          if ($event.target.composing) return;
+          _vm.$set(material, "eyelets_unit_price_m", $event.target.value);
+        }
+      }
+    }), _vm._v(" "), _vm.errors.eyelets_unit_price_m ? _c("small", {
+      staticClass: "text-danger"
+    }, [_vm._v("\n                                                    " + _vm._s(_vm.errors.eyelets_unit_price_m[0]) + "\n                                                ")]) : _vm._e()]), _vm._v(" "), _c("div", {
+      staticClass: "col-md-4"
+    }, [_c("input", {
+      directives: [{
+        name: "model",
+        rawName: "v-model",
+        value: material.total_eyelets,
+        expression: "material.total_eyelets"
+      }],
+      staticClass: "form-control",
+      attrs: {
+        type: "text",
+        id: "exampleInputEmail",
+        "aria-describedby": "emailHelp",
+        placeholder: "Total Eyelets"
+      },
+      domProps: {
+        value: material.total_eyelets
+      },
+      on: {
+        input: function input($event) {
+          if ($event.target.composing) return;
+          _vm.$set(material, "total_eyelets", $event.target.value);
+        }
+      }
+    }), _vm._v(" "), _vm.errors.total_eyelets ? _c("small", {
+      staticClass: "text-danger"
+    }, [_vm._v("\n                                                    " + _vm._s(_vm.errors.total_eyelets[0]) + "\n                                                ")]) : _vm._e()])]), _vm._v(" "), _c("div", {
+      staticClass: "pt-2 form-row align-items-center"
+    }, [_c("div", {
+      staticClass: "col-md-4"
+    }, [_c("input", {
+      directives: [{
+        name: "model",
+        rawName: "v-model",
+        value: material.web_vel_length,
+        expression: "material.web_vel_length"
+      }],
+      staticClass: "form-control",
+      attrs: {
+        type: "text",
+        id: "exampleInputEmail",
+        "aria-describedby": "emailHelp",
+        placeholder: "Webbing / Velcro Length"
+      },
+      domProps: {
+        value: material.web_vel_length
+      },
+      on: {
+        input: function input($event) {
+          if ($event.target.composing) return;
+          _vm.$set(material, "web_vel_length", $event.target.value);
+        }
+      }
+    }), _vm._v(" "), _vm.errors.web_vel_length ? _c("small", {
+      staticClass: "text-danger"
+    }, [_vm._v("\n                                                    " + _vm._s(_vm.errors.web_vel_length[0]) + "\n                                                ")]) : _vm._e()]), _vm._v(" "), _c("div", {
+      staticClass: "col-md-4"
+    }, [_c("input", {
+      directives: [{
+        name: "model",
+        rawName: "v-model",
+        value: material.webvel_unit_price_m,
+        expression: "material.webvel_unit_price_m"
+      }],
+      staticClass: "form-control",
+      attrs: {
+        type: "text",
+        id: "exampleInputEmail",
+        "aria-describedby": "emailHelp",
+        placeholder: "Unit Price / m"
+      },
+      domProps: {
+        value: material.webvel_unit_price_m
+      },
+      on: {
+        input: function input($event) {
+          if ($event.target.composing) return;
+          _vm.$set(material, "webvel_unit_price_m", $event.target.value);
+        }
+      }
+    }), _vm._v(" "), _vm.errors.webvel_unit_price_m ? _c("small", {
+      staticClass: "text-danger"
+    }, [_vm._v("\n                                                    " + _vm._s(_vm.errors.webvel_unit_price_m[0]) + "\n                                                ")]) : _vm._e()]), _vm._v(" "), _c("div", {
+      staticClass: "col-md-4"
+    }, [_c("input", {
+      directives: [{
+        name: "model",
+        rawName: "v-model",
+        value: material.total_webvel,
+        expression: "material.total_webvel"
+      }],
+      staticClass: "form-control",
+      attrs: {
+        type: "text",
+        id: "exampleInputEmail",
+        "aria-describedby": "emailHelp",
+        placeholder: "Total Webbing / Velcro"
+      },
+      domProps: {
+        value: material.total_webvel
+      },
+      on: {
+        input: function input($event) {
+          if ($event.target.composing) return;
+          _vm.$set(material, "total_webvel", $event.target.value);
+        }
+      }
+    }), _vm._v(" "), _vm.errors.total_webvel ? _c("small", {
+      staticClass: "text-danger"
+    }, [_vm._v("\n                                                    " + _vm._s(_vm.errors.total_webvel[0]) + "\n                                                ")]) : _vm._e()])]), _vm._v(" "), _c("div", {
+      staticClass: "pt-2 form-row align-items-center"
+    }, [_c("div", {
+      staticClass: "col-md-2"
+    }, [_c("input", {
+      directives: [{
+        name: "model",
+        rawName: "v-model",
+        value: material.pullup_unit_price,
+        expression: "material.pullup_unit_price"
+      }],
+      staticClass: "form-control",
+      attrs: {
+        type: "text",
+        id: "exampleInputEmail",
+        "aria-describedby": "emailHelp",
+        placeholder: "Pull-up Banner Unit Price"
+      },
+      domProps: {
+        value: material.pullup_unit_price
+      },
+      on: {
+        input: function input($event) {
+          if ($event.target.composing) return;
+          _vm.$set(material, "pullup_unit_price", $event.target.value);
+        }
+      }
+    }), _vm._v(" "), _vm.errors.pullup_unit_price ? _c("small", {
+      staticClass: "text-danger"
+    }, [_vm._v("\n                                                    " + _vm._s(_vm.errors.pullup_unit_price[0]) + "\n                                                ")]) : _vm._e()]), _vm._v(" "), _c("div", {
+      staticClass: "col-md-2"
+    }, [_c("input", {
+      directives: [{
+        name: "model",
+        rawName: "v-model",
+        value: material.pullup_total_hardware,
+        expression: "material.pullup_total_hardware"
+      }],
+      staticClass: "form-control",
+      attrs: {
+        type: "text",
+        id: "exampleInputEmail",
+        "aria-describedby": "emailHelp",
+        placeholder: "Total Pull-up Banner Hardware"
+      },
+      domProps: {
+        value: material.pullup_total_hardware
+      },
+      on: {
+        input: function input($event) {
+          if ($event.target.composing) return;
+          _vm.$set(material, "pullup_total_hardware", $event.target.value);
+        }
+      }
+    }), _vm._v(" "), _vm.errors.pullup_total_hardware ? _c("small", {
+      staticClass: "text-danger"
+    }, [_vm._v("\n                                                    " + _vm._s(_vm.errors.pullup_total_hardware[0]) + "\n                                                ")]) : _vm._e()]), _vm._v(" "), _c("div", {
+      staticClass: "col-md-2"
+    }, [_c("input", {
+      directives: [{
+        name: "model",
+        rawName: "v-model",
+        value: material.pullup_unit_price_sqm,
+        expression: "material.pullup_unit_price_sqm"
+      }],
+      staticClass: "form-control",
+      attrs: {
+        type: "text",
+        id: "exampleInputEmail",
+        "aria-describedby": "emailHelp",
+        placeholder: "Unit Price / m²"
+      },
+      domProps: {
+        value: material.pullup_unit_price_sqm
+      },
+      on: {
+        input: function input($event) {
+          if ($event.target.composing) return;
+          _vm.$set(material, "pullup_unit_price_sqm", $event.target.value);
+        }
+      }
+    }), _vm._v(" "), _vm.errors.pullup_unit_price_sqm ? _c("small", {
+      staticClass: "text-danger"
+    }, [_vm._v("\n                                                    " + _vm._s(_vm.errors.pullup_unit_price_sqm[0]) + "\n                                                ")]) : _vm._e()]), _vm._v(" "), _c("div", {
+      staticClass: "col-md-2"
+    }, [_c("input", {
+      directives: [{
+        name: "model",
+        rawName: "v-model",
+        value: material.total_magnetic,
+        expression: "material.total_magnetic"
+      }],
+      staticClass: "form-control",
+      attrs: {
+        type: "text",
+        id: "exampleInputEmail",
+        "aria-describedby": "emailHelp",
+        placeholder: "Total Magnetic"
+      },
+      domProps: {
+        value: material.total_magnetic
+      },
+      on: {
+        input: function input($event) {
+          if ($event.target.composing) return;
+          _vm.$set(material, "total_magnetic", $event.target.value);
+        }
+      }
+    }), _vm._v(" "), _vm.errors.total_magnetic ? _c("small", {
+      staticClass: "text-danger"
+    }, [_vm._v("\n                                                    " + _vm._s(_vm.errors.total_magnetic[0]) + "\n                                                ")]) : _vm._e()]), _vm._v(" "), _c("div", {
+      staticClass: "col-md-2"
+    }, [_c("input", {
+      directives: [{
+        name: "model",
+        rawName: "v-model",
+        value: material.consumables,
+        expression: "material.consumables"
+      }],
+      staticClass: "form-control",
+      attrs: {
+        type: "text",
+        id: "exampleInputEmail",
+        "aria-describedby": "emailHelp",
+        placeholder: "Consumables"
+      },
+      domProps: {
+        value: material.consumables
+      },
+      on: {
+        input: function input($event) {
+          if ($event.target.composing) return;
+          _vm.$set(material, "consumables", $event.target.value);
+        }
+      }
+    }), _vm._v(" "), _vm.errors.consumables ? _c("small", {
+      staticClass: "text-danger"
+    }, [_vm._v("\n                                                    " + _vm._s(_vm.errors.consumables[0]) + "\n                                                ")]) : _vm._e()]), _vm._v(" "), _c("div", {
+      staticClass: "col-md-2"
+    }, [_c("input", {
+      directives: [{
+        name: "model",
+        rawName: "v-model",
+        value: material.unit_price_item,
+        expression: "material.unit_price_item"
+      }],
+      staticClass: "form-control",
+      attrs: {
+        type: "text",
+        id: "exampleInputEmail",
+        "aria-describedby": "emailHelp",
+        placeholder: "Unit Price / Item"
+      },
+      domProps: {
+        value: material.unit_price_item
+      },
+      on: {
+        input: function input($event) {
+          if ($event.target.composing) return;
+          _vm.$set(material, "unit_price_item", $event.target.value);
+        }
+      }
+    }), _vm._v(" "), _vm.errors.unit_price_item ? _c("small", {
+      staticClass: "text-danger"
+    }, [_vm._v("\n                                                    " + _vm._s(_vm.errors.unit_price_item[0]) + "\n                                                ")]) : _vm._e()])])]);
   }), _vm._v(" "), _c("div", {
     staticClass: "form-group"
   }, [_c("div", {
@@ -4458,7 +5489,1182 @@ var render = function render() {
     on: {
       click: _vm.addMaterials
     }
-  }, [_vm._v("Add\n                                                    Material")])])])]), _vm._v(" "), _vm._m(1)], 2)])])])])])])])]);
+  }, [_vm._v("Add\n                                                    Material")])])]), _vm._v(" "), _c("div", {
+    staticClass: "pt-4 form-row align-items-center"
+  }, [_c("div", {
+    staticClass: "col-md-6"
+  }, [_c("h4", [_vm._v("Total Amount: ")]), _vm._v(" "), _c("input", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.form.total_amount,
+      expression: "form.total_amount"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      type: "text",
+      id: "exampleInputEmail",
+      "aria-describedby": "emailHelp",
+      placeholder: "R0.00"
+    },
+    domProps: {
+      value: _vm.form.total_amount
+    },
+    on: {
+      input: function input($event) {
+        if ($event.target.composing) return;
+        _vm.$set(_vm.form, "total_amount", $event.target.value);
+      }
+    }
+  })])])]), _vm._v(" "), _vm._m(1)], 2)])])])])])])])]);
+};
+var staticRenderFns = [function () {
+  var _vm = this,
+    _c = _vm._self._c;
+  return _c("div", {
+    staticClass: "text-center"
+  }, [_c("h1", {
+    staticClass: "h4 text-gray-900 mb-4"
+  }, [_vm._v("Create Job Card")])]);
+}, function () {
+  var _vm = this,
+    _c = _vm._self._c;
+  return _c("div", {
+    staticClass: "form-group"
+  }, [_c("button", {
+    staticClass: "btn btn-primary btn-block",
+    attrs: {
+      type: "submit"
+    }
+  }, [_vm._v("Create\n                                            Jobcard")])]);
+}];
+render._withStripped = true;
+
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/job_cards/EditJobcards.vue?vue&type=template&id=6981b3ee":
+/*!******************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib/loaders/templateLoader.js??ref--6!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/job_cards/EditJobcards.vue?vue&type=template&id=6981b3ee ***!
+  \******************************************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function render() {
+  var _vm = this,
+    _c = _vm._self._c;
+  return _c("div", [_c("div", {
+    staticClass: "row"
+  }, [_c("router-link", {
+    staticClass: "btn btn-primary",
+    attrs: {
+      to: "/jobcards"
+    }
+  }, [_vm._v("All Job Cards")])], 1), _vm._v(" "), _c("div", {
+    staticClass: "row justify-content-center"
+  }, [_c("div", {
+    staticClass: "col-xl-12 col-lg-12 col-md-12"
+  }, [_c("div", {
+    staticClass: "card shadow-sm my-5"
+  }, [_c("div", {
+    staticClass: "card-body p-0"
+  }, [_c("div", {
+    staticClass: "row"
+  }, [_c("div", {
+    staticClass: "col-lg-12"
+  }, [_c("div", {
+    staticClass: "login-form"
+  }, [_vm._m(0), _vm._v(" "), _c("form", {
+    staticClass: "jobcard",
+    attrs: {
+      enctype: "multipart/form-data"
+    },
+    on: {
+      submit: function submit($event) {
+        $event.preventDefault();
+        return _vm.jobcardInsert.apply(null, arguments);
+      }
+    }
+  }, [_c("div", {
+    staticClass: "form-group"
+  }, [_c("div", {
+    staticClass: "form-row"
+  }, [_c("div", {
+    staticClass: "col-md-6"
+  }, [_c("input", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.form.job_number,
+      expression: "form.job_number"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      type: "text",
+      id: "exampleInputFirstName",
+      placeholder: "Enter Job Number"
+    },
+    domProps: {
+      value: _vm.form.job_number
+    },
+    on: {
+      input: function input($event) {
+        if ($event.target.composing) return;
+        _vm.$set(_vm.form, "job_number", $event.target.value);
+      }
+    }
+  }), _vm._v(" "), _vm.errors.job_number ? _c("small", {
+    staticClass: "text-danger"
+  }, [_vm._v("\n                                                    " + _vm._s(_vm.errors.job_number[0]) + "\n                                                ")]) : _vm._e()]), _vm._v(" "), _c("div", {
+    staticClass: "col-md-6"
+  }, [_c("input", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.form.salesperson,
+      expression: "form.salesperson"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      type: "text",
+      id: "exampleInputPasswordRepeat",
+      placeholder: "Salesperson"
+    },
+    domProps: {
+      value: _vm.form.salesperson
+    },
+    on: {
+      input: function input($event) {
+        if ($event.target.composing) return;
+        _vm.$set(_vm.form, "salesperson", $event.target.value);
+      }
+    }
+  }), _vm._v(" "), _vm.errors.salesperson ? _c("small", {
+    staticClass: "text-danger"
+  }, [_vm._v("\n                                                    " + _vm._s(_vm.errors.salesperson[0]) + "\n                                                ")]) : _vm._e()])])]), _vm._v(" "), _c("div", {
+    staticClass: "form-group"
+  }, [_c("div", {
+    staticClass: "form-row"
+  }, [_c("div", {
+    staticClass: "col-md-6"
+  }, [_c("input", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.form.stand_name,
+      expression: "form.stand_name"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      type: "text",
+      id: "exampleInputPassword",
+      placeholder: "Enter Stand Name"
+    },
+    domProps: {
+      value: _vm.form.stand_name
+    },
+    on: {
+      input: function input($event) {
+        if ($event.target.composing) return;
+        _vm.$set(_vm.form, "stand_name", $event.target.value);
+      }
+    }
+  }), _vm._v(" "), _vm.errors.stand_name ? _c("small", {
+    staticClass: "text-danger"
+  }, [_vm._v("\n                                                    " + _vm._s(_vm.errors.stand_name[0]) + "\n                                                ")]) : _vm._e()]), _vm._v(" "), _c("div", {
+    staticClass: "col-md-6"
+  }, [_c("input", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.form.show_name,
+      expression: "form.show_name"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      type: "text",
+      id: "exampleInputEmail",
+      "aria-describedby": "emailHelp",
+      placeholder: "Enter Show Name"
+    },
+    domProps: {
+      value: _vm.form.show_name
+    },
+    on: {
+      input: function input($event) {
+        if ($event.target.composing) return;
+        _vm.$set(_vm.form, "show_name", $event.target.value);
+      }
+    }
+  }), _vm._v(" "), _vm.errors.show_name ? _c("small", {
+    staticClass: "text-danger"
+  }, [_vm._v("\n                                                    " + _vm._s(_vm.errors.show_name[0]) + "\n                                                ")]) : _vm._e()])])]), _vm._v(" "), _vm._l(_vm.form.materials, function (material, index) {
+    return _c("div", {
+      key: index,
+      staticClass: "form-group"
+    }, [_c("div", {
+      staticClass: "form-row align-items-center"
+    }, [_c("div", {
+      staticClass: "col-md-11"
+    }, [_c("h6", [_c("b", [_vm._v("Material " + _vm._s(index + 1))])])]), _vm._v(" "), _c("div", {
+      staticClass: "col-1 mb-2"
+    }, [_c("button", {
+      staticClass: "btn btn-danger form-control",
+      on: {
+        click: function click($event) {
+          return _vm.removeMaterials(index);
+        }
+      }
+    }, [_vm._v("Remove")])]), _vm._v(" "), _c("div", {
+      staticClass: "col-md-6"
+    }, [_c("input", {
+      directives: [{
+        name: "model",
+        rawName: "v-model",
+        value: material.quantity,
+        expression: "material.quantity"
+      }],
+      staticClass: "form-control",
+      attrs: {
+        type: "text",
+        id: "exampleInputPassword",
+        placeholder: "Quantity"
+      },
+      domProps: {
+        value: material.quantity
+      },
+      on: {
+        input: function input($event) {
+          if ($event.target.composing) return;
+          _vm.$set(material, "quantity", $event.target.value);
+        }
+      }
+    }), _vm._v(" "), _vm.errors.quantity ? _c("small", {
+      staticClass: "text-danger"
+    }, [_vm._v("\n                                                    " + _vm._s(_vm.errors.quantity[0]) + "\n                                                ")]) : _vm._e()]), _vm._v(" "), _c("div", {
+      staticClass: "col-md-6"
+    }, [_c("input", {
+      directives: [{
+        name: "model",
+        rawName: "v-model",
+        value: material.description,
+        expression: "material.description"
+      }],
+      staticClass: "form-control",
+      attrs: {
+        type: "text",
+        id: "exampleInputEmail",
+        "aria-describedby": "emailHelp",
+        placeholder: "Description"
+      },
+      domProps: {
+        value: material.description
+      },
+      on: {
+        input: function input($event) {
+          if ($event.target.composing) return;
+          _vm.$set(material, "description", $event.target.value);
+        }
+      }
+    }), _vm._v(" "), _vm.errors.description ? _c("small", {
+      staticClass: "text-danger"
+    }, [_vm._v("\n                                                    " + _vm._s(_vm.errors.description[0]) + "\n                                                ")]) : _vm._e()])]), _vm._v(" "), _c("div", {
+      staticClass: "pt-2 form-row align-items-center"
+    }, [_c("div", {
+      staticClass: "col-md-4"
+    }, [_c("input", {
+      directives: [{
+        name: "model",
+        rawName: "v-model",
+        value: material.width,
+        expression: "material.width"
+      }],
+      staticClass: "form-control",
+      attrs: {
+        type: "text",
+        id: "exampleInputEmail",
+        "aria-describedby": "emailHelp",
+        placeholder: "Width"
+      },
+      domProps: {
+        value: material.width
+      },
+      on: {
+        input: function input($event) {
+          if ($event.target.composing) return;
+          _vm.$set(material, "width", $event.target.value);
+        }
+      }
+    }), _vm._v(" "), _vm.errors.width ? _c("small", {
+      staticClass: "text-danger"
+    }, [_vm._v("\n                                                    " + _vm._s(_vm.errors.width[0]) + "\n                                                ")]) : _vm._e()]), _vm._v(" "), _c("div", {
+      staticClass: "col-md-4"
+    }, [_c("input", {
+      directives: [{
+        name: "model",
+        rawName: "v-model",
+        value: material.height,
+        expression: "material.height"
+      }],
+      staticClass: "form-control",
+      attrs: {
+        type: "text",
+        id: "exampleInputEmail",
+        "aria-describedby": "emailHelp",
+        placeholder: "Height"
+      },
+      domProps: {
+        value: material.height
+      },
+      on: {
+        input: function input($event) {
+          if ($event.target.composing) return;
+          _vm.$set(material, "height", $event.target.value);
+        }
+      }
+    }), _vm._v(" "), _vm.errors.height ? _c("small", {
+      staticClass: "text-danger"
+    }, [_vm._v("\n                                                    " + _vm._s(_vm.errors.height[0]) + "\n                                                ")]) : _vm._e()]), _vm._v(" "), _c("div", {
+      staticClass: "col-md-4"
+    }, [_c("input", {
+      directives: [{
+        name: "model",
+        rawName: "v-model",
+        value: material.total_sqm,
+        expression: "material.total_sqm"
+      }],
+      staticClass: "form-control",
+      attrs: {
+        type: "text",
+        id: "exampleInputEmail",
+        "aria-describedby": "emailHelp",
+        placeholder: "Total m²"
+      },
+      domProps: {
+        value: material.total_sqm
+      },
+      on: {
+        input: function input($event) {
+          if ($event.target.composing) return;
+          _vm.$set(material, "total_sqm", $event.target.value);
+        }
+      }
+    }), _vm._v(" "), _vm.errors.total_sqm ? _c("small", {
+      staticClass: "text-danger"
+    }, [_vm._v("\n                                                    " + _vm._s(_vm.errors.total_sqm[0]) + "\n                                                ")]) : _vm._e()])]), _vm._v(" "), _c("div", {
+      staticClass: "pt-2 form-row align-items-center"
+    }, [_c("div", {
+      staticClass: "col-md-4"
+    }, [_c("input", {
+      directives: [{
+        name: "model",
+        rawName: "v-model",
+        value: material.banner_type,
+        expression: "material.banner_type"
+      }],
+      staticClass: "form-control",
+      attrs: {
+        type: "text",
+        id: "exampleInputEmail",
+        "aria-describedby": "emailHelp",
+        placeholder: "Fabric Banner Type"
+      },
+      domProps: {
+        value: material.banner_type
+      },
+      on: {
+        input: function input($event) {
+          if ($event.target.composing) return;
+          _vm.$set(material, "banner_type", $event.target.value);
+        }
+      }
+    }), _vm._v(" "), _vm.errors.banner_type ? _c("small", {
+      staticClass: "text-danger"
+    }, [_vm._v("\n                                                    " + _vm._s(_vm.errors.banner_type[0]) + "\n                                                ")]) : _vm._e()]), _vm._v(" "), _c("div", {
+      staticClass: "col-md-4"
+    }, [_c("label", {
+      attrs: {
+        "for": "outsourced"
+      }
+    }, [_vm._v("Out-sourced: ")]), _vm._v(" "), _c("select", {
+      directives: [{
+        name: "model",
+        rawName: "v-model",
+        value: material.outsourced,
+        expression: "material.outsourced"
+      }],
+      attrs: {
+        name: "outsourced",
+        id: "outsourced"
+      },
+      on: {
+        change: function change($event) {
+          var $$selectedVal = Array.prototype.filter.call($event.target.options, function (o) {
+            return o.selected;
+          }).map(function (o) {
+            var val = "_value" in o ? o._value : o.value;
+            return val;
+          });
+          _vm.$set(material, "outsourced", $event.target.multiple ? $$selectedVal : $$selectedVal[0]);
+        }
+      }
+    }, [_c("option", {
+      attrs: {
+        value: "true"
+      }
+    }, [_vm._v("Yes")]), _vm._v(" "), _c("option", {
+      attrs: {
+        selected: "selected",
+        value: "false"
+      }
+    }, [_vm._v("No")])]), _vm._v(" "), _vm.errors.outsourced ? _c("small", {
+      staticClass: "text-danger"
+    }, [_vm._v("\n                                                    " + _vm._s(_vm.errors.outsourced[0]) + "\n                                                ")]) : _vm._e()]), _vm._v(" "), _c("div", {
+      staticClass: "col-md-4"
+    }, [_c("input", {
+      directives: [{
+        name: "model",
+        rawName: "v-model",
+        value: material.machine,
+        expression: "material.machine"
+      }],
+      staticClass: "form-control",
+      attrs: {
+        type: "text",
+        id: "exampleInputEmail",
+        "aria-describedby": "emailHelp",
+        placeholder: "Machine"
+      },
+      domProps: {
+        value: material.machine
+      },
+      on: {
+        input: function input($event) {
+          if ($event.target.composing) return;
+          _vm.$set(material, "machine", $event.target.value);
+        }
+      }
+    }), _vm._v(" "), _vm.errors.machine ? _c("small", {
+      staticClass: "text-danger"
+    }, [_vm._v("\n                                                    " + _vm._s(_vm.errors.machine[0]) + "\n                                                ")]) : _vm._e()])]), _vm._v(" "), _c("div", {
+      staticClass: "pt-2 form-row align-items-center"
+    }, [_c("div", {
+      staticClass: "col-md-3"
+    }, [_c("input", {
+      directives: [{
+        name: "model",
+        rawName: "v-model",
+        value: material.print_medium_sqm,
+        expression: "material.print_medium_sqm"
+      }],
+      staticClass: "form-control",
+      attrs: {
+        type: "text",
+        id: "exampleInputEmail",
+        "aria-describedby": "emailHelp",
+        placeholder: "Print Medium / m²"
+      },
+      domProps: {
+        value: material.print_medium_sqm
+      },
+      on: {
+        input: function input($event) {
+          if ($event.target.composing) return;
+          _vm.$set(material, "print_medium_sqm", $event.target.value);
+        }
+      }
+    }), _vm._v(" "), _vm.errors.print_medium_sqm ? _c("small", {
+      staticClass: "text-danger"
+    }, [_vm._v("\n                                                    " + _vm._s(_vm.errors.print_medium_sqm[0]) + "\n                                                ")]) : _vm._e()]), _vm._v(" "), _c("div", {
+      staticClass: "col-md-3"
+    }, [_c("input", {
+      directives: [{
+        name: "model",
+        rawName: "v-model",
+        value: material.total_print_medium,
+        expression: "material.total_print_medium"
+      }],
+      staticClass: "form-control",
+      attrs: {
+        type: "text",
+        id: "exampleInputEmail",
+        "aria-describedby": "emailHelp",
+        placeholder: "Total Print Medium"
+      },
+      domProps: {
+        value: material.total_print_medium
+      },
+      on: {
+        input: function input($event) {
+          if ($event.target.composing) return;
+          _vm.$set(material, "total_print_medium", $event.target.value);
+        }
+      }
+    }), _vm._v(" "), _vm.errors.total_print_medium ? _c("small", {
+      staticClass: "text-danger"
+    }, [_vm._v("\n                                                    " + _vm._s(_vm.errors.total_print_medium[0]) + "\n                                                ")]) : _vm._e()]), _vm._v(" "), _c("div", {
+      staticClass: "col-md-3"
+    }, [_c("input", {
+      directives: [{
+        name: "model",
+        rawName: "v-model",
+        value: material.ink_sqm,
+        expression: "material.ink_sqm"
+      }],
+      staticClass: "form-control",
+      attrs: {
+        type: "text",
+        id: "exampleInputEmail",
+        "aria-describedby": "emailHelp",
+        placeholder: "Ink / m²"
+      },
+      domProps: {
+        value: material.ink_sqm
+      },
+      on: {
+        input: function input($event) {
+          if ($event.target.composing) return;
+          _vm.$set(material, "ink_sqm", $event.target.value);
+        }
+      }
+    }), _vm._v(" "), _vm.errors.ink_sqm ? _c("small", {
+      staticClass: "text-danger"
+    }, [_vm._v("\n                                                    " + _vm._s(_vm.errors.ink_sqm[0]) + "\n                                                ")]) : _vm._e()]), _vm._v(" "), _c("div", {
+      staticClass: "col-md-3"
+    }, [_c("input", {
+      directives: [{
+        name: "model",
+        rawName: "v-model",
+        value: material.total_ink,
+        expression: "material.total_ink"
+      }],
+      staticClass: "form-control",
+      attrs: {
+        type: "text",
+        id: "exampleInputEmail",
+        "aria-describedby": "emailHelp",
+        placeholder: "Total Ink"
+      },
+      domProps: {
+        value: material.total_ink
+      },
+      on: {
+        input: function input($event) {
+          if ($event.target.composing) return;
+          _vm.$set(material, "total_ink", $event.target.value);
+        }
+      }
+    }), _vm._v(" "), _vm.errors.total_ink ? _c("small", {
+      staticClass: "text-danger"
+    }, [_vm._v("\n                                                    " + _vm._s(_vm.errors.total_ink[0]) + "\n                                                ")]) : _vm._e()])]), _vm._v(" "), _c("div", {
+      staticClass: "pt-2 form-row align-items-center"
+    }, [_c("div", {
+      staticClass: "col-md-6"
+    }, [_c("label", {
+      attrs: {
+        "for": "outsourced"
+      }
+    }, [_vm._v("Pinnacle Digital Fabric Printing:")]), _vm._v(" "), _c("select", {
+      directives: [{
+        name: "model",
+        rawName: "v-model",
+        value: material.pdfp,
+        expression: "material.pdfp"
+      }],
+      attrs: {
+        name: "outsourced",
+        id: "outsourced"
+      },
+      on: {
+        change: function change($event) {
+          var $$selectedVal = Array.prototype.filter.call($event.target.options, function (o) {
+            return o.selected;
+          }).map(function (o) {
+            var val = "_value" in o ? o._value : o.value;
+            return val;
+          });
+          _vm.$set(material, "pdfp", $event.target.multiple ? $$selectedVal : $$selectedVal[0]);
+        }
+      }
+    }, [_c("option", {
+      attrs: {
+        value: "true"
+      }
+    }, [_vm._v("Yes")]), _vm._v(" "), _c("option", {
+      attrs: {
+        selected: ""
+      }
+    }, [_vm._v("No")])]), _vm._v(" "), _vm.errors.pdfp ? _c("small", {
+      staticClass: "text-danger"
+    }, [_vm._v("\n                                                    " + _vm._s(_vm.errors.pdfp[0]) + "\n                                                ")]) : _vm._e()]), _vm._v(" "), _c("div", {
+      staticClass: "col-md-6"
+    }, [_c("input", {
+      directives: [{
+        name: "model",
+        rawName: "v-model",
+        value: material.total_pinnacle,
+        expression: "material.total_pinnacle"
+      }],
+      staticClass: "form-control",
+      attrs: {
+        type: "text",
+        id: "exampleInputEmail",
+        "aria-describedby": "emailHelp",
+        placeholder: "Total Pinnacle"
+      },
+      domProps: {
+        value: material.total_pinnacle
+      },
+      on: {
+        input: function input($event) {
+          if ($event.target.composing) return;
+          _vm.$set(material, "total_pinnacle", $event.target.value);
+        }
+      }
+    }), _vm._v(" "), _vm.errors.total_pinnacle ? _c("small", {
+      staticClass: "text-danger"
+    }, [_vm._v("\n                                                    " + _vm._s(_vm.errors.total_pinnacle[0]) + "\n                                                ")]) : _vm._e()])]), _vm._v(" "), _c("div", {
+      staticClass: "pt-2 form-row align-items-center"
+    }, [_c("div", {
+      staticClass: "col-md-4"
+    }, [_c("input", {
+      directives: [{
+        name: "model",
+        rawName: "v-model",
+        value: material.silicon_welt_length,
+        expression: "material.silicon_welt_length"
+      }],
+      staticClass: "form-control",
+      attrs: {
+        type: "text",
+        id: "exampleInputEmail",
+        "aria-describedby": "emailHelp",
+        placeholder: "Silicon Welt Length"
+      },
+      domProps: {
+        value: material.silicon_welt_length
+      },
+      on: {
+        input: function input($event) {
+          if ($event.target.composing) return;
+          _vm.$set(material, "silicon_welt_length", $event.target.value);
+        }
+      }
+    }), _vm._v(" "), _vm.errors.silicon_welt_length ? _c("small", {
+      staticClass: "text-danger"
+    }, [_vm._v("\n                                                    " + _vm._s(_vm.errors.silicon_welt_length[0]) + "\n                                                ")]) : _vm._e()]), _vm._v(" "), _c("div", {
+      staticClass: "col-md-4"
+    }, [_c("input", {
+      directives: [{
+        name: "model",
+        rawName: "v-model",
+        value: material.sw_unit_price_m,
+        expression: "material.sw_unit_price_m"
+      }],
+      staticClass: "form-control",
+      attrs: {
+        type: "text",
+        id: "exampleInputEmail",
+        "aria-describedby": "emailHelp",
+        placeholder: "Unit Price / m"
+      },
+      domProps: {
+        value: material.sw_unit_price_m
+      },
+      on: {
+        input: function input($event) {
+          if ($event.target.composing) return;
+          _vm.$set(material, "sw_unit_price_m", $event.target.value);
+        }
+      }
+    }), _vm._v(" "), _vm.errors.sw_unit_price_m ? _c("small", {
+      staticClass: "text-danger"
+    }, [_vm._v("\n                                                    " + _vm._s(_vm.errors.sw_unit_price_m[0]) + "\n                                                ")]) : _vm._e()]), _vm._v(" "), _c("div", {
+      staticClass: "col-md-4"
+    }, [_c("input", {
+      directives: [{
+        name: "model",
+        rawName: "v-model",
+        value: material.total_silicon_welt,
+        expression: "material.total_silicon_welt"
+      }],
+      staticClass: "form-control",
+      attrs: {
+        type: "text",
+        id: "exampleInputEmail",
+        "aria-describedby": "emailHelp",
+        placeholder: "Total Silicon Welt"
+      },
+      domProps: {
+        value: material.total_silicon_welt
+      },
+      on: {
+        input: function input($event) {
+          if ($event.target.composing) return;
+          _vm.$set(material, "total_silicon_welt", $event.target.value);
+        }
+      }
+    }), _vm._v(" "), _vm.errors.total_silicon_welt ? _c("small", {
+      staticClass: "text-danger"
+    }, [_vm._v("\n                                                    " + _vm._s(_vm.errors.total_silicon_welt[0]) + "\n                                                ")]) : _vm._e()])]), _vm._v(" "), _c("div", {
+      staticClass: "pt-2 form-row align-items-center"
+    }, [_c("div", {
+      staticClass: "col-md-4"
+    }, [_c("input", {
+      directives: [{
+        name: "model",
+        rawName: "v-model",
+        value: material.flat_chonk_length,
+        expression: "material.flat_chonk_length"
+      }],
+      staticClass: "form-control",
+      attrs: {
+        type: "text",
+        id: "exampleInputEmail",
+        "aria-describedby": "emailHelp",
+        placeholder: "Flat Chonk Length"
+      },
+      domProps: {
+        value: material.flat_chonk_length
+      },
+      on: {
+        input: function input($event) {
+          if ($event.target.composing) return;
+          _vm.$set(material, "flat_chonk_length", $event.target.value);
+        }
+      }
+    }), _vm._v(" "), _vm.errors.flat_chonk_length ? _c("small", {
+      staticClass: "text-danger"
+    }, [_vm._v("\n                                                    " + _vm._s(_vm.errors.flat_chonk_length[0]) + "\n                                                ")]) : _vm._e()]), _vm._v(" "), _c("div", {
+      staticClass: "col-md-4"
+    }, [_c("input", {
+      directives: [{
+        name: "model",
+        rawName: "v-model",
+        value: material.fc_unit_price_m,
+        expression: "material.fc_unit_price_m"
+      }],
+      staticClass: "form-control",
+      attrs: {
+        type: "text",
+        id: "exampleInputEmail",
+        "aria-describedby": "emailHelp",
+        placeholder: "Unit Price / m"
+      },
+      domProps: {
+        value: material.fc_unit_price_m
+      },
+      on: {
+        input: function input($event) {
+          if ($event.target.composing) return;
+          _vm.$set(material, "fc_unit_price_m", $event.target.value);
+        }
+      }
+    }), _vm._v(" "), _vm.errors.fc_unit_price_m ? _c("small", {
+      staticClass: "text-danger"
+    }, [_vm._v("\n                                                    " + _vm._s(_vm.errors.fc_unit_price_m[0]) + "\n                                                ")]) : _vm._e()]), _vm._v(" "), _c("div", {
+      staticClass: "col-md-4"
+    }, [_c("input", {
+      directives: [{
+        name: "model",
+        rawName: "v-model",
+        value: material.total_flat_chonk,
+        expression: "material.total_flat_chonk"
+      }],
+      staticClass: "form-control",
+      attrs: {
+        type: "text",
+        id: "exampleInputEmail",
+        "aria-describedby": "emailHelp",
+        placeholder: "Total Flat Chonk"
+      },
+      domProps: {
+        value: material.total_flat_chonk
+      },
+      on: {
+        input: function input($event) {
+          if ($event.target.composing) return;
+          _vm.$set(material, "total_flat_chonk", $event.target.value);
+        }
+      }
+    }), _vm._v(" "), _vm.errors.total_flat_chonk ? _c("small", {
+      staticClass: "text-danger"
+    }, [_vm._v("\n                                                    " + _vm._s(_vm.errors.total_flat_chonk[0]) + "\n                                                ")]) : _vm._e()])]), _vm._v(" "), _c("div", {
+      staticClass: "pt-2 form-row align-items-center"
+    }, [_c("div", {
+      staticClass: "col-md-4"
+    }, [_c("input", {
+      directives: [{
+        name: "model",
+        rawName: "v-model",
+        value: material.eyelets_length,
+        expression: "material.eyelets_length"
+      }],
+      staticClass: "form-control",
+      attrs: {
+        type: "text",
+        id: "exampleInputEmail",
+        "aria-describedby": "emailHelp",
+        placeholder: "Eyelets Length"
+      },
+      domProps: {
+        value: material.eyelets_length
+      },
+      on: {
+        input: function input($event) {
+          if ($event.target.composing) return;
+          _vm.$set(material, "eyelets_length", $event.target.value);
+        }
+      }
+    }), _vm._v(" "), _vm.errors.eyelets_length ? _c("small", {
+      staticClass: "text-danger"
+    }, [_vm._v("\n                                                    " + _vm._s(_vm.errors.eyelets_length[0]) + "\n                                                ")]) : _vm._e()]), _vm._v(" "), _c("div", {
+      staticClass: "col-md-4"
+    }, [_c("input", {
+      directives: [{
+        name: "model",
+        rawName: "v-model",
+        value: material.eyelets_unit_price_m,
+        expression: "material.eyelets_unit_price_m"
+      }],
+      staticClass: "form-control",
+      attrs: {
+        type: "text",
+        id: "exampleInputEmail",
+        "aria-describedby": "emailHelp",
+        placeholder: "Unit Price / m"
+      },
+      domProps: {
+        value: material.eyelets_unit_price_m
+      },
+      on: {
+        input: function input($event) {
+          if ($event.target.composing) return;
+          _vm.$set(material, "eyelets_unit_price_m", $event.target.value);
+        }
+      }
+    }), _vm._v(" "), _vm.errors.eyelets_unit_price_m ? _c("small", {
+      staticClass: "text-danger"
+    }, [_vm._v("\n                                                    " + _vm._s(_vm.errors.eyelets_unit_price_m[0]) + "\n                                                ")]) : _vm._e()]), _vm._v(" "), _c("div", {
+      staticClass: "col-md-4"
+    }, [_c("input", {
+      directives: [{
+        name: "model",
+        rawName: "v-model",
+        value: material.total_eyelets,
+        expression: "material.total_eyelets"
+      }],
+      staticClass: "form-control",
+      attrs: {
+        type: "text",
+        id: "exampleInputEmail",
+        "aria-describedby": "emailHelp",
+        placeholder: "Total Eyelets"
+      },
+      domProps: {
+        value: material.total_eyelets
+      },
+      on: {
+        input: function input($event) {
+          if ($event.target.composing) return;
+          _vm.$set(material, "total_eyelets", $event.target.value);
+        }
+      }
+    }), _vm._v(" "), _vm.errors.total_eyelets ? _c("small", {
+      staticClass: "text-danger"
+    }, [_vm._v("\n                                                    " + _vm._s(_vm.errors.total_eyelets[0]) + "\n                                                ")]) : _vm._e()])]), _vm._v(" "), _c("div", {
+      staticClass: "pt-2 form-row align-items-center"
+    }, [_c("div", {
+      staticClass: "col-md-4"
+    }, [_c("input", {
+      directives: [{
+        name: "model",
+        rawName: "v-model",
+        value: material.web_vel_length,
+        expression: "material.web_vel_length"
+      }],
+      staticClass: "form-control",
+      attrs: {
+        type: "text",
+        id: "exampleInputEmail",
+        "aria-describedby": "emailHelp",
+        placeholder: "Webbing / Velcro Length"
+      },
+      domProps: {
+        value: material.web_vel_length
+      },
+      on: {
+        input: function input($event) {
+          if ($event.target.composing) return;
+          _vm.$set(material, "web_vel_length", $event.target.value);
+        }
+      }
+    }), _vm._v(" "), _vm.errors.web_vel_length ? _c("small", {
+      staticClass: "text-danger"
+    }, [_vm._v("\n                                                    " + _vm._s(_vm.errors.web_vel_length[0]) + "\n                                                ")]) : _vm._e()]), _vm._v(" "), _c("div", {
+      staticClass: "col-md-4"
+    }, [_c("input", {
+      directives: [{
+        name: "model",
+        rawName: "v-model",
+        value: material.webvel_unit_price_m,
+        expression: "material.webvel_unit_price_m"
+      }],
+      staticClass: "form-control",
+      attrs: {
+        type: "text",
+        id: "exampleInputEmail",
+        "aria-describedby": "emailHelp",
+        placeholder: "Unit Price / m"
+      },
+      domProps: {
+        value: material.webvel_unit_price_m
+      },
+      on: {
+        input: function input($event) {
+          if ($event.target.composing) return;
+          _vm.$set(material, "webvel_unit_price_m", $event.target.value);
+        }
+      }
+    }), _vm._v(" "), _vm.errors.webvel_unit_price_m ? _c("small", {
+      staticClass: "text-danger"
+    }, [_vm._v("\n                                                    " + _vm._s(_vm.errors.webvel_unit_price_m[0]) + "\n                                                ")]) : _vm._e()]), _vm._v(" "), _c("div", {
+      staticClass: "col-md-4"
+    }, [_c("input", {
+      directives: [{
+        name: "model",
+        rawName: "v-model",
+        value: material.total_webvel,
+        expression: "material.total_webvel"
+      }],
+      staticClass: "form-control",
+      attrs: {
+        type: "text",
+        id: "exampleInputEmail",
+        "aria-describedby": "emailHelp",
+        placeholder: "Total Webbing / Velcro"
+      },
+      domProps: {
+        value: material.total_webvel
+      },
+      on: {
+        input: function input($event) {
+          if ($event.target.composing) return;
+          _vm.$set(material, "total_webvel", $event.target.value);
+        }
+      }
+    }), _vm._v(" "), _vm.errors.total_webvel ? _c("small", {
+      staticClass: "text-danger"
+    }, [_vm._v("\n                                                    " + _vm._s(_vm.errors.total_webvel[0]) + "\n                                                ")]) : _vm._e()])]), _vm._v(" "), _c("div", {
+      staticClass: "pt-2 form-row align-items-center"
+    }, [_c("div", {
+      staticClass: "col-md-2"
+    }, [_c("input", {
+      directives: [{
+        name: "model",
+        rawName: "v-model",
+        value: material.pullup_unit_price,
+        expression: "material.pullup_unit_price"
+      }],
+      staticClass: "form-control",
+      attrs: {
+        type: "text",
+        id: "exampleInputEmail",
+        "aria-describedby": "emailHelp",
+        placeholder: "Pull-up Banner Unit Price"
+      },
+      domProps: {
+        value: material.pullup_unit_price
+      },
+      on: {
+        input: function input($event) {
+          if ($event.target.composing) return;
+          _vm.$set(material, "pullup_unit_price", $event.target.value);
+        }
+      }
+    }), _vm._v(" "), _vm.errors.pullup_unit_price ? _c("small", {
+      staticClass: "text-danger"
+    }, [_vm._v("\n                                                    " + _vm._s(_vm.errors.pullup_unit_price[0]) + "\n                                                ")]) : _vm._e()]), _vm._v(" "), _c("div", {
+      staticClass: "col-md-2"
+    }, [_c("input", {
+      directives: [{
+        name: "model",
+        rawName: "v-model",
+        value: material.pullup_total_hardware,
+        expression: "material.pullup_total_hardware"
+      }],
+      staticClass: "form-control",
+      attrs: {
+        type: "text",
+        id: "exampleInputEmail",
+        "aria-describedby": "emailHelp",
+        placeholder: "Total Pull-up Banner Hardware"
+      },
+      domProps: {
+        value: material.pullup_total_hardware
+      },
+      on: {
+        input: function input($event) {
+          if ($event.target.composing) return;
+          _vm.$set(material, "pullup_total_hardware", $event.target.value);
+        }
+      }
+    }), _vm._v(" "), _vm.errors.pullup_total_hardware ? _c("small", {
+      staticClass: "text-danger"
+    }, [_vm._v("\n                                                    " + _vm._s(_vm.errors.pullup_total_hardware[0]) + "\n                                                ")]) : _vm._e()]), _vm._v(" "), _c("div", {
+      staticClass: "col-md-2"
+    }, [_c("input", {
+      directives: [{
+        name: "model",
+        rawName: "v-model",
+        value: material.pullup_unit_price_sqm,
+        expression: "material.pullup_unit_price_sqm"
+      }],
+      staticClass: "form-control",
+      attrs: {
+        type: "text",
+        id: "exampleInputEmail",
+        "aria-describedby": "emailHelp",
+        placeholder: "Unit Price / m²"
+      },
+      domProps: {
+        value: material.pullup_unit_price_sqm
+      },
+      on: {
+        input: function input($event) {
+          if ($event.target.composing) return;
+          _vm.$set(material, "pullup_unit_price_sqm", $event.target.value);
+        }
+      }
+    }), _vm._v(" "), _vm.errors.pullup_unit_price_sqm ? _c("small", {
+      staticClass: "text-danger"
+    }, [_vm._v("\n                                                    " + _vm._s(_vm.errors.pullup_unit_price_sqm[0]) + "\n                                                ")]) : _vm._e()]), _vm._v(" "), _c("div", {
+      staticClass: "col-md-2"
+    }, [_c("input", {
+      directives: [{
+        name: "model",
+        rawName: "v-model",
+        value: material.total_magnetic,
+        expression: "material.total_magnetic"
+      }],
+      staticClass: "form-control",
+      attrs: {
+        type: "text",
+        id: "exampleInputEmail",
+        "aria-describedby": "emailHelp",
+        placeholder: "Total Magnetic"
+      },
+      domProps: {
+        value: material.total_magnetic
+      },
+      on: {
+        input: function input($event) {
+          if ($event.target.composing) return;
+          _vm.$set(material, "total_magnetic", $event.target.value);
+        }
+      }
+    }), _vm._v(" "), _vm.errors.total_magnetic ? _c("small", {
+      staticClass: "text-danger"
+    }, [_vm._v("\n                                                    " + _vm._s(_vm.errors.total_magnetic[0]) + "\n                                                ")]) : _vm._e()]), _vm._v(" "), _c("div", {
+      staticClass: "col-md-2"
+    }, [_c("input", {
+      directives: [{
+        name: "model",
+        rawName: "v-model",
+        value: material.consumables,
+        expression: "material.consumables"
+      }],
+      staticClass: "form-control",
+      attrs: {
+        type: "text",
+        id: "exampleInputEmail",
+        "aria-describedby": "emailHelp",
+        placeholder: "Consumables"
+      },
+      domProps: {
+        value: material.consumables
+      },
+      on: {
+        input: function input($event) {
+          if ($event.target.composing) return;
+          _vm.$set(material, "consumables", $event.target.value);
+        }
+      }
+    }), _vm._v(" "), _vm.errors.consumables ? _c("small", {
+      staticClass: "text-danger"
+    }, [_vm._v("\n                                                    " + _vm._s(_vm.errors.consumables[0]) + "\n                                                ")]) : _vm._e()]), _vm._v(" "), _c("div", {
+      staticClass: "col-md-2"
+    }, [_c("input", {
+      directives: [{
+        name: "model",
+        rawName: "v-model",
+        value: material.unit_price_item,
+        expression: "material.unit_price_item"
+      }],
+      staticClass: "form-control",
+      attrs: {
+        type: "text",
+        id: "exampleInputEmail",
+        "aria-describedby": "emailHelp",
+        placeholder: "Unit Price / Item"
+      },
+      domProps: {
+        value: material.unit_price_item
+      },
+      on: {
+        input: function input($event) {
+          if ($event.target.composing) return;
+          _vm.$set(material, "unit_price_item", $event.target.value);
+        }
+      }
+    }), _vm._v(" "), _vm.errors.unit_price_item ? _c("small", {
+      staticClass: "text-danger"
+    }, [_vm._v("\n                                                    " + _vm._s(_vm.errors.unit_price_item[0]) + "\n                                                ")]) : _vm._e()])])]);
+  }), _vm._v(" "), _c("div", {
+    staticClass: "form-group"
+  }, [_c("div", {
+    staticClass: "form-row"
+  }, [_c("div", {
+    staticClass: "col-1"
+  }, [_c("button", {
+    staticClass: "btn btn-success form-control",
+    on: {
+      click: _vm.addMaterials
+    }
+  }, [_vm._v("Add\n                                                    Material")])])])]), _vm._v(" "), _c("div", {
+    staticClass: "form-group"
+  }, [_c("div", {
+    staticClass: "pt-2 form-row align-items-center"
+  }, [_c("div", {
+    staticClass: "col-md-6"
+  }, [_c("h6", [_vm._v("Total Amount: ")]), _vm._v(" "), _c("input", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.form.total_amount,
+      expression: "form.total_amount"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      type: "text",
+      id: "exampleInputEmail",
+      "aria-describedby": "emailHelp",
+      placeholder: "R0.00"
+    },
+    domProps: {
+      value: _vm.form.total_amount
+    },
+    on: {
+      input: function input($event) {
+        if ($event.target.composing) return;
+        _vm.$set(_vm.form, "total_amount", $event.target.value);
+      }
+    }
+  })])])]), _vm._v(" "), _vm._m(1)], 2)])])])])])])])]);
 };
 var staticRenderFns = [function () {
   var _vm = this,
@@ -64703,17 +66909,20 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
-var render, staticRenderFns
-var script = {}
+/* harmony import */ var _EditJobcards_vue_vue_type_template_id_6981b3ee__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./EditJobcards.vue?vue&type=template&id=6981b3ee */ "./resources/js/components/job_cards/EditJobcards.vue?vue&type=template&id=6981b3ee");
+/* harmony import */ var _EditJobcards_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./EditJobcards.vue?vue&type=script&lang=js */ "./resources/js/components/job_cards/EditJobcards.vue?vue&type=script&lang=js");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
 
 
 /* normalize component */
 
-var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_0__["default"])(
-  script,
-  render,
-  staticRenderFns,
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _EditJobcards_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__["default"],
+  _EditJobcards_vue_vue_type_template_id_6981b3ee__WEBPACK_IMPORTED_MODULE_0__["render"],
+  _EditJobcards_vue_vue_type_template_id_6981b3ee__WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
   false,
   null,
   null,
@@ -64721,8 +66930,42 @@ var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_
   
 )
 
+/* hot reload */
+if (false) { var api; }
 component.options.__file = "resources/js/components/job_cards/EditJobcards.vue"
 /* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/job_cards/EditJobcards.vue?vue&type=script&lang=js":
+/*!************************************************************************************!*\
+  !*** ./resources/js/components/job_cards/EditJobcards.vue?vue&type=script&lang=js ***!
+  \************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_EditJobcards_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./EditJobcards.vue?vue&type=script&lang=js */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/job_cards/EditJobcards.vue?vue&type=script&lang=js");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_EditJobcards_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/job_cards/EditJobcards.vue?vue&type=template&id=6981b3ee":
+/*!******************************************************************************************!*\
+  !*** ./resources/js/components/job_cards/EditJobcards.vue?vue&type=template&id=6981b3ee ***!
+  \******************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ref_6_node_modules_vue_loader_lib_index_js_vue_loader_options_EditJobcards_vue_vue_type_template_id_6981b3ee__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??ref--6!../../../../node_modules/vue-loader/lib??vue-loader-options!./EditJobcards.vue?vue&type=template&id=6981b3ee */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/job_cards/EditJobcards.vue?vue&type=template&id=6981b3ee");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ref_6_node_modules_vue_loader_lib_index_js_vue_loader_options_EditJobcards_vue_vue_type_template_id_6981b3ee__WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ref_6_node_modules_vue_loader_lib_index_js_vue_loader_options_EditJobcards_vue_vue_type_template_id_6981b3ee__WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
 
 /***/ }),
 
