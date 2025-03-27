@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Model\Jobcard;
 use Illuminate\Http\Request;
+use DB;
 
 class JobcardController extends Controller
 {
@@ -14,7 +16,8 @@ class JobcardController extends Controller
      */
     public function index()
     {
-        //
+        $jobcard = Jobcard::all();
+        return response()->json($jobcard);
     }
 
 
@@ -26,7 +29,23 @@ class JobcardController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validateData = $request->validate([
+            'job_number' => 'required|max:255',
+            'salesperson' => 'required|max:255',
+            'stand_name' => 'required',
+            'show_name' => 'required',
+            'materials' => 'required|array',
+            'total_amount' => 'required|numeric'
+        ]);
+
+        $jobcard = new Jobcard();
+        $jobcard->job_number = $request->job_number;
+        $jobcard->salesperson = $request->salesperson;
+        $jobcard->stand_name = $request->stand_name;
+        $jobcard->show_name = $request->show_name;
+        $jobcard->materials = json_encode($request->materials);
+        $jobcard->total_amount = $request->total_amount;
+        $jobcard->save();
     }
 
     /**
@@ -37,7 +56,8 @@ class JobcardController extends Controller
      */
     public function show($id)
     {
-        //
+        $jobcard = DB::table('jobcards')->where('id', $id)->first();
+        return response()->json($jobcard);
     }
 
 
@@ -50,7 +70,15 @@ class JobcardController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $data = array();
+        $data['job_number'] = $request->job_number;
+        $data['salesperson'] = $request->salesperson;
+        $data['stand_name'] = $request->stand_name;
+        $data['show_name'] = $request->show_name;
+        $data['materials'] = $request->materials;
+        $data['total_amount'] = $request->total_amount;
+
+        $user = DB::table('jobcards')->where('id', $id)->update($data);
     }
 
     /**
@@ -61,6 +89,6 @@ class JobcardController extends Controller
      */
     public function destroy($id)
     {
-        //
+        DB::table('jobcards')->where('id', $id)->delete();
     }
 }

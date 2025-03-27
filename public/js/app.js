@@ -2295,27 +2295,27 @@ function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e 
   },
   data: function data() {
     return {
-      employees: [],
+      jobcards: [],
       search: ''
     };
   },
   computed: {
     filtersearch: function filtersearch() {
       var _this = this;
-      return this.employees.filter(function (employee) {
-        return employee.name.toLowerCase().match(_this.search.toLowerCase()) || employee.phone.match(_this.search) || employee.email.toLowerCase().match(_this.search.toLowerCase());
+      return this.jobcards.filter(function (jobcard) {
+        return jobcard.salesperson.toLowerCase().match(_this.search.toLowerCase()) || jobcard.job_number.toLowerCase().match(_this.search.toLowerCase()) || jobcard.stand_name.toLowerCase().match(_this.search.toLowerCase()) || jobcard.show_name.toLowerCase().match(_this.search.toLowerCase());
       });
     }
   },
   methods: {
-    allEmployees: function allEmployees() {
+    allJobcards: function allJobcards() {
       var _this2 = this;
-      axios.get('/api/employee/').then(function (_ref) {
+      axios.get('/api/jobcard/').then(function (_ref) {
         var data = _ref.data;
-        return _this2.employees = data;
+        return _this2.jobcards = data;
       })["catch"]();
     },
-    deleteEmployee: function deleteEmployee(id) {
+    deleteJobcard: function deleteJobcard(id) {
       var _this3 = this;
       Swal.fire({
         title: "Are you sure?",
@@ -2327,13 +2327,13 @@ function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e 
         confirmButtonText: "Yes, delete it!"
       }).then(function (result) {
         if (result.value) {
-          axios["delete"]('/api/employee/' + id).then(function () {
-            _this3.employees = _this3.employees.filter(function (employee) {
-              return employee.id !== id;
+          axios["delete"]('/api/jobcard/' + id).then(function () {
+            _this3.jobcards = _this3.jobcards.filter(function (jobcard) {
+              return jobcard.id !== id;
             });
           })["catch"](function () {
             _this3.$router.push({
-              name: 'employees'
+              name: 'jobcards'
             });
           });
           Swal.fire({
@@ -2346,7 +2346,7 @@ function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e 
     }
   }
 }, "created", function created() {
-  this.allEmployees();
+  this.allJobcards();
 }));
 
 /***/ }),
@@ -2378,38 +2378,38 @@ __webpack_require__.r(__webpack_exports__);
         stand_name: null,
         show_name: null,
         materials: [{
-          quantity: '',
-          description: '',
-          width: '',
-          height: '',
-          total_sqm: '',
-          banner_type: '',
-          outsourced: '',
-          machine: '',
-          print_medium_sqm: '',
-          total_print_medium: '',
-          ink_sqm: '',
-          total_ink: '',
-          pdfp: '',
-          total_pinnacle: '',
-          silicon_welt_length: '',
-          sw_unit_price_m: '',
-          total_silicon_welt: '',
-          flat_chonk_length: '',
-          fc_unit_price_m: '',
-          total_flat_chonk: '',
-          eyelets_length: '',
-          eyelets_unit_price_m: '',
-          total_eyelets: '',
-          web_vel_length: '',
-          webvel_unit_price_m: '',
-          total_webvel: '',
-          pullup_unit_price: '',
-          pullup_total_hardware: '',
-          pullup_unit_price_sqm: '',
-          total_magnetic: '',
-          consumables: '',
-          unit_price_item: ''
+          quantity: null,
+          description: null,
+          width: null,
+          height: null,
+          total_sqm: null,
+          banner_type: null,
+          outsourced: null,
+          machine: null,
+          print_medium_sqm: null,
+          total_print_medium: null,
+          ink_sqm: null,
+          total_ink: null,
+          pdfp: null,
+          total_pinnacle: null,
+          silicon_welt_length: null,
+          sw_unit_price_m: null,
+          total_silicon_welt: null,
+          flat_chonk_length: null,
+          fc_unit_price_m: null,
+          total_flat_chonk: null,
+          eyelets_length: null,
+          eyelets_unit_price_m: null,
+          total_eyelets: null,
+          web_vel_length: null,
+          webvel_unit_price_m: null,
+          total_webvel: null,
+          pullup_unit_price: null,
+          pullup_total_hardware: null,
+          pullup_unit_price_sqm: null,
+          total_magnetic: null,
+          consumables: null,
+          unit_price_item: null
         }],
         total_amount: null
       },
@@ -2417,55 +2417,66 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   methods: {
-    addMaterials: function addMaterials() {
-      this.form.materials.push({
-        quantity: '',
-        description: '',
-        width: '',
-        height: '',
-        total_sqm: '',
-        banner_type: '',
-        outsourced: '',
-        machine: '',
-        print_medium_sqm: '',
-        total_print_medium: '',
-        ink_sqm: '',
-        total_ink: '',
-        pdfp: '',
-        total_pinnacle: '',
-        silicon_welt_length: '',
-        sw_unit_price_m: '',
-        total_silicon_welt: '',
-        flat_chonk_length: '',
-        fc_unit_price_m: '',
-        total_flat_chonk: '',
-        eyelets_length: '',
-        eyelets_unit_price_m: '',
-        total_eyelets: '',
-        web_vel_length: '',
-        webvel_unit_price_m: '',
-        total_webvel: '',
-        pullup_unit_price: '',
-        pullup_total_hardware: '',
-        pullup_unit_price_sqm: '',
-        total_magnetic: '',
-        consumables: '',
-        unit_price_item: ''
-      });
-    },
-    removeMaterials: function removeMaterials(index) {
-      this.form.materials.splice(index, 1);
-    },
     jobcardInsert: function jobcardInsert() {
       var _this = this;
-      axios.post('/api/employee', this.form).then(function () {
+      axios.post('/api/jobcard', this.form).then(function () {
         _this.$router.push({
-          name: 'employees'
+          name: 'jobcards'
         });
         _helpers_Notification__WEBPACK_IMPORTED_MODULE_0__["default"].success();
       })["catch"](function (error) {
-        return _this.errors = error.response.data.errors;
+        if (error.response && error.response.data && error.response.data.errors) {
+          _this.errors = error.response.data.errors;
+
+          // ✅ Ensure errors.materials is an array
+          if (!Array.isArray(_this.errors.materials)) {
+            _this.errors.materials = [];
+          }
+        } else {
+          _this.errors = {};
+        }
       });
+    },
+    addMaterials: function addMaterials() {
+      this.form.materials.push({
+        quantity: null,
+        description: null,
+        width: null,
+        height: null,
+        total_sqm: null,
+        banner_type: null,
+        outsourced: null,
+        machine: null,
+        print_medium_sqm: null,
+        total_print_medium: null,
+        ink_sqm: null,
+        total_ink: null,
+        pdfp: null,
+        total_pinnacle: null,
+        silicon_welt_length: null,
+        sw_unit_price_m: null,
+        total_silicon_welt: null,
+        flat_chonk_length: null,
+        fc_unit_price_m: null,
+        total_flat_chonk: null,
+        eyelets_length: null,
+        eyelets_unit_price_m: null,
+        total_eyelets: null,
+        web_vel_length: null,
+        webvel_unit_price_m: null,
+        total_webvel: null,
+        pullup_unit_price: null,
+        pullup_total_hardware: null,
+        pullup_unit_price_sqm: null,
+        total_magnetic: null,
+        consumables: null,
+        unit_price_item: null
+      });
+      this.errors.materials = this.errors.materials || [];
+      this.errors.materials.push({});
+    },
+    removeMaterials: function removeMaterials(index) {
+      this.form.materials.splice(index, 1);
     }
   }
 });
@@ -4355,7 +4366,7 @@ var render = function render() {
   }, [_vm._m(1), _vm._v(" "), _c("tbody", _vm._l(_vm.filtersearch, function (jobcard) {
     return _c("tr", {
       key: jobcard.id
-    }, [_c("td", [_vm._v(_vm._s(jobcard.job_number))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(jobcard.sales_person))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(jobcard.stand_name))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(jobcard.show_name))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(jobcard.created_date))]), _vm._v(" "), _c("td", [_c("router-link", {
+    }, [_c("td", [_vm._v(_vm._s(jobcard.job_number))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(jobcard.salesperson))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(jobcard.stand_name))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(jobcard.show_name))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(_vm._f("moment")(jobcard.created_at, "dddd, MMMM Do YYYY, h:mm:ss a")))]), _vm._v(" "), _c("td", [_c("router-link", {
       staticClass: "btn btn-sm btn-primary",
       attrs: {
         to: {
@@ -4369,7 +4380,7 @@ var render = function render() {
       staticClass: "btn btn-sm btn-danger text-white",
       on: {
         click: function click($event) {
-          return _vm.deleteEmployee(jobcard.id);
+          return _vm.deleteJobcard(jobcard.id);
         }
       }
     }, [_vm._v("Delete")])], 1)]);
@@ -4597,9 +4608,7 @@ var render = function render() {
           _vm.$set(material, "quantity", $event.target.value);
         }
       }
-    }), _vm._v(" "), _vm.errors.quantity ? _c("small", {
-      staticClass: "text-danger"
-    }, [_vm._v("\n                                                    " + _vm._s(_vm.errors.quantity[0]) + "\n                                                ")]) : _vm._e()]), _vm._v(" "), _c("div", {
+    })]), _vm._v(" "), _c("div", {
       staticClass: "col-md-6"
     }, [_c("input", {
       directives: [{
@@ -4624,9 +4633,7 @@ var render = function render() {
           _vm.$set(material, "description", $event.target.value);
         }
       }
-    }), _vm._v(" "), _vm.errors.description ? _c("small", {
-      staticClass: "text-danger"
-    }, [_vm._v("\n                                                    " + _vm._s(_vm.errors.description[0]) + "\n                                                ")]) : _vm._e()])]), _vm._v(" "), _c("div", {
+    })])]), _vm._v(" "), _c("div", {
       staticClass: "pt-2 form-row align-items-center"
     }, [_c("div", {
       staticClass: "col-md-4"
@@ -4653,9 +4660,7 @@ var render = function render() {
           _vm.$set(material, "width", $event.target.value);
         }
       }
-    }), _vm._v(" "), _vm.errors.width ? _c("small", {
-      staticClass: "text-danger"
-    }, [_vm._v("\n                                                    " + _vm._s(_vm.errors.width[0]) + "\n                                                ")]) : _vm._e()]), _vm._v(" "), _c("div", {
+    })]), _vm._v(" "), _c("div", {
       staticClass: "col-md-4"
     }, [_c("input", {
       directives: [{
@@ -4680,9 +4685,7 @@ var render = function render() {
           _vm.$set(material, "height", $event.target.value);
         }
       }
-    }), _vm._v(" "), _vm.errors.height ? _c("small", {
-      staticClass: "text-danger"
-    }, [_vm._v("\n                                                    " + _vm._s(_vm.errors.height[0]) + "\n                                                ")]) : _vm._e()]), _vm._v(" "), _c("div", {
+    })]), _vm._v(" "), _c("div", {
       staticClass: "col-md-4"
     }, [_c("input", {
       directives: [{
@@ -4707,9 +4710,7 @@ var render = function render() {
           _vm.$set(material, "total_sqm", $event.target.value);
         }
       }
-    }), _vm._v(" "), _vm.errors.total_sqm ? _c("small", {
-      staticClass: "text-danger"
-    }, [_vm._v("\n                                                    " + _vm._s(_vm.errors.total_sqm[0]) + "\n                                                ")]) : _vm._e()])]), _vm._v(" "), _c("div", {
+    })])]), _vm._v(" "), _c("div", {
       staticClass: "pt-2 form-row align-items-center"
     }, [_c("div", {
       staticClass: "col-md-4"
@@ -4736,9 +4737,7 @@ var render = function render() {
           _vm.$set(material, "banner_type", $event.target.value);
         }
       }
-    }), _vm._v(" "), _vm.errors.banner_type ? _c("small", {
-      staticClass: "text-danger"
-    }, [_vm._v("\n                                                    " + _vm._s(_vm.errors.banner_type[0]) + "\n                                                ")]) : _vm._e()]), _vm._v(" "), _c("div", {
+    })]), _vm._v(" "), _c("div", {
       staticClass: "col-md-4"
     }, [_c("label", {
       attrs: {
@@ -4775,9 +4774,7 @@ var render = function render() {
         selected: "selected",
         value: "false"
       }
-    }, [_vm._v("No")])]), _vm._v(" "), _vm.errors.outsourced ? _c("small", {
-      staticClass: "text-danger"
-    }, [_vm._v("\n                                                    " + _vm._s(_vm.errors.outsourced[0]) + "\n                                                ")]) : _vm._e()]), _vm._v(" "), _c("div", {
+    }, [_vm._v("No")])])]), _vm._v(" "), _c("div", {
       staticClass: "col-md-4"
     }, [_c("input", {
       directives: [{
@@ -4802,9 +4799,7 @@ var render = function render() {
           _vm.$set(material, "machine", $event.target.value);
         }
       }
-    }), _vm._v(" "), _vm.errors.machine ? _c("small", {
-      staticClass: "text-danger"
-    }, [_vm._v("\n                                                    " + _vm._s(_vm.errors.machine[0]) + "\n                                                ")]) : _vm._e()])]), _vm._v(" "), _c("div", {
+    })])]), _vm._v(" "), _c("div", {
       staticClass: "pt-2 form-row align-items-center"
     }, [_c("div", {
       staticClass: "col-md-3"
@@ -4831,9 +4826,7 @@ var render = function render() {
           _vm.$set(material, "print_medium_sqm", $event.target.value);
         }
       }
-    }), _vm._v(" "), _vm.errors.print_medium_sqm ? _c("small", {
-      staticClass: "text-danger"
-    }, [_vm._v("\n                                                    " + _vm._s(_vm.errors.print_medium_sqm[0]) + "\n                                                ")]) : _vm._e()]), _vm._v(" "), _c("div", {
+    })]), _vm._v(" "), _c("div", {
       staticClass: "col-md-3"
     }, [_c("input", {
       directives: [{
@@ -4858,9 +4851,7 @@ var render = function render() {
           _vm.$set(material, "total_print_medium", $event.target.value);
         }
       }
-    }), _vm._v(" "), _vm.errors.total_print_medium ? _c("small", {
-      staticClass: "text-danger"
-    }, [_vm._v("\n                                                    " + _vm._s(_vm.errors.total_print_medium[0]) + "\n                                                ")]) : _vm._e()]), _vm._v(" "), _c("div", {
+    })]), _vm._v(" "), _c("div", {
       staticClass: "col-md-3"
     }, [_c("input", {
       directives: [{
@@ -4885,9 +4876,7 @@ var render = function render() {
           _vm.$set(material, "ink_sqm", $event.target.value);
         }
       }
-    }), _vm._v(" "), _vm.errors.ink_sqm ? _c("small", {
-      staticClass: "text-danger"
-    }, [_vm._v("\n                                                    " + _vm._s(_vm.errors.ink_sqm[0]) + "\n                                                ")]) : _vm._e()]), _vm._v(" "), _c("div", {
+    })]), _vm._v(" "), _c("div", {
       staticClass: "col-md-3"
     }, [_c("input", {
       directives: [{
@@ -4912,9 +4901,7 @@ var render = function render() {
           _vm.$set(material, "total_ink", $event.target.value);
         }
       }
-    }), _vm._v(" "), _vm.errors.total_ink ? _c("small", {
-      staticClass: "text-danger"
-    }, [_vm._v("\n                                                    " + _vm._s(_vm.errors.total_ink[0]) + "\n                                                ")]) : _vm._e()])]), _vm._v(" "), _c("div", {
+    })])]), _vm._v(" "), _c("div", {
       staticClass: "pt-2 form-row align-items-center"
     }, [_c("div", {
       staticClass: "col-md-6"
@@ -4952,9 +4939,7 @@ var render = function render() {
       attrs: {
         selected: ""
       }
-    }, [_vm._v("No")])]), _vm._v(" "), _vm.errors.pdfp ? _c("small", {
-      staticClass: "text-danger"
-    }, [_vm._v("\n                                                    " + _vm._s(_vm.errors.pdfp[0]) + "\n                                                ")]) : _vm._e()]), _vm._v(" "), _c("div", {
+    }, [_vm._v("No")])])]), _vm._v(" "), _c("div", {
       staticClass: "col-md-6"
     }, [_c("input", {
       directives: [{
@@ -4979,9 +4964,7 @@ var render = function render() {
           _vm.$set(material, "total_pinnacle", $event.target.value);
         }
       }
-    }), _vm._v(" "), _vm.errors.total_pinnacle ? _c("small", {
-      staticClass: "text-danger"
-    }, [_vm._v("\n                                                    " + _vm._s(_vm.errors.total_pinnacle[0]) + "\n                                                ")]) : _vm._e()])]), _vm._v(" "), _c("div", {
+    })])]), _vm._v(" "), _c("div", {
       staticClass: "pt-2 form-row align-items-center"
     }, [_c("div", {
       staticClass: "col-md-4"
@@ -5008,9 +4991,7 @@ var render = function render() {
           _vm.$set(material, "silicon_welt_length", $event.target.value);
         }
       }
-    }), _vm._v(" "), _vm.errors.silicon_welt_length ? _c("small", {
-      staticClass: "text-danger"
-    }, [_vm._v("\n                                                    " + _vm._s(_vm.errors.silicon_welt_length[0]) + "\n                                                ")]) : _vm._e()]), _vm._v(" "), _c("div", {
+    })]), _vm._v(" "), _c("div", {
       staticClass: "col-md-4"
     }, [_c("input", {
       directives: [{
@@ -5035,9 +5016,7 @@ var render = function render() {
           _vm.$set(material, "sw_unit_price_m", $event.target.value);
         }
       }
-    }), _vm._v(" "), _vm.errors.sw_unit_price_m ? _c("small", {
-      staticClass: "text-danger"
-    }, [_vm._v("\n                                                    " + _vm._s(_vm.errors.sw_unit_price_m[0]) + "\n                                                ")]) : _vm._e()]), _vm._v(" "), _c("div", {
+    })]), _vm._v(" "), _c("div", {
       staticClass: "col-md-4"
     }, [_c("input", {
       directives: [{
@@ -5062,9 +5041,7 @@ var render = function render() {
           _vm.$set(material, "total_silicon_welt", $event.target.value);
         }
       }
-    }), _vm._v(" "), _vm.errors.total_silicon_welt ? _c("small", {
-      staticClass: "text-danger"
-    }, [_vm._v("\n                                                    " + _vm._s(_vm.errors.total_silicon_welt[0]) + "\n                                                ")]) : _vm._e()])]), _vm._v(" "), _c("div", {
+    })])]), _vm._v(" "), _c("div", {
       staticClass: "pt-2 form-row align-items-center"
     }, [_c("div", {
       staticClass: "col-md-4"
@@ -5091,9 +5068,7 @@ var render = function render() {
           _vm.$set(material, "flat_chonk_length", $event.target.value);
         }
       }
-    }), _vm._v(" "), _vm.errors.flat_chonk_length ? _c("small", {
-      staticClass: "text-danger"
-    }, [_vm._v("\n                                                    " + _vm._s(_vm.errors.flat_chonk_length[0]) + "\n                                                ")]) : _vm._e()]), _vm._v(" "), _c("div", {
+    })]), _vm._v(" "), _c("div", {
       staticClass: "col-md-4"
     }, [_c("input", {
       directives: [{
@@ -5118,9 +5093,7 @@ var render = function render() {
           _vm.$set(material, "fc_unit_price_m", $event.target.value);
         }
       }
-    }), _vm._v(" "), _vm.errors.fc_unit_price_m ? _c("small", {
-      staticClass: "text-danger"
-    }, [_vm._v("\n                                                    " + _vm._s(_vm.errors.fc_unit_price_m[0]) + "\n                                                ")]) : _vm._e()]), _vm._v(" "), _c("div", {
+    })]), _vm._v(" "), _c("div", {
       staticClass: "col-md-4"
     }, [_c("input", {
       directives: [{
@@ -5145,9 +5118,7 @@ var render = function render() {
           _vm.$set(material, "total_flat_chonk", $event.target.value);
         }
       }
-    }), _vm._v(" "), _vm.errors.total_flat_chonk ? _c("small", {
-      staticClass: "text-danger"
-    }, [_vm._v("\n                                                    " + _vm._s(_vm.errors.total_flat_chonk[0]) + "\n                                                ")]) : _vm._e()])]), _vm._v(" "), _c("div", {
+    })])]), _vm._v(" "), _c("div", {
       staticClass: "pt-2 form-row align-items-center"
     }, [_c("div", {
       staticClass: "col-md-4"
@@ -5174,9 +5145,7 @@ var render = function render() {
           _vm.$set(material, "eyelets_length", $event.target.value);
         }
       }
-    }), _vm._v(" "), _vm.errors.eyelets_length ? _c("small", {
-      staticClass: "text-danger"
-    }, [_vm._v("\n                                                    " + _vm._s(_vm.errors.eyelets_length[0]) + "\n                                                ")]) : _vm._e()]), _vm._v(" "), _c("div", {
+    })]), _vm._v(" "), _c("div", {
       staticClass: "col-md-4"
     }, [_c("input", {
       directives: [{
@@ -5201,9 +5170,7 @@ var render = function render() {
           _vm.$set(material, "eyelets_unit_price_m", $event.target.value);
         }
       }
-    }), _vm._v(" "), _vm.errors.eyelets_unit_price_m ? _c("small", {
-      staticClass: "text-danger"
-    }, [_vm._v("\n                                                    " + _vm._s(_vm.errors.eyelets_unit_price_m[0]) + "\n                                                ")]) : _vm._e()]), _vm._v(" "), _c("div", {
+    })]), _vm._v(" "), _c("div", {
       staticClass: "col-md-4"
     }, [_c("input", {
       directives: [{
@@ -5228,9 +5195,7 @@ var render = function render() {
           _vm.$set(material, "total_eyelets", $event.target.value);
         }
       }
-    }), _vm._v(" "), _vm.errors.total_eyelets ? _c("small", {
-      staticClass: "text-danger"
-    }, [_vm._v("\n                                                    " + _vm._s(_vm.errors.total_eyelets[0]) + "\n                                                ")]) : _vm._e()])]), _vm._v(" "), _c("div", {
+    })])]), _vm._v(" "), _c("div", {
       staticClass: "pt-2 form-row align-items-center"
     }, [_c("div", {
       staticClass: "col-md-4"
@@ -5257,9 +5222,7 @@ var render = function render() {
           _vm.$set(material, "web_vel_length", $event.target.value);
         }
       }
-    }), _vm._v(" "), _vm.errors.web_vel_length ? _c("small", {
-      staticClass: "text-danger"
-    }, [_vm._v("\n                                                    " + _vm._s(_vm.errors.web_vel_length[0]) + "\n                                                ")]) : _vm._e()]), _vm._v(" "), _c("div", {
+    })]), _vm._v(" "), _c("div", {
       staticClass: "col-md-4"
     }, [_c("input", {
       directives: [{
@@ -5284,9 +5247,7 @@ var render = function render() {
           _vm.$set(material, "webvel_unit_price_m", $event.target.value);
         }
       }
-    }), _vm._v(" "), _vm.errors.webvel_unit_price_m ? _c("small", {
-      staticClass: "text-danger"
-    }, [_vm._v("\n                                                    " + _vm._s(_vm.errors.webvel_unit_price_m[0]) + "\n                                                ")]) : _vm._e()]), _vm._v(" "), _c("div", {
+    })]), _vm._v(" "), _c("div", {
       staticClass: "col-md-4"
     }, [_c("input", {
       directives: [{
@@ -5311,9 +5272,7 @@ var render = function render() {
           _vm.$set(material, "total_webvel", $event.target.value);
         }
       }
-    }), _vm._v(" "), _vm.errors.total_webvel ? _c("small", {
-      staticClass: "text-danger"
-    }, [_vm._v("\n                                                    " + _vm._s(_vm.errors.total_webvel[0]) + "\n                                                ")]) : _vm._e()])]), _vm._v(" "), _c("div", {
+    })])]), _vm._v(" "), _c("div", {
       staticClass: "pt-2 form-row align-items-center"
     }, [_c("div", {
       staticClass: "col-md-2"
@@ -5340,9 +5299,7 @@ var render = function render() {
           _vm.$set(material, "pullup_unit_price", $event.target.value);
         }
       }
-    }), _vm._v(" "), _vm.errors.pullup_unit_price ? _c("small", {
-      staticClass: "text-danger"
-    }, [_vm._v("\n                                                    " + _vm._s(_vm.errors.pullup_unit_price[0]) + "\n                                                ")]) : _vm._e()]), _vm._v(" "), _c("div", {
+    })]), _vm._v(" "), _c("div", {
       staticClass: "col-md-2"
     }, [_c("input", {
       directives: [{
@@ -5367,9 +5324,7 @@ var render = function render() {
           _vm.$set(material, "pullup_total_hardware", $event.target.value);
         }
       }
-    }), _vm._v(" "), _vm.errors.pullup_total_hardware ? _c("small", {
-      staticClass: "text-danger"
-    }, [_vm._v("\n                                                    " + _vm._s(_vm.errors.pullup_total_hardware[0]) + "\n                                                ")]) : _vm._e()]), _vm._v(" "), _c("div", {
+    })]), _vm._v(" "), _c("div", {
       staticClass: "col-md-2"
     }, [_c("input", {
       directives: [{
@@ -5394,9 +5349,7 @@ var render = function render() {
           _vm.$set(material, "pullup_unit_price_sqm", $event.target.value);
         }
       }
-    }), _vm._v(" "), _vm.errors.pullup_unit_price_sqm ? _c("small", {
-      staticClass: "text-danger"
-    }, [_vm._v("\n                                                    " + _vm._s(_vm.errors.pullup_unit_price_sqm[0]) + "\n                                                ")]) : _vm._e()]), _vm._v(" "), _c("div", {
+    })]), _vm._v(" "), _c("div", {
       staticClass: "col-md-2"
     }, [_c("input", {
       directives: [{
@@ -5421,9 +5374,7 @@ var render = function render() {
           _vm.$set(material, "total_magnetic", $event.target.value);
         }
       }
-    }), _vm._v(" "), _vm.errors.total_magnetic ? _c("small", {
-      staticClass: "text-danger"
-    }, [_vm._v("\n                                                    " + _vm._s(_vm.errors.total_magnetic[0]) + "\n                                                ")]) : _vm._e()]), _vm._v(" "), _c("div", {
+    })]), _vm._v(" "), _c("div", {
       staticClass: "col-md-2"
     }, [_c("input", {
       directives: [{
@@ -5448,9 +5399,7 @@ var render = function render() {
           _vm.$set(material, "consumables", $event.target.value);
         }
       }
-    }), _vm._v(" "), _vm.errors.consumables ? _c("small", {
-      staticClass: "text-danger"
-    }, [_vm._v("\n                                                    " + _vm._s(_vm.errors.consumables[0]) + "\n                                                ")]) : _vm._e()]), _vm._v(" "), _c("div", {
+    })]), _vm._v(" "), _c("div", {
       staticClass: "col-md-2"
     }, [_c("input", {
       directives: [{
@@ -5475,9 +5424,7 @@ var render = function render() {
           _vm.$set(material, "unit_price_item", $event.target.value);
         }
       }
-    }), _vm._v(" "), _vm.errors.unit_price_item ? _c("small", {
-      staticClass: "text-danger"
-    }, [_vm._v("\n                                                    " + _vm._s(_vm.errors.unit_price_item[0]) + "\n                                                ")]) : _vm._e()])])]);
+    })])])]);
   }), _vm._v(" "), _c("div", {
     staticClass: "form-group"
   }, [_c("div", {
@@ -5516,7 +5463,9 @@ var render = function render() {
         _vm.$set(_vm.form, "total_amount", $event.target.value);
       }
     }
-  })])])]), _vm._v(" "), _vm._m(1)], 2)])])])])])])])]);
+  }), _vm._v(" "), _vm.errors.total_amount ? _c("small", {
+    staticClass: "text-danger"
+  }, [_vm._v("\n                                                    " + _vm._s(_vm.errors.total_amount[0]) + "\n                                                ")]) : _vm._e()])])]), _vm._v(" "), _vm._m(1)], 2)])])])])])])])]);
 };
 var staticRenderFns = [function () {
   var _vm = this,
@@ -11604,25 +11553,6 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 // module
 exports.push([module.i, "\n#em_photo {\r\n  height: 40px;\r\n  width: 40px;\n}\r\n", ""]);
-
-// exports
-
-
-/***/ }),
-
-/***/ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/job_cards/AllJobcards.vue?vue&type=style&index=0&id=19087ffe&lang=css":
-/*!**************************************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/css-loader??ref--6-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--6-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/job_cards/AllJobcards.vue?vue&type=style&index=0&id=19087ffe&lang=css ***!
-  \**************************************************************************************************************************************************************************************************************************************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-loader/lib/css-base.js */ "./node_modules/css-loader/lib/css-base.js")(false);
-// imports
-
-
-// module
-exports.push([module.i, "\n#em_photo {\n  height: 40px;\n  width: 40px;\n}\n", ""]);
 
 // exports
 
@@ -45857,36 +45787,6 @@ if(false) {}
 
 /***/ }),
 
-/***/ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/job_cards/AllJobcards.vue?vue&type=style&index=0&id=19087ffe&lang=css":
-/*!******************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/style-loader!./node_modules/css-loader??ref--6-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--6-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/job_cards/AllJobcards.vue?vue&type=style&index=0&id=19087ffe&lang=css ***!
-  \******************************************************************************************************************************************************************************************************************************************************************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-
-var content = __webpack_require__(/*! !../../../../node_modules/css-loader??ref--6-1!../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../node_modules/postcss-loader/src??ref--6-2!../../../../node_modules/vue-loader/lib??vue-loader-options!./AllJobcards.vue?vue&type=style&index=0&id=19087ffe&lang=css */ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/job_cards/AllJobcards.vue?vue&type=style&index=0&id=19087ffe&lang=css");
-
-if(typeof content === 'string') content = [[module.i, content, '']];
-
-var transform;
-var insertInto;
-
-
-
-var options = {"hmr":true}
-
-options.transform = transform
-options.insertInto = undefined;
-
-var update = __webpack_require__(/*! ../../../../node_modules/style-loader/lib/addStyles.js */ "./node_modules/style-loader/lib/addStyles.js")(content, options);
-
-if(content.locals) module.exports = content.locals;
-
-if(false) {}
-
-/***/ }),
-
 /***/ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/supplier/AllSuppliers.vue?vue&type=style&index=0&id=12969564&lang=css":
 /*!******************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/style-loader!./node_modules/css-loader??ref--6-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--6-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/supplier/AllSuppliers.vue?vue&type=style&index=0&id=12969564&lang=css ***!
@@ -66755,9 +66655,7 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _AllJobcards_vue_vue_type_template_id_19087ffe__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./AllJobcards.vue?vue&type=template&id=19087ffe */ "./resources/js/components/job_cards/AllJobcards.vue?vue&type=template&id=19087ffe");
 /* harmony import */ var _AllJobcards_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./AllJobcards.vue?vue&type=script&lang=js */ "./resources/js/components/job_cards/AllJobcards.vue?vue&type=script&lang=js");
-/* empty/unused harmony star reexport *//* harmony import */ var _AllJobcards_vue_vue_type_style_index_0_id_19087ffe_lang_css__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./AllJobcards.vue?vue&type=style&index=0&id=19087ffe&lang=css */ "./resources/js/components/job_cards/AllJobcards.vue?vue&type=style&index=0&id=19087ffe&lang=css");
-/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
-
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
 
 
@@ -66765,7 +66663,7 @@ __webpack_require__.r(__webpack_exports__);
 
 /* normalize component */
 
-var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__["default"])(
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
   _AllJobcards_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__["default"],
   _AllJobcards_vue_vue_type_template_id_19087ffe__WEBPACK_IMPORTED_MODULE_0__["render"],
   _AllJobcards_vue_vue_type_template_id_19087ffe__WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
@@ -66794,22 +66692,6 @@ component.options.__file = "resources/js/components/job_cards/AllJobcards.vue"
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_AllJobcards_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./AllJobcards.vue?vue&type=script&lang=js */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/job_cards/AllJobcards.vue?vue&type=script&lang=js");
 /* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_AllJobcards_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_0__["default"]); 
-
-/***/ }),
-
-/***/ "./resources/js/components/job_cards/AllJobcards.vue?vue&type=style&index=0&id=19087ffe&lang=css":
-/*!*******************************************************************************************************!*\
-  !*** ./resources/js/components/job_cards/AllJobcards.vue?vue&type=style&index=0&id=19087ffe&lang=css ***!
-  \*******************************************************************************************************/
-/*! no static exports found */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_AllJobcards_vue_vue_type_style_index_0_id_19087ffe_lang_css__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/style-loader!../../../../node_modules/css-loader??ref--6-1!../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../node_modules/postcss-loader/src??ref--6-2!../../../../node_modules/vue-loader/lib??vue-loader-options!./AllJobcards.vue?vue&type=style&index=0&id=19087ffe&lang=css */ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/job_cards/AllJobcards.vue?vue&type=style&index=0&id=19087ffe&lang=css");
-/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_AllJobcards_vue_vue_type_style_index_0_id_19087ffe_lang_css__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_AllJobcards_vue_vue_type_style_index_0_id_19087ffe_lang_css__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_AllJobcards_vue_vue_type_style_index_0_id_19087ffe_lang_css__WEBPACK_IMPORTED_MODULE_0__) if(["default"].indexOf(__WEBPACK_IMPORT_KEY__) < 0) (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_AllJobcards_vue_vue_type_style_index_0_id_19087ffe_lang_css__WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
-
 
 /***/ }),
 

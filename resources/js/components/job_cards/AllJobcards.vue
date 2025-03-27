@@ -30,13 +30,13 @@
                 <tbody>
                   <tr v-for="jobcard in filtersearch" :key="jobcard.id">
                     <td>{{ jobcard.job_number }}</td>
-                    <td>{{ jobcard.sales_person }}</td>
+                    <td>{{ jobcard.salesperson }}</td>
                     <td>{{ jobcard.stand_name }}</td>
                     <td>{{ jobcard.show_name }}</td>
-                    <td>{{ jobcard.created_date }}</td>
+                    <td>{{ jobcard.created_at | moment("dddd, MMMM Do YYYY, h:mm:ss a")}}</td>
                     <td>
                       <router-link :to="{name: 'edit-jobcard', params:{id:jobcard.id}}" class="btn btn-sm btn-primary">Edit</router-link>
-                      <a @click="deleteEmployee(jobcard.id)" class="btn btn-sm btn-danger text-white">Delete</a>
+                      <a @click="deleteJobcard(jobcard.id)" class="btn btn-sm btn-danger text-white">Delete</a>
                     </td>
                   </tr>
                 </tbody>
@@ -60,27 +60,27 @@
     },
     data() {
       return {
-        employees: [],
+        jobcards: [],
         search: ''
       }
     },
   
     computed: {
       filtersearch() {
-        return this.employees.filter(employee => {
-          return employee.name.toLowerCase().match(this.search.toLowerCase()) || employee.phone.match(this.search) || employee.email.toLowerCase().match(this.search.toLowerCase())
+        return this.jobcards.filter(jobcard => {
+          return jobcard.salesperson.toLowerCase().match(this.search.toLowerCase()) || jobcard.job_number.toLowerCase().match(this.search.toLowerCase()) || jobcard.stand_name.toLowerCase().match(this.search.toLowerCase())|| jobcard.show_name.toLowerCase().match(this.search.toLowerCase())
         })
       }
     },
   
     methods: {
-      allEmployees() {
-        axios.get('/api/employee/')
-          .then(({ data }) => (this.employees = data))
+      allJobcards() {
+        axios.get('/api/jobcard/')
+          .then(({ data }) => (this.jobcards = data))
           .catch()
       },
   
-      deleteEmployee(id) {
+      deleteJobcard(id) {
         Swal.fire({
           title: "Are you sure?",
           text: "You won't be able to revert this!",
@@ -91,13 +91,13 @@
           confirmButtonText: "Yes, delete it!"
         }).then((result) => {
           if (result.value) {
-            axios.delete('/api/employee/'+ id)
+            axios.delete('/api/jobcard/'+ id)
           .then(() => {
-            this.employees = this.employees.filter( employee => {
-              return employee.id!== id;
+            this.jobcards = this.jobcards.filter( jobcard => {
+              return jobcard.id!== id;
             })
           })
-          .catch(() => {this.$router.push({name: 'employees'})})
+          .catch(() => {this.$router.push({name: 'jobcards'})})
             Swal.fire({
               title: "Deleted!",
               text: "Your file has been deleted.",
@@ -109,15 +109,12 @@
     },
   
     created() {
-      this.allEmployees()
+      this.allJobcards()
     }
   }
   </script>
   
   
   <style type="text/css">
-  #em_photo {
-    height: 40px;
-    width: 40px;
-  }
+  
   </style>

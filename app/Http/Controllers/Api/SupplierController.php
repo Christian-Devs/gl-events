@@ -83,6 +83,6 @@ class SupplierController extends Controller
      */
     public function destroy($id)
     {
-        DB::table('employees')->where('id', $id)->delete();
+        DB::table('suppliers')->where('id', $id)->delete();
     }
 }
