@@ -73,9 +73,11 @@
                                                     </small>
                                                 </div>
                                                 <div class="col-md-6">
-                                                    <input type="text" class="form-control" id="exampleInputEmail"
-                                                        aria-describedby="emailHelp" placeholder="Description"
-                                                        v-model="material.description">
+                                                    <label for="outsourced">Description: </label>
+                                                    <select name="description" id="description" v-model="material.description">
+                                                        <option value="fabric_banner">Fabric Banner</option>
+                                                        <option value="full_vinyl_print">Full Vinyl Print</option>
+                                                    </select>
                                                     <small class="text-danger" v-if="errors.description">
                                                         {{ errors.description[0] }}
                                                     </small>
@@ -99,7 +101,7 @@
                                                     </small>
                                                 </div>
                                                 <div class="col-md-4">
-                                                    <input type="text" class="form-control" id="exampleInputEmail"
+                                                    <input type="text" disabled class="form-control" id="exampleInputEmail"
                                                         aria-describedby="emailHelp" placeholder="Total m²"
                                                         v-model="material.total_sqm">
                                                     <small class="text-danger" v-if="errors.total_sqm">
@@ -138,26 +140,10 @@
                                             <div class="pt-2 form-row align-items-center">
                                                 <div class="col-md-3">
                                                     <input type="text" class="form-control" id="exampleInputEmail"
-                                                        aria-describedby="emailHelp" placeholder="Print Medium / m²"
-                                                        v-model="material.print_medium_sqm">
-                                                    <small class="text-danger" v-if="errors.print_medium_sqm">
-                                                        {{ errors.print_medium_sqm[0] }}
-                                                    </small>
-                                                </div>
-                                                <div class="col-md-3">
-                                                    <input type="text" class="form-control" id="exampleInputEmail"
                                                         aria-describedby="emailHelp" placeholder="Total Print Medium"
                                                         v-model="material.total_print_medium">
                                                     <small class="text-danger" v-if="errors.total_print_medium">
                                                         {{ errors.total_print_medium[0] }}
-                                                    </small>
-                                                </div>
-                                                <div class="col-md-3">
-                                                    <input type="text" class="form-control" id="exampleInputEmail"
-                                                        aria-describedby="emailHelp" placeholder="Ink / m²"
-                                                        v-model="material.ink_sqm">
-                                                    <small class="text-danger" v-if="errors.ink_sqm">
-                                                        {{ errors.ink_sqm[0] }}
                                                     </small>
                                                 </div>
                                                 <div class="col-md-3">
@@ -173,14 +159,14 @@
                                                 <div class="col-md-6">
                                                     <label for="outsourced">Pinnacle Digital Fabric Printing:</label>
                                                     <select name="outsourced" id="outsourced" v-model="material.pdfp">
-                                                        <option value="true">Yes</option>
-                                                        <option selected>No</option>
+                                                        <option value="yes">Yes</option>
+                                                        <option selected value="no">No</option>
                                                     </select>
                                                     <small class="text-danger" v-if="errors.pdfp">
                                                         {{ errors.pdfp[0] }}
                                                     </small>
                                                 </div>
-                                                <div class="col-md-6">
+                                                <div class="col-md-6" v-if="material.pdfp.value == 'yes'">
                                                     <input type="text" class="form-control" id="exampleInputEmail"
                                                         aria-describedby="emailHelp" placeholder="Total Pinnacle"
                                                         v-model="material.total_pinnacle">
@@ -191,6 +177,16 @@
                                             </div>
                                             <div class="pt-2 form-row align-items-center">
                                                 <div class="col-md-4">
+                                                    <label for="outsourced">Silicon Welt:</label>
+                                                    <select name="outsourced" id="outsourced" v-model="material.silicon_welt">
+                                                        <option value="yes">Yes</option>
+                                                        <option selected value="no">No</option>
+                                                    </select>
+                                                    <small class="text-danger" v-if="errors.pdfp">
+                                                        {{ errors.pdfp[0] }}
+                                                    </small>
+                                                </div>
+                                                <div class="col-md-4" v-if="material.silicon_welt.value == 'yes'">
                                                     <input type="text" class="form-control" id="exampleInputEmail"
                                                         aria-describedby="emailHelp" placeholder="Silicon Welt Length"
                                                         v-model="material.silicon_welt_length">
@@ -198,16 +194,8 @@
                                                         {{ errors.silicon_welt_length[0] }}
                                                     </small>
                                                 </div>
-                                                <div class="col-md-4">
-                                                    <input type="text" class="form-control" id="exampleInputEmail"
-                                                        aria-describedby="emailHelp" placeholder="Unit Price / m"
-                                                        v-model="material.sw_unit_price_m">
-                                                    <small class="text-danger" v-if="errors.sw_unit_price_m">
-                                                        {{ errors.sw_unit_price_m[0] }}
-                                                    </small>
-                                                </div>
-                                                <div class="col-md-4">
-                                                    <input type="text" class="form-control" id="exampleInputEmail"
+                                                <div class="col-md-4" v-if="material.silicon_welt.value == 'yes'">
+                                                    <input type="text" disabled class="form-control" id="exampleInputEmail"
                                                         aria-describedby="emailHelp" placeholder="Total Silicon Welt"
                                                         v-model="material.total_silicon_welt">
                                                     <small class="text-danger" v-if="errors.total_silicon_welt">
@@ -217,6 +205,16 @@
                                             </div>
                                             <div class="pt-2 form-row align-items-center">
                                                 <div class="col-md-4">
+                                                    <label for="outsourced">Flat Chonk:</label>
+                                                    <select name="outsourced" id="outsourced" v-model="material.flat_chonk">
+                                                        <option value="yes">Yes</option>
+                                                        <option selected value="no">No</option>
+                                                    </select>
+                                                    <small class="text-danger" v-if="errors.pdfp">
+                                                        {{ errors.pdfp[0] }}
+                                                    </small>
+                                                </div>
+                                                <div class="col-md-4" v-if="material.flat_chonk.value == 'yes'">
                                                     <input type="text" class="form-control" id="exampleInputEmail"
                                                         aria-describedby="emailHelp" placeholder="Flat Chonk Length"
                                                         v-model="material.flat_chonk_length">
@@ -224,16 +222,8 @@
                                                         {{ errors.flat_chonk_length[0] }}
                                                     </small>
                                                 </div>
-                                                <div class="col-md-4">
-                                                    <input type="text" class="form-control" id="exampleInputEmail"
-                                                        aria-describedby="emailHelp" placeholder="Unit Price / m"
-                                                        v-model="material.fc_unit_price_m">
-                                                    <small class="text-danger" v-if="errors.fc_unit_price_m">
-                                                        {{ errors.fc_unit_price_m[0] }}
-                                                    </small>
-                                                </div>
-                                                <div class="col-md-4">
-                                                    <input type="text" class="form-control" id="exampleInputEmail"
+                                                <div class="col-md-4" v-if="material.flat_chonk.value == 'yes'">
+                                                    <input type="text" disabled class="form-control" id="exampleInputEmail"
                                                         aria-describedby="emailHelp" placeholder="Total Flat Chonk"
                                                         v-model="material.total_flat_chonk">
                                                     <small class="text-danger" v-if="errors.total_flat_chonk">
@@ -242,7 +232,7 @@
                                                 </div>
                                             </div>
                                             <div class="pt-2 form-row align-items-center">
-                                                <div class="col-md-4">
+                                                <div class="col-md-6">
                                                     <input type="text" class="form-control" id="exampleInputEmail"
                                                         aria-describedby="emailHelp" placeholder="Eyelets Length"
                                                         v-model="material.eyelets_length">
@@ -250,16 +240,8 @@
                                                         {{ errors.eyelets_length[0] }}
                                                     </small>
                                                 </div>
-                                                <div class="col-md-4">
-                                                    <input type="text" class="form-control" id="exampleInputEmail"
-                                                        aria-describedby="emailHelp" placeholder="Unit Price / m"
-                                                        v-model="material.eyelets_unit_price_m">
-                                                    <small class="text-danger" v-if="errors.eyelets_unit_price_m">
-                                                        {{ errors.eyelets_unit_price_m[0] }}
-                                                    </small>
-                                                </div>
-                                                <div class="col-md-4">
-                                                    <input type="text" class="form-control" id="exampleInputEmail"
+                                                <div class="col-md-6">
+                                                    <input type="text" disabled class="form-control" id="exampleInputEmail"
                                                         aria-describedby="emailHelp" placeholder="Total Eyelets"
                                                         v-model="material.total_eyelets">
                                                     <small class="text-danger" v-if="errors.total_eyelets">
@@ -268,7 +250,7 @@
                                                 </div>
                                             </div>
                                             <div class="pt-2 form-row align-items-center">
-                                                <div class="col-md-4">
+                                                <div class="col-md-6">
                                                     <input type="text" class="form-control" id="exampleInputEmail"
                                                         aria-describedby="emailHelp" placeholder="Webbing / Velcro Length"
                                                         v-model="material.web_vel_length">
@@ -276,16 +258,8 @@
                                                         {{ errors.web_vel_length[0] }}
                                                     </small>
                                                 </div>
-                                                <div class="col-md-4">
-                                                    <input type="text" class="form-control" id="exampleInputEmail"
-                                                        aria-describedby="emailHelp" placeholder="Unit Price / m"
-                                                        v-model="material.webvel_unit_price_m">
-                                                    <small class="text-danger" v-if="errors.webvel_unit_price_m">
-                                                        {{ errors.webvel_unit_price_m[0] }}
-                                                    </small>
-                                                </div>
-                                                <div class="col-md-4">
-                                                    <input type="text" class="form-control" id="exampleInputEmail"
+                                                <div class="col-md-6">
+                                                    <input type="text" disabled class="form-control" id="exampleInputEmail"
                                                         aria-describedby="emailHelp" placeholder="Total Webbing / Velcro"
                                                         v-model="material.total_webvel">
                                                     <small class="text-danger" v-if="errors.total_webvel">
@@ -295,14 +269,16 @@
                                             </div>
                                             <div class="pt-2 form-row align-items-center">
                                                 <div class="col-md-2">
-                                                    <input type="text" class="form-control" id="exampleInputEmail"
-                                                        aria-describedby="emailHelp" placeholder="Pull-up Banner Unit Price"
-                                                        v-model="material.pullup_unit_price">
-                                                    <small class="text-danger" v-if="errors.pullup_unit_price">
-                                                        {{ errors.pullup_unit_price[0] }}
+                                                    <label for="outsourced">Pull Up Banner: </label>
+                                                    <select name="outsourced" id="outsourced" v-model="material.pullup_banner">
+                                                        <option value="yes">Yes</option>
+                                                        <option selected value="no">No</option>
+                                                    </select>
+                                                    <small class="text-danger" v-if="errors.pdfp">
+                                                        {{ errors.pdfp[0] }}
                                                     </small>
                                                 </div>
-                                                <div class="col-md-2">
+                                                <div class="col-md-2" v-if="material.pullup_banner.value == 'yes'">
                                                     <input type="text" class="form-control" id="exampleInputEmail"
                                                         aria-describedby="emailHelp" placeholder="Total Pull-up Banner Hardware"
                                                         v-model="material.pullup_total_hardware">
@@ -311,14 +287,16 @@
                                                     </small>
                                                 </div>
                                                 <div class="col-md-2">
-                                                    <input type="text" class="form-control" id="exampleInputEmail"
-                                                        aria-describedby="emailHelp" placeholder="Unit Price / m²"
-                                                        v-model="material.pullup_unit_price_sqm">
-                                                    <small class="text-danger" v-if="errors.pullup_unit_price_sqm">
-                                                        {{ errors.pullup_unit_price_sqm[0] }}
+                                                    <label for="outsourced">Magnetic: </label>
+                                                    <select name="outsourced" id="outsourced" v-model="material.magnetic">
+                                                        <option value="yes">Yes</option>
+                                                        <option selected value="no">No</option>
+                                                    </select>
+                                                    <small class="text-danger" v-if="errors.pdfp">
+                                                        {{ errors.pdfp[0] }}
                                                     </small>
                                                 </div>
-                                                <div class="col-md-2">
+                                                <div class="col-md-2" v-if="material.magnetic.value == 'yes'">
                                                     <input type="text" class="form-control" id="exampleInputEmail"
                                                         aria-describedby="emailHelp" placeholder="Total Magnetic"
                                                         v-model="material.total_magnetic">
