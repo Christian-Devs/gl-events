@@ -2518,32 +2518,29 @@ __webpack_require__.r(__webpack_exports__);
           banner_type: '',
           outsourced: '',
           machine: '',
-          print_medium_sqm: '',
           total_print_medium: '',
-          ink_sqm: '',
           total_ink: '',
           pdfp: '',
           total_pinnacle: '',
+          silicon_welt: '',
           silicon_welt_length: '',
-          sw_unit_price_m: '',
           total_silicon_welt: '',
+          flat_chonk: '',
           flat_chonk_length: '',
-          fc_unit_price_m: '',
           total_flat_chonk: '',
+          eyelets: '',
           eyelets_length: '',
-          eyelets_unit_price_m: '',
           total_eyelets: '',
           web_vel_length: '',
-          webvel_unit_price_m: '',
           total_webvel: '',
-          pullup_unit_price: '',
+          pullup_banner: '',
           pullup_total_hardware: '',
-          pullup_unit_price_sqm: '',
+          magnetic: '',
           total_magnetic: '',
           consumables: '',
           unit_price_item: ''
         }],
-        total_amount: total_amount
+        total_amount: ''
       },
       errors: {}
     };
@@ -5696,30 +5693,41 @@ var render = function render() {
       staticClass: "text-danger"
     }, [_vm._v("\n                                                    " + _vm._s(_vm.errors.quantity[0]) + "\n                                                ")]) : _vm._e()]), _vm._v(" "), _c("div", {
       staticClass: "col-md-6"
-    }, [_c("input", {
+    }, [_c("label", {
+      attrs: {
+        "for": "outsourced"
+      }
+    }, [_vm._v("Description: ")]), _vm._v(" "), _c("select", {
       directives: [{
         name: "model",
         rawName: "v-model",
         value: material.description,
         expression: "material.description"
       }],
-      staticClass: "form-control",
       attrs: {
-        type: "text",
-        id: "exampleInputEmail",
-        "aria-describedby": "emailHelp",
-        placeholder: "Description"
-      },
-      domProps: {
-        value: material.description
+        name: "description",
+        id: "description"
       },
       on: {
-        input: function input($event) {
-          if ($event.target.composing) return;
-          _vm.$set(material, "description", $event.target.value);
+        change: function change($event) {
+          var $$selectedVal = Array.prototype.filter.call($event.target.options, function (o) {
+            return o.selected;
+          }).map(function (o) {
+            var val = "_value" in o ? o._value : o.value;
+            return val;
+          });
+          _vm.$set(material, "description", $event.target.multiple ? $$selectedVal : $$selectedVal[0]);
         }
       }
-    }), _vm._v(" "), _vm.errors.description ? _c("small", {
+    }, [_c("option", {
+      attrs: {
+        value: "fabric_banner"
+      }
+    }, [_vm._v("Fabric Banner")]), _vm._v(" "), _c("option", {
+      attrs: {
+        value: "full_vinyl_print"
+      }
+    }, [_vm._v("Full Vinyl Print")])]), _vm._v(" "), _vm.errors.description ? _c("small", {
       staticClass: "text-danger"
     }, [_vm._v("\n                                                    " + _vm._s(_vm.errors.description[0]) + "\n                                                ")]) : _vm._e()])]), _vm._v(" "), _c("div", {
       staticClass: "pt-2 form-row align-items-center"
@@ -5789,6 +5797,7 @@ var render = function render() {
       staticClass: "form-control",
       attrs: {
         type: "text",
+        disabled: "",
         id: "exampleInputEmail",
         "aria-describedby": "emailHelp",
         placeholder: "Total m²"
@@ -5907,33 +5916,6 @@ var render = function render() {
       directives: [{
         name: "model",
         rawName: "v-model",
-        value: material.print_medium_sqm,
-        expression: "material.print_medium_sqm"
-      }],
-      staticClass: "form-control",
-      attrs: {
-        type: "text",
-        id: "exampleInputEmail",
-        "aria-describedby": "emailHelp",
-        placeholder: "Print Medium / m²"
-      },
-      domProps: {
-        value: material.print_medium_sqm
-      },
-      on: {
-        input: function input($event) {
-          if ($event.target.composing) return;
-          _vm.$set(material, "print_medium_sqm", $event.target.value);
-        }
-      }
-    }), _vm._v(" "), _vm.errors.print_medium_sqm ? _c("small", {
-      staticClass: "text-danger"
-    }, [_vm._v("\n                                                    " + _vm._s(_vm.errors.print_medium_sqm[0]) + "\n                                                ")]) : _vm._e()]), _vm._v(" "), _c("div", {
-      staticClass: "col-md-3"
-    }, [_c("input", {
-      directives: [{
-        name: "model",
-        rawName: "v-model",
         value: material.total_print_medium,
         expression: "material.total_print_medium"
       }],
@@ -5956,33 +5938,6 @@ var render = function render() {
     }), _vm._v(" "), _vm.errors.total_print_medium ? _c("small", {
       staticClass: "text-danger"
     }, [_vm._v("\n                                                    " + _vm._s(_vm.errors.total_print_medium[0]) + "\n                                                ")]) : _vm._e()]), _vm._v(" "), _c("div", {
-      staticClass: "col-md-3"
-    }, [_c("input", {
-      directives: [{
-        name: "model",
-        rawName: "v-model",
-        value: material.ink_sqm,
-        expression: "material.ink_sqm"
-      }],
-      staticClass: "form-control",
-      attrs: {
-        type: "text",
-        id: "exampleInputEmail",
-        "aria-describedby": "emailHelp",
-        placeholder: "Ink / m²"
-      },
-      domProps: {
-        value: material.ink_sqm
-      },
-      on: {
-        input: function input($event) {
-          if ($event.target.composing) return;
-          _vm.$set(material, "ink_sqm", $event.target.value);
-        }
-      }
-    }), _vm._v(" "), _vm.errors.ink_sqm ? _c("small", {
-      staticClass: "text-danger"
-    }, [_vm._v("\n                                                    " + _vm._s(_vm.errors.ink_sqm[0]) + "\n                                                ")]) : _vm._e()]), _vm._v(" "), _c("div", {
       staticClass: "col-md-3"
     }, [_c("input", {
       directives: [{
@@ -6041,15 +5996,16 @@ var render = function render() {
       }
     }, [_c("option", {
       attrs: {
-        value: "true"
+        value: "yes"
       }
     }, [_vm._v("Yes")]), _vm._v(" "), _c("option", {
       attrs: {
-        selected: ""
+        selected: "",
+        value: "no"
       }
     }, [_vm._v("No")])]), _vm._v(" "), _vm.errors.pdfp ? _c("small", {
       staticClass: "text-danger"
-    }, [_vm._v("\n                                                    " + _vm._s(_vm.errors.pdfp[0]) + "\n                                                ")]) : _vm._e()]), _vm._v(" "), _c("div", {
+    }, [_vm._v("\n                                                    " + _vm._s(_vm.errors.pdfp[0]) + "\n                                                ")]) : _vm._e()]), _vm._v(" "), material.pdfp.value == "yes" ? _c("div", {
       staticClass: "col-md-6"
     }, [_c("input", {
       directives: [{
@@ -6076,9 +6032,48 @@ var render = function render() {
       }
     }), _vm._v(" "), _vm.errors.total_pinnacle ? _c("small", {
       staticClass: "text-danger"
-    }, [_vm._v("\n                                                    " + _vm._s(_vm.errors.total_pinnacle[0]) + "\n                                                ")]) : _vm._e()])]), _vm._v(" "), _c("div", {
+    }, [_vm._v("\n                                                    " + _vm._s(_vm.errors.total_pinnacle[0]) + "\n                                                ")]) : _vm._e()]) : _vm._e()]), _vm._v(" "), _c("div", {
       staticClass: "pt-2 form-row align-items-center"
     }, [_c("div", {
+      staticClass: "col-md-4"
+    }, [_c("label", {
+      attrs: {
+        "for": "outsourced"
+      }
+    }, [_vm._v("Silicon Welt:")]), _vm._v(" "), _c("select", {
+      directives: [{
+        name: "model",
+        rawName: "v-model",
+        value: material.silicon_welt,
+        expression: "material.silicon_welt"
+      }],
+      attrs: {
+        name: "outsourced",
+        id: "outsourced"
+      },
+      on: {
+        change: function change($event) {
+          var $$selectedVal = Array.prototype.filter.call($event.target.options, function (o) {
+            return o.selected;
+          }).map(function (o) {
+            var val = "_value" in o ? o._value : o.value;
+            return val;
+          });
+          _vm.$set(material, "silicon_welt", $event.target.multiple ? $$selectedVal : $$selectedVal[0]);
+        }
+      }
+    }, [_c("option", {
+      attrs: {
+        value: "yes"
+      }
+    }, [_vm._v("Yes")]), _vm._v(" "), _c("option", {
+      attrs: {
+        selected: "",
+        value: "no"
+      }
+    }, [_vm._v("No")])]), _vm._v(" "), _vm.errors.pdfp ? _c("small", {
+      staticClass: "text-danger"
+    }, [_vm._v("\n                                                    " + _vm._s(_vm.errors.pdfp[0]) + "\n                                                ")]) : _vm._e()]), _vm._v(" "), material.silicon_welt.value == "yes" ? _c("div", {
       staticClass: "col-md-4"
     }, [_c("input", {
       directives: [{
@@ -6105,34 +6100,7 @@ var render = function render() {
       }
     }), _vm._v(" "), _vm.errors.silicon_welt_length ? _c("small", {
       staticClass: "text-danger"
-    }, [_vm._v("\n                                                    " + _vm._s(_vm.errors.silicon_welt_length[0]) + "\n                                                ")]) : _vm._e()]), _vm._v(" "), _c("div", {
-      staticClass: "col-md-4"
-    }, [_c("input", {
-      directives: [{
-        name: "model",
-        rawName: "v-model",
-        value: material.sw_unit_price_m,
-        expression: "material.sw_unit_price_m"
-      }],
-      staticClass: "form-control",
-      attrs: {
-        type: "text",
-        id: "exampleInputEmail",
-        "aria-describedby": "emailHelp",
-        placeholder: "Unit Price / m"
-      },
-      domProps: {
-        value: material.sw_unit_price_m
-      },
-      on: {
-        input: function input($event) {
-          if ($event.target.composing) return;
-          _vm.$set(material, "sw_unit_price_m", $event.target.value);
-        }
-      }
-    }), _vm._v(" "), _vm.errors.sw_unit_price_m ? _c("small", {
-      staticClass: "text-danger"
-    }, [_vm._v("\n                                                    " + _vm._s(_vm.errors.sw_unit_price_m[0]) + "\n                                                ")]) : _vm._e()]), _vm._v(" "), _c("div", {
+    }, [_vm._v("\n                                                    " + _vm._s(_vm.errors.silicon_welt_length[0]) + "\n                                                ")]) : _vm._e()]) : _vm._e(), _vm._v(" "), material.silicon_welt.value == "yes" ? _c("div", {
       staticClass: "col-md-4"
     }, [_c("input", {
       directives: [{
@@ -6144,6 +6112,7 @@ var render = function render() {
       staticClass: "form-control",
       attrs: {
         type: "text",
+        disabled: "",
         id: "exampleInputEmail",
         "aria-describedby": "emailHelp",
         placeholder: "Total Silicon Welt"
@@ -6159,9 +6128,48 @@ var render = function render() {
       }
     }), _vm._v(" "), _vm.errors.total_silicon_welt ? _c("small", {
       staticClass: "text-danger"
-    }, [_vm._v("\n                                                    " + _vm._s(_vm.errors.total_silicon_welt[0]) + "\n                                                ")]) : _vm._e()])]), _vm._v(" "), _c("div", {
+    }, [_vm._v("\n                                                    " + _vm._s(_vm.errors.total_silicon_welt[0]) + "\n                                                ")]) : _vm._e()]) : _vm._e()]), _vm._v(" "), _c("div", {
       staticClass: "pt-2 form-row align-items-center"
     }, [_c("div", {
+      staticClass: "col-md-4"
+    }, [_c("label", {
+      attrs: {
+        "for": "outsourced"
+      }
+    }, [_vm._v("Flat Chonk:")]), _vm._v(" "), _c("select", {
+      directives: [{
+        name: "model",
+        rawName: "v-model",
+        value: material.flat_chonk,
+        expression: "material.flat_chonk"
+      }],
+      attrs: {
+        name: "outsourced",
+        id: "outsourced"
+      },
+      on: {
+        change: function change($event) {
+          var $$selectedVal = Array.prototype.filter.call($event.target.options, function (o) {
+            return o.selected;
+          }).map(function (o) {
+            var val = "_value" in o ? o._value : o.value;
+            return val;
+          });
+          _vm.$set(material, "flat_chonk", $event.target.multiple ? $$selectedVal : $$selectedVal[0]);
+        }
+      }
+    }, [_c("option", {
+      attrs: {
+        value: "yes"
+      }
+    }, [_vm._v("Yes")]), _vm._v(" "), _c("option", {
+      attrs: {
+        selected: "",
+        value: "no"
+      }
+    }, [_vm._v("No")])]), _vm._v(" "), _vm.errors.pdfp ? _c("small", {
+      staticClass: "text-danger"
+    }, [_vm._v("\n                                                    " + _vm._s(_vm.errors.pdfp[0]) + "\n                                                ")]) : _vm._e()]), _vm._v(" "), material.flat_chonk.value == "yes" ? _c("div", {
       staticClass: "col-md-4"
     }, [_c("input", {
       directives: [{
@@ -6188,34 +6196,7 @@ var render = function render() {
       }
     }), _vm._v(" "), _vm.errors.flat_chonk_length ? _c("small", {
       staticClass: "text-danger"
-    }, [_vm._v("\n                                                    " + _vm._s(_vm.errors.flat_chonk_length[0]) + "\n                                                ")]) : _vm._e()]), _vm._v(" "), _c("div", {
-      staticClass: "col-md-4"
-    }, [_c("input", {
-      directives: [{
-        name: "model",
-        rawName: "v-model",
-        value: material.fc_unit_price_m,
-        expression: "material.fc_unit_price_m"
-      }],
-      staticClass: "form-control",
-      attrs: {
-        type: "text",
-        id: "exampleInputEmail",
-        "aria-describedby": "emailHelp",
-        placeholder: "Unit Price / m"
-      },
-      domProps: {
-        value: material.fc_unit_price_m
-      },
-      on: {
-        input: function input($event) {
-          if ($event.target.composing) return;
-          _vm.$set(material, "fc_unit_price_m", $event.target.value);
-        }
-      }
-    }), _vm._v(" "), _vm.errors.fc_unit_price_m ? _c("small", {
-      staticClass: "text-danger"
-    }, [_vm._v("\n                                                    " + _vm._s(_vm.errors.fc_unit_price_m[0]) + "\n                                                ")]) : _vm._e()]), _vm._v(" "), _c("div", {
+    }, [_vm._v("\n                                                    " + _vm._s(_vm.errors.flat_chonk_length[0]) + "\n                                                ")]) : _vm._e()]) : _vm._e(), _vm._v(" "), material.flat_chonk.value == "yes" ? _c("div", {
       staticClass: "col-md-4"
     }, [_c("input", {
       directives: [{
@@ -6227,6 +6208,7 @@ var render = function render() {
       staticClass: "form-control",
       attrs: {
         type: "text",
+        disabled: "",
         id: "exampleInputEmail",
         "aria-describedby": "emailHelp",
         placeholder: "Total Flat Chonk"
@@ -6242,9 +6224,48 @@ var render = function render() {
       }
     }), _vm._v(" "), _vm.errors.total_flat_chonk ? _c("small", {
       staticClass: "text-danger"
-    }, [_vm._v("\n                                                    " + _vm._s(_vm.errors.total_flat_chonk[0]) + "\n                                                ")]) : _vm._e()])]), _vm._v(" "), _c("div", {
+    }, [_vm._v("\n                                                    " + _vm._s(_vm.errors.total_flat_chonk[0]) + "\n                                                ")]) : _vm._e()]) : _vm._e()]), _vm._v(" "), _c("div", {
       staticClass: "pt-2 form-row align-items-center"
     }, [_c("div", {
+      staticClass: "col-md-4"
+    }, [_c("label", {
+      attrs: {
+        "for": "outsourced"
+      }
+    }, [_vm._v("Eyelets:")]), _vm._v(" "), _c("select", {
+      directives: [{
+        name: "model",
+        rawName: "v-model",
+        value: material.eyelets,
+        expression: "material.eyelets"
+      }],
+      attrs: {
+        name: "outsourced",
+        id: "outsourced"
+      },
+      on: {
+        change: function change($event) {
+          var $$selectedVal = Array.prototype.filter.call($event.target.options, function (o) {
+            return o.selected;
+          }).map(function (o) {
+            var val = "_value" in o ? o._value : o.value;
+            return val;
+          });
+          _vm.$set(material, "eyelets", $event.target.multiple ? $$selectedVal : $$selectedVal[0]);
+        }
+      }
+    }, [_c("option", {
+      attrs: {
+        value: "yes"
+      }
+    }, [_vm._v("Yes")]), _vm._v(" "), _c("option", {
+      attrs: {
+        selected: "",
+        value: "no"
+      }
+    }, [_vm._v("No")])]), _vm._v(" "), _vm.errors.eyelets ? _c("small", {
+      staticClass: "text-danger"
+    }, [_vm._v("\n                                                    " + _vm._s(_vm.errors.eyelets[0]) + "\n                                                ")]) : _vm._e()]), _vm._v(" "), material.eyelets.value == "yes" ? _c("div", {
       staticClass: "col-md-4"
     }, [_c("input", {
       directives: [{
@@ -6271,34 +6292,7 @@ var render = function render() {
       }
     }), _vm._v(" "), _vm.errors.eyelets_length ? _c("small", {
       staticClass: "text-danger"
-    }, [_vm._v("\n                                                    " + _vm._s(_vm.errors.eyelets_length[0]) + "\n                                                ")]) : _vm._e()]), _vm._v(" "), _c("div", {
-      staticClass: "col-md-4"
-    }, [_c("input", {
-      directives: [{
-        name: "model",
-        rawName: "v-model",
-        value: material.eyelets_unit_price_m,
-        expression: "material.eyelets_unit_price_m"
-      }],
-      staticClass: "form-control",
-      attrs: {
-        type: "text",
-        id: "exampleInputEmail",
-        "aria-describedby": "emailHelp",
-        placeholder: "Unit Price / m"
-      },
-      domProps: {
-        value: material.eyelets_unit_price_m
-      },
-      on: {
-        input: function input($event) {
-          if ($event.target.composing) return;
-          _vm.$set(material, "eyelets_unit_price_m", $event.target.value);
-        }
-      }
-    }), _vm._v(" "), _vm.errors.eyelets_unit_price_m ? _c("small", {
-      staticClass: "text-danger"
-    }, [_vm._v("\n                                                    " + _vm._s(_vm.errors.eyelets_unit_price_m[0]) + "\n                                                ")]) : _vm._e()]), _vm._v(" "), _c("div", {
+    }, [_vm._v("\n                                                    " + _vm._s(_vm.errors.eyelets_length[0]) + "\n                                                ")]) : _vm._e()]) : _vm._e(), _vm._v(" "), material.eyelets.value == "yes" ? _c("div", {
       staticClass: "col-md-4"
     }, [_c("input", {
       directives: [{
@@ -6310,6 +6304,7 @@ var render = function render() {
       staticClass: "form-control",
       attrs: {
         type: "text",
+        disabled: "",
         id: "exampleInputEmail",
         "aria-describedby": "emailHelp",
         placeholder: "Total Eyelets"
@@ -6325,10 +6320,10 @@ var render = function render() {
       }
     }), _vm._v(" "), _vm.errors.total_eyelets ? _c("small", {
       staticClass: "text-danger"
-    }, [_vm._v("\n                                                    " + _vm._s(_vm.errors.total_eyelets[0]) + "\n                                                ")]) : _vm._e()])]), _vm._v(" "), _c("div", {
+    }, [_vm._v("\n                                                    " + _vm._s(_vm.errors.total_eyelets[0]) + "\n                                                ")]) : _vm._e()]) : _vm._e()]), _vm._v(" "), _c("div", {
       staticClass: "pt-2 form-row align-items-center"
     }, [_c("div", {
-      staticClass: "col-md-4"
+      staticClass: "col-md-6"
     }, [_c("input", {
       directives: [{
         name: "model",
@@ -6355,34 +6350,7 @@ var render = function render() {
     }), _vm._v(" "), _vm.errors.web_vel_length ? _c("small", {
       staticClass: "text-danger"
     }, [_vm._v("\n                                                    " + _vm._s(_vm.errors.web_vel_length[0]) + "\n                                                ")]) : _vm._e()]), _vm._v(" "), _c("div", {
-      staticClass: "col-md-4"
-    }, [_c("input", {
-      directives: [{
-        name: "model",
-        rawName: "v-model",
-        value: material.webvel_unit_price_m,
-        expression: "material.webvel_unit_price_m"
-      }],
-      staticClass: "form-control",
-      attrs: {
-        type: "text",
-        id: "exampleInputEmail",
-        "aria-describedby": "emailHelp",
-        placeholder: "Unit Price / m"
-      },
-      domProps: {
-        value: material.webvel_unit_price_m
-      },
-      on: {
-        input: function input($event) {
-          if ($event.target.composing) return;
-          _vm.$set(material, "webvel_unit_price_m", $event.target.value);
-        }
-      }
-    }), _vm._v(" "), _vm.errors.webvel_unit_price_m ? _c("small", {
-      staticClass: "text-danger"
-    }, [_vm._v("\n                                                    " + _vm._s(_vm.errors.webvel_unit_price_m[0]) + "\n                                                ")]) : _vm._e()]), _vm._v(" "), _c("div", {
-      staticClass: "col-md-4"
+      staticClass: "col-md-6"
     }, [_c("input", {
       directives: [{
         name: "model",
@@ -6393,6 +6361,7 @@ var render = function render() {
       staticClass: "form-control",
       attrs: {
         type: "text",
+        disabled: "",
         id: "exampleInputEmail",
         "aria-describedby": "emailHelp",
         placeholder: "Total Webbing / Velcro"
@@ -6412,32 +6381,44 @@ var render = function render() {
       staticClass: "pt-2 form-row align-items-center"
     }, [_c("div", {
       staticClass: "col-md-2"
-    }, [_c("input", {
+    }, [_c("label", {
+      attrs: {
+        "for": "outsourced"
+      }
+    }, [_vm._v("Pull Up Banner: ")]), _vm._v(" "), _c("select", {
       directives: [{
         name: "model",
         rawName: "v-model",
-        value: material.pullup_unit_price,
-        expression: "material.pullup_unit_price"
+        value: material.pullup_banner,
+        expression: "material.pullup_banner"
       }],
-      staticClass: "form-control",
       attrs: {
-        type: "text",
-        id: "exampleInputEmail",
-        "aria-describedby": "emailHelp",
-        placeholder: "Pull-up Banner Unit Price"
-      },
-      domProps: {
-        value: material.pullup_unit_price
+        name: "outsourced",
+        id: "outsourced"
       },
       on: {
-        input: function input($event) {
-          if ($event.target.composing) return;
-          _vm.$set(material, "pullup_unit_price", $event.target.value);
+        change: function change($event) {
+          var $$selectedVal = Array.prototype.filter.call($event.target.options, function (o) {
+            return o.selected;
+          }).map(function (o) {
+            var val = "_value" in o ? o._value : o.value;
+            return val;
+          });
+          _vm.$set(material, "pullup_banner", $event.target.multiple ? $$selectedVal : $$selectedVal[0]);
         }
       }
-    }), _vm._v(" "), _vm.errors.pullup_unit_price ? _c("small", {
+    }, [_c("option", {
+      attrs: {
+        value: "yes"
+      }
+    }, [_vm._v("Yes")]), _vm._v(" "), _c("option", {
+      attrs: {
+        selected: "",
+        value: "no"
+      }
+    }, [_vm._v("No")])]), _vm._v(" "), _vm.errors.pdfp ? _c("small", {
       staticClass: "text-danger"
-    }, [_vm._v("\n                                                    " + _vm._s(_vm.errors.pullup_unit_price[0]) + "\n                                                ")]) : _vm._e()]), _vm._v(" "), _c("div", {
+    }, [_vm._v("\n                                                    " + _vm._s(_vm.errors.pdfp[0]) + "\n                                                ")]) : _vm._e()]), _vm._v(" "), material.pullup_banner.value == "yes" ? _c("div", {
       staticClass: "col-md-2"
     }, [_c("input", {
       directives: [{
@@ -6464,34 +6445,46 @@ var render = function render() {
       }
     }), _vm._v(" "), _vm.errors.pullup_total_hardware ? _c("small", {
       staticClass: "text-danger"
-    }, [_vm._v("\n                                                    " + _vm._s(_vm.errors.pullup_total_hardware[0]) + "\n                                                ")]) : _vm._e()]), _vm._v(" "), _c("div", {
+    }, [_vm._v("\n                                                    " + _vm._s(_vm.errors.pullup_total_hardware[0]) + "\n                                                ")]) : _vm._e()]) : _vm._e(), _vm._v(" "), _c("div", {
       staticClass: "col-md-2"
-    }, [_c("input", {
+    }, [_c("label", {
+      attrs: {
+        "for": "outsourced"
+      }
+    }, [_vm._v("Magnetic: ")]), _vm._v(" "), _c("select", {
       directives: [{
         name: "model",
         rawName: "v-model",
-        value: material.pullup_unit_price_sqm,
-        expression: "material.pullup_unit_price_sqm"
+        value: material.magnetic,
+        expression: "material.magnetic"
       }],
-      staticClass: "form-control",
       attrs: {
-        type: "text",
-        id: "exampleInputEmail",
-        "aria-describedby": "emailHelp",
-        placeholder: "Unit Price / m²"
-      },
-      domProps: {
-        value: material.pullup_unit_price_sqm
+        name: "outsourced",
+        id: "outsourced"
       },
       on: {
-        input: function input($event) {
-          if ($event.target.composing) return;
-          _vm.$set(material, "pullup_unit_price_sqm", $event.target.value);
+        change: function change($event) {
+          var $$selectedVal = Array.prototype.filter.call($event.target.options, function (o) {
+            return o.selected;
+          }).map(function (o) {
+            var val = "_value" in o ? o._value : o.value;
+            return val;
+          });
+          _vm.$set(material, "magnetic", $event.target.multiple ? $$selectedVal : $$selectedVal[0]);
         }
       }
-    }), _vm._v(" "), _vm.errors.pullup_unit_price_sqm ? _c("small", {
+    }, [_c("option", {
+      attrs: {
+        value: "yes"
+      }
+    }, [_vm._v("Yes")]), _vm._v(" "), _c("option", {
+      attrs: {
+        selected: "",
+        value: "no"
+      }
+    }, [_vm._v("No")])]), _vm._v(" "), _vm.errors.pdfp ? _c("small", {
       staticClass: "text-danger"
-    }, [_vm._v("\n                                                    " + _vm._s(_vm.errors.pullup_unit_price_sqm[0]) + "\n                                                ")]) : _vm._e()]), _vm._v(" "), _c("div", {
+    }, [_vm._v("\n                                                    " + _vm._s(_vm.errors.pdfp[0]) + "\n                                                ")]) : _vm._e()]), _vm._v(" "), material.magnetic.value == "yes" ? _c("div", {
       staticClass: "col-md-2"
     }, [_c("input", {
       directives: [{
@@ -6518,7 +6511,7 @@ var render = function render() {
       }
     }), _vm._v(" "), _vm.errors.total_magnetic ? _c("small", {
       staticClass: "text-danger"
-    }, [_vm._v("\n                                                    " + _vm._s(_vm.errors.total_magnetic[0]) + "\n                                                ")]) : _vm._e()]), _vm._v(" "), _c("div", {
+    }, [_vm._v("\n                                                    " + _vm._s(_vm.errors.total_magnetic[0]) + "\n                                                ")]) : _vm._e()]) : _vm._e(), _vm._v(" "), _c("div", {
       staticClass: "col-md-2"
     }, [_c("input", {
       directives: [{
@@ -67424,8 +67417,8 @@ var routes = [{
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\xampp\htdocs\gl-events\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\xampp\htdocs\gl-events\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! C:\xampp\htdocs\GL_Events\gl-events\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\xampp\htdocs\GL_Events\gl-events\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

@@ -232,7 +232,17 @@
                                                 </div>
                                             </div>
                                             <div class="pt-2 form-row align-items-center">
-                                                <div class="col-md-6">
+                                                <div class="col-md-4">
+                                                    <label for="outsourced">Eyelets:</label>
+                                                    <select name="outsourced" id="outsourced" v-model="material.eyelets">
+                                                        <option value="yes">Yes</option>
+                                                        <option selected value="no">No</option>
+                                                    </select>
+                                                    <small class="text-danger" v-if="errors.eyelets">
+                                                        {{ errors.eyelets[0] }}
+                                                    </small>
+                                                </div>
+                                                <div class="col-md-4" v-if="material.eyelets.value == 'yes'">
                                                     <input type="text" class="form-control" id="exampleInputEmail"
                                                         aria-describedby="emailHelp" placeholder="Eyelets Length"
                                                         v-model="material.eyelets_length">
@@ -240,7 +250,7 @@
                                                         {{ errors.eyelets_length[0] }}
                                                     </small>
                                                 </div>
-                                                <div class="col-md-6">
+                                                <div class="col-md-4" v-if="material.eyelets.value == 'yes'">
                                                     <input type="text" disabled class="form-control" id="exampleInputEmail"
                                                         aria-describedby="emailHelp" placeholder="Total Eyelets"
                                                         v-model="material.total_eyelets">
@@ -385,32 +395,29 @@ export default {
                     banner_type: '',
                     outsourced: '',
                     machine: '',
-                    print_medium_sqm: '',
                     total_print_medium: '',
-                    ink_sqm: '',
                     total_ink: '',
                     pdfp: '',
                     total_pinnacle: '',
+                    silicon_welt: '',
                     silicon_welt_length: '',
-                    sw_unit_price_m: '',
                     total_silicon_welt: '',
+                    flat_chonk: '',
                     flat_chonk_length: '',
-                    fc_unit_price_m: '',
                     total_flat_chonk: '',
+                    eyelets: '',
                     eyelets_length: '',
-                    eyelets_unit_price_m: '',
                     total_eyelets: '',
                     web_vel_length: '',
-                    webvel_unit_price_m: '',
                     total_webvel: '',
-                    pullup_unit_price: '',
+                    pullup_banner: '',
                     pullup_total_hardware: '',
-                    pullup_unit_price_sqm: '',
+                    magnetic: '',
                     total_magnetic: '',
                     consumables: '',
                     unit_price_item: ''
                 }],
-                total_amount
+                total_amount: ''
             },
             errors: {}
         }
