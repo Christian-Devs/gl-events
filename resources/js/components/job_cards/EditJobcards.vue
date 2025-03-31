@@ -166,7 +166,7 @@
                                                         {{ errors.pdfp[0] }}
                                                     </small>
                                                 </div>
-                                                <div class="col-md-6" v-if="material.pdfp.value == 'yes'">
+                                                <div class="col-md-6" v-if="material.pdfp == 'yes'">
                                                     <input type="text" class="form-control" id="exampleInputEmail"
                                                         aria-describedby="emailHelp" placeholder="Total Pinnacle"
                                                         v-model="material.total_pinnacle">
@@ -186,7 +186,7 @@
                                                         {{ errors.pdfp[0] }}
                                                     </small>
                                                 </div>
-                                                <div class="col-md-4" v-if="material.silicon_welt.value == 'yes'">
+                                                <div class="col-md-4" v-if="material.silicon_welt == 'yes'">
                                                     <input type="text" class="form-control" id="exampleInputEmail"
                                                         aria-describedby="emailHelp" placeholder="Silicon Welt Length"
                                                         v-model="material.silicon_welt_length">
@@ -194,7 +194,7 @@
                                                         {{ errors.silicon_welt_length[0] }}
                                                     </small>
                                                 </div>
-                                                <div class="col-md-4" v-if="material.silicon_welt.value == 'yes'">
+                                                <div class="col-md-4" v-if="material.silicon_welt == 'yes'">
                                                     <input type="text" disabled class="form-control" id="exampleInputEmail"
                                                         aria-describedby="emailHelp" placeholder="Total Silicon Welt"
                                                         v-model="material.total_silicon_welt">
@@ -214,7 +214,7 @@
                                                         {{ errors.pdfp[0] }}
                                                     </small>
                                                 </div>
-                                                <div class="col-md-4" v-if="material.flat_chonk.value == 'yes'">
+                                                <div class="col-md-4" v-if="material.flat_chonk == 'yes'">
                                                     <input type="text" class="form-control" id="exampleInputEmail"
                                                         aria-describedby="emailHelp" placeholder="Flat Chonk Length"
                                                         v-model="material.flat_chonk_length">
@@ -222,7 +222,7 @@
                                                         {{ errors.flat_chonk_length[0] }}
                                                     </small>
                                                 </div>
-                                                <div class="col-md-4" v-if="material.flat_chonk.value == 'yes'">
+                                                <div class="col-md-4" v-if="material.flat_chonk == 'yes'">
                                                     <input type="text" disabled class="form-control" id="exampleInputEmail"
                                                         aria-describedby="emailHelp" placeholder="Total Flat Chonk"
                                                         v-model="material.total_flat_chonk">
@@ -242,7 +242,7 @@
                                                         {{ errors.eyelets[0] }}
                                                     </small>
                                                 </div>
-                                                <div class="col-md-4" v-if="material.eyelets.value == 'yes'">
+                                                <div class="col-md-4" v-if="material.eyelets == 'yes'">
                                                     <input type="text" class="form-control" id="exampleInputEmail"
                                                         aria-describedby="emailHelp" placeholder="Eyelets Length"
                                                         v-model="material.eyelets_length">
@@ -250,7 +250,7 @@
                                                         {{ errors.eyelets_length[0] }}
                                                     </small>
                                                 </div>
-                                                <div class="col-md-4" v-if="material.eyelets.value == 'yes'">
+                                                <div class="col-md-4" v-if="material.eyelets == 'yes'">
                                                     <input type="text" disabled class="form-control" id="exampleInputEmail"
                                                         aria-describedby="emailHelp" placeholder="Total Eyelets"
                                                         v-model="material.total_eyelets">
@@ -260,7 +260,17 @@
                                                 </div>
                                             </div>
                                             <div class="pt-2 form-row align-items-center">
-                                                <div class="col-md-6">
+                                                <div class="col-md-4">
+                                                    <label for="outsourced">Webbing/Velcro:</label>
+                                                    <select name="outsourced" id="outsourced" v-model="material.webvel">
+                                                        <option value="yes">Yes</option>
+                                                        <option selected value="no">No</option>
+                                                    </select>
+                                                    <small class="text-danger" v-if="errors.eyelets">
+                                                        {{ errors.eyelets[0] }}
+                                                    </small>
+                                                </div>
+                                                <div class="col-md-4" v-if="material.webvel == 'yes'">
                                                     <input type="text" class="form-control" id="exampleInputEmail"
                                                         aria-describedby="emailHelp" placeholder="Webbing / Velcro Length"
                                                         v-model="material.web_vel_length">
@@ -268,7 +278,7 @@
                                                         {{ errors.web_vel_length[0] }}
                                                     </small>
                                                 </div>
-                                                <div class="col-md-6">
+                                                <div class="col-md-4" v-if="material.webvel == 'yes'">
                                                     <input type="text" disabled class="form-control" id="exampleInputEmail"
                                                         aria-describedby="emailHelp" placeholder="Total Webbing / Velcro"
                                                         v-model="material.total_webvel">
@@ -288,7 +298,7 @@
                                                         {{ errors.pdfp[0] }}
                                                     </small>
                                                 </div>
-                                                <div class="col-md-2" v-if="material.pullup_banner.value == 'yes'">
+                                                <div class="col-md-2" v-if="material.pullup_banner == 'yes'">
                                                     <input type="text" class="form-control" id="exampleInputEmail"
                                                         aria-describedby="emailHelp" placeholder="Total Pull-up Banner Hardware"
                                                         v-model="material.pullup_total_hardware">
@@ -306,7 +316,7 @@
                                                         {{ errors.pdfp[0] }}
                                                     </small>
                                                 </div>
-                                                <div class="col-md-2" v-if="material.magnetic.value == 'yes'">
+                                                <div class="col-md-2" v-if="material.magnetic == 'yes'">
                                                     <input type="text" class="form-control" id="exampleInputEmail"
                                                         aria-describedby="emailHelp" placeholder="Total Magnetic"
                                                         v-model="material.total_magnetic">
@@ -408,6 +418,7 @@ export default {
                     eyelets: '',
                     eyelets_length: '',
                     total_eyelets: '',
+                    webvel: '',
                     web_vel_length: '',
                     total_webvel: '',
                     pullup_banner: '',

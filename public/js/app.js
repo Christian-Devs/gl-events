@@ -2531,6 +2531,7 @@ __webpack_require__.r(__webpack_exports__);
           eyelets: '',
           eyelets_length: '',
           total_eyelets: '',
+          webvel: '',
           web_vel_length: '',
           total_webvel: '',
           pullup_banner: '',
@@ -6005,7 +6006,7 @@ var render = function render() {
       }
     }, [_vm._v("No")])]), _vm._v(" "), _vm.errors.pdfp ? _c("small", {
       staticClass: "text-danger"
-    }, [_vm._v("\n                                                    " + _vm._s(_vm.errors.pdfp[0]) + "\n                                                ")]) : _vm._e()]), _vm._v(" "), material.pdfp.value == "yes" ? _c("div", {
+    }, [_vm._v("\n                                                    " + _vm._s(_vm.errors.pdfp[0]) + "\n                                                ")]) : _vm._e()]), _vm._v(" "), material.pdfp == "yes" ? _c("div", {
       staticClass: "col-md-6"
     }, [_c("input", {
       directives: [{
@@ -6073,7 +6074,7 @@ var render = function render() {
       }
     }, [_vm._v("No")])]), _vm._v(" "), _vm.errors.pdfp ? _c("small", {
       staticClass: "text-danger"
-    }, [_vm._v("\n                                                    " + _vm._s(_vm.errors.pdfp[0]) + "\n                                                ")]) : _vm._e()]), _vm._v(" "), material.silicon_welt.value == "yes" ? _c("div", {
+    }, [_vm._v("\n                                                    " + _vm._s(_vm.errors.pdfp[0]) + "\n                                                ")]) : _vm._e()]), _vm._v(" "), material.silicon_welt == "yes" ? _c("div", {
       staticClass: "col-md-4"
     }, [_c("input", {
       directives: [{
@@ -6100,7 +6101,7 @@ var render = function render() {
       }
     }), _vm._v(" "), _vm.errors.silicon_welt_length ? _c("small", {
       staticClass: "text-danger"
-    }, [_vm._v("\n                                                    " + _vm._s(_vm.errors.silicon_welt_length[0]) + "\n                                                ")]) : _vm._e()]) : _vm._e(), _vm._v(" "), material.silicon_welt.value == "yes" ? _c("div", {
+    }, [_vm._v("\n                                                    " + _vm._s(_vm.errors.silicon_welt_length[0]) + "\n                                                ")]) : _vm._e()]) : _vm._e(), _vm._v(" "), material.silicon_welt == "yes" ? _c("div", {
       staticClass: "col-md-4"
     }, [_c("input", {
       directives: [{
@@ -6169,7 +6170,7 @@ var render = function render() {
       }
     }, [_vm._v("No")])]), _vm._v(" "), _vm.errors.pdfp ? _c("small", {
       staticClass: "text-danger"
-    }, [_vm._v("\n                                                    " + _vm._s(_vm.errors.pdfp[0]) + "\n                                                ")]) : _vm._e()]), _vm._v(" "), material.flat_chonk.value == "yes" ? _c("div", {
+    }, [_vm._v("\n                                                    " + _vm._s(_vm.errors.pdfp[0]) + "\n                                                ")]) : _vm._e()]), _vm._v(" "), material.flat_chonk == "yes" ? _c("div", {
       staticClass: "col-md-4"
     }, [_c("input", {
       directives: [{
@@ -6196,7 +6197,7 @@ var render = function render() {
       }
     }), _vm._v(" "), _vm.errors.flat_chonk_length ? _c("small", {
       staticClass: "text-danger"
-    }, [_vm._v("\n                                                    " + _vm._s(_vm.errors.flat_chonk_length[0]) + "\n                                                ")]) : _vm._e()]) : _vm._e(), _vm._v(" "), material.flat_chonk.value == "yes" ? _c("div", {
+    }, [_vm._v("\n                                                    " + _vm._s(_vm.errors.flat_chonk_length[0]) + "\n                                                ")]) : _vm._e()]) : _vm._e(), _vm._v(" "), material.flat_chonk == "yes" ? _c("div", {
       staticClass: "col-md-4"
     }, [_c("input", {
       directives: [{
@@ -6265,7 +6266,7 @@ var render = function render() {
       }
     }, [_vm._v("No")])]), _vm._v(" "), _vm.errors.eyelets ? _c("small", {
       staticClass: "text-danger"
-    }, [_vm._v("\n                                                    " + _vm._s(_vm.errors.eyelets[0]) + "\n                                                ")]) : _vm._e()]), _vm._v(" "), material.eyelets.value == "yes" ? _c("div", {
+    }, [_vm._v("\n                                                    " + _vm._s(_vm.errors.eyelets[0]) + "\n                                                ")]) : _vm._e()]), _vm._v(" "), material.eyelets == "yes" ? _c("div", {
       staticClass: "col-md-4"
     }, [_c("input", {
       directives: [{
@@ -6292,7 +6293,7 @@ var render = function render() {
       }
     }), _vm._v(" "), _vm.errors.eyelets_length ? _c("small", {
       staticClass: "text-danger"
-    }, [_vm._v("\n                                                    " + _vm._s(_vm.errors.eyelets_length[0]) + "\n                                                ")]) : _vm._e()]) : _vm._e(), _vm._v(" "), material.eyelets.value == "yes" ? _c("div", {
+    }, [_vm._v("\n                                                    " + _vm._s(_vm.errors.eyelets_length[0]) + "\n                                                ")]) : _vm._e()]) : _vm._e(), _vm._v(" "), material.eyelets == "yes" ? _c("div", {
       staticClass: "col-md-4"
     }, [_c("input", {
       directives: [{
@@ -6323,7 +6324,46 @@ var render = function render() {
     }, [_vm._v("\n                                                    " + _vm._s(_vm.errors.total_eyelets[0]) + "\n                                                ")]) : _vm._e()]) : _vm._e()]), _vm._v(" "), _c("div", {
       staticClass: "pt-2 form-row align-items-center"
     }, [_c("div", {
-      staticClass: "col-md-6"
+      staticClass: "col-md-4"
+    }, [_c("label", {
+      attrs: {
+        "for": "outsourced"
+      }
+    }, [_vm._v("Webbing/Velcro:")]), _vm._v(" "), _c("select", {
+      directives: [{
+        name: "model",
+        rawName: "v-model",
+        value: material.webvel,
+        expression: "material.webvel"
+      }],
+      attrs: {
+        name: "outsourced",
+        id: "outsourced"
+      },
+      on: {
+        change: function change($event) {
+          var $$selectedVal = Array.prototype.filter.call($event.target.options, function (o) {
+            return o.selected;
+          }).map(function (o) {
+            var val = "_value" in o ? o._value : o.value;
+            return val;
+          });
+          _vm.$set(material, "webvel", $event.target.multiple ? $$selectedVal : $$selectedVal[0]);
+        }
+      }
+    }, [_c("option", {
+      attrs: {
+        value: "yes"
+      }
+    }, [_vm._v("Yes")]), _vm._v(" "), _c("option", {
+      attrs: {
+        selected: "",
+        value: "no"
+      }
+    }, [_vm._v("No")])]), _vm._v(" "), _vm.errors.eyelets ? _c("small", {
+      staticClass: "text-danger"
+    }, [_vm._v("\n                                                    " + _vm._s(_vm.errors.eyelets[0]) + "\n                                                ")]) : _vm._e()]), _vm._v(" "), material.webvel == "yes" ? _c("div", {
+      staticClass: "col-md-4"
     }, [_c("input", {
       directives: [{
         name: "model",
@@ -6349,8 +6389,8 @@ var render = function render() {
       }
     }), _vm._v(" "), _vm.errors.web_vel_length ? _c("small", {
       staticClass: "text-danger"
-    }, [_vm._v("\n                                                    " + _vm._s(_vm.errors.web_vel_length[0]) + "\n                                                ")]) : _vm._e()]), _vm._v(" "), _c("div", {
-      staticClass: "col-md-6"
+    }, [_vm._v("\n                                                    " + _vm._s(_vm.errors.web_vel_length[0]) + "\n                                                ")]) : _vm._e()]) : _vm._e(), _vm._v(" "), material.webvel == "yes" ? _c("div", {
+      staticClass: "col-md-4"
     }, [_c("input", {
       directives: [{
         name: "model",
@@ -6377,7 +6417,7 @@ var render = function render() {
       }
     }), _vm._v(" "), _vm.errors.total_webvel ? _c("small", {
       staticClass: "text-danger"
-    }, [_vm._v("\n                                                    " + _vm._s(_vm.errors.total_webvel[0]) + "\n                                                ")]) : _vm._e()])]), _vm._v(" "), _c("div", {
+    }, [_vm._v("\n                                                    " + _vm._s(_vm.errors.total_webvel[0]) + "\n                                                ")]) : _vm._e()]) : _vm._e()]), _vm._v(" "), _c("div", {
       staticClass: "pt-2 form-row align-items-center"
     }, [_c("div", {
       staticClass: "col-md-2"
@@ -6418,7 +6458,7 @@ var render = function render() {
       }
     }, [_vm._v("No")])]), _vm._v(" "), _vm.errors.pdfp ? _c("small", {
       staticClass: "text-danger"
-    }, [_vm._v("\n                                                    " + _vm._s(_vm.errors.pdfp[0]) + "\n                                                ")]) : _vm._e()]), _vm._v(" "), material.pullup_banner.value == "yes" ? _c("div", {
+    }, [_vm._v("\n                                                    " + _vm._s(_vm.errors.pdfp[0]) + "\n                                                ")]) : _vm._e()]), _vm._v(" "), material.pullup_banner == "yes" ? _c("div", {
       staticClass: "col-md-2"
     }, [_c("input", {
       directives: [{
@@ -6484,7 +6524,7 @@ var render = function render() {
       }
     }, [_vm._v("No")])]), _vm._v(" "), _vm.errors.pdfp ? _c("small", {
       staticClass: "text-danger"
-    }, [_vm._v("\n                                                    " + _vm._s(_vm.errors.pdfp[0]) + "\n                                                ")]) : _vm._e()]), _vm._v(" "), material.magnetic.value == "yes" ? _c("div", {
+    }, [_vm._v("\n                                                    " + _vm._s(_vm.errors.pdfp[0]) + "\n                                                ")]) : _vm._e()]), _vm._v(" "), material.magnetic == "yes" ? _c("div", {
       staticClass: "col-md-2"
     }, [_c("input", {
       directives: [{
