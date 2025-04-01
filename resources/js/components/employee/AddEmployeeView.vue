@@ -25,7 +25,7 @@
                         </div>
                         <div class="col-md-6">
                           <input type="text" class="form-control" id="exampleInputPasswordRepeat"
-                            placeholder="Enter Nid" v-model="form.nid">
+                            placeholder="Enter Employee Code" v-model="form.nid">
                           <small class="text-danger" v-if="errors.nid">
                             {{ errors.nid[0] }}
                           </small>

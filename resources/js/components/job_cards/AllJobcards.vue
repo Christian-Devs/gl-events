@@ -20,9 +20,10 @@
                 <thead class="thead-light">
                   <tr>
                     <th>Job Number</th>
-                    <th>Sales Person</th>
                     <th>Stand Name</th>
                     <th>Show Name</th>
+                    <th>AM / PM</th>
+                    <th>Total Amount</th>
                     <th>Date Created</th>
                     <th>Action</th>
                   </tr>
@@ -30,10 +31,11 @@
                 <tbody>
                   <tr v-for="jobcard in filtersearch" :key="jobcard.id">
                     <td>{{ jobcard.job_number }}</td>
-                    <td>{{ jobcard.salesperson }}</td>
                     <td>{{ jobcard.stand_name }}</td>
                     <td>{{ jobcard.show_name }}</td>
-                    <td>{{ jobcard.created_at | moment("dddd, MMMM Do YYYY, h:mm:ss a")}}</td>
+                    <td>{{ jobcard.salesperson }}</td>
+                    <td>R{{ jobcard.total_amount }}</td>
+                    <td>{{ jobcard.created_at | moment('L hh:MM')}}</td>
                     <td>
                       <router-link :to="{name: 'edit-jobcard', params:{id:jobcard.id}}" class="btn btn-sm btn-primary">Edit</router-link>
                       <a @click="deleteJobcard(jobcard.id)" class="btn btn-sm btn-danger text-white">Delete</a>

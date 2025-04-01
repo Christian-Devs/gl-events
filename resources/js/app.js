@@ -6,12 +6,15 @@ import { routes } from "./routes";
 import User from "./helpers/User";
 import Swal from "sweetalert2";
 import Notification from "./helpers/Notification";
+import CanvasJSChart from "@canvasjs/vue-charts";
 
 window.User = User;
 window.Swal = Swal;
 window.Notification = Notification;
 
 Vue.use(VueRouter);
+Vue.use(CanvasJSChart);
+Vue.use(require('vue-moment'));
 
 const router = new VueRouter({
     routes,

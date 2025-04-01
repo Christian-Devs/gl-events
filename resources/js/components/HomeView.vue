@@ -15,15 +15,15 @@
                     <div class="card-body">
                         <div class="row align-items-center">
                             <div class="col mr-2">
-                                <div class="text-xs font-weight-bold text-uppercase mb-1">Earnings (Monthly)</div>
-                                <div class="h5 mb-0 font-weight-bold text-gray-800">$40,000</div>
+                                <div class="text-xs font-weight-bold text-uppercase mb-1">Total Costs (2024)</div>
+                                <div class="h5 mb-0 font-weight-bold text-gray-800">R6 567 523.83</div>
                                 <div class="mt-2 mb-0 text-muted text-xs">
-                                    <span class="text-success mr-2"><i class="fa fa-arrow-up"></i> 3.48%</span>
-                                    <span>Since last month</span>
+                                    <span class="text-danger mr-2"><i class="fa fa-arrow-up"></i> 3.48%</span>
+                                    <span>Since last year</span>
                                 </div>
                             </div>
                             <div class="col-auto">
-                                <i class="fas fa-calendar fa-2x text-primary"></i>
+                                <i class="fas fa-shopping-cart fa-2x text-success"></i>
                             </div>
                         </div>
                     </div>
@@ -35,15 +35,15 @@
                     <div class="card-body">
                         <div class="row no-gutters align-items-center">
                             <div class="col mr-2">
-                                <div class="text-xs font-weight-bold text-uppercase mb-1">Sales</div>
-                                <div class="h5 mb-0 font-weight-bold text-gray-800">650</div>
+                                <div class="text-xs font-weight-bold text-uppercase mb-1">Total Profit (2024)</div>
+                                <div class="h5 mb-0 font-weight-bold text-gray-800">R12 825 342.32</div>
                                 <div class="mt-2 mb-0 text-muted text-xs">
                                     <span class="text-success mr-2"><i class="fas fa-arrow-up"></i> 12%</span>
-                                    <span>Since last years</span>
+                                    <span>Since last year</span>
                                 </div>
                             </div>
                             <div class="col-auto">
-                                <i class="fas fa-shopping-cart fa-2x text-success"></i>
+                                <i class="fas fa-calendar fa-2x text-primary"></i>
                             </div>
                         </div>
                     </div>
@@ -55,7 +55,7 @@
                     <div class="card-body">
                         <div class="row no-gutters align-items-center">
                             <div class="col mr-2">
-                                <div class="text-xs font-weight-bold text-uppercase mb-1">New User</div>
+                                <div class="text-xs font-weight-bold text-uppercase mb-1">Jobcards to Date</div>
                                 <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">366</div>
                                 <div class="mt-2 mb-0 text-muted text-xs">
                                     <span class="text-success mr-2"><i class="fas fa-arrow-up"></i> 20.4%</span>
@@ -63,7 +63,7 @@
                                 </div>
                             </div>
                             <div class="col-auto">
-                                <i class="fas fa-users fa-2x text-info"></i>
+                                <i class="fas fa-file fa-2x text-info"></i>
                             </div>
                         </div>
                     </div>
@@ -90,38 +90,78 @@
                 </div>
             </div>
 
-            <!-- Area Chart -->
-            <div class="col-xl-8 col-lg-7">
-                <div class="card mb-4">
+            <!-- Invoice Example -->
+            <div class="col-xl-8 col-lg-7 mb-4">
+                <div class="card">
                     <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                        <h6 class="m-0 font-weight-bold text-primary">Monthly Recap Report</h6>
-                        <div class="dropdown no-arrow">
-                            <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
-                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
-                            </a>
-                            <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
-                                aria-labelledby="dropdownMenuLink">
-                                <div class="dropdown-header">Dropdown Header:</div>
-                                <a class="dropdown-item" href="#">Action</a>
-                                <a class="dropdown-item" href="#">Another action</a>
-                                <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="#">Something else here</a>
-                            </div>
-                        </div>
+                        <h6 class="m-0 font-weight-bold text-primary">Work In Progress</h6>
+                        <router-link class="m-0 float-right btn btn-danger btn-sm" to="/jobcards">View More <i
+                                class="fas fa-chevron-right"></i></router-link>
                     </div>
-                    <div class="card-body">
-                        <div class="chart-area">
-                            <canvas id="myAreaChart"></canvas>
-                        </div>
+                    <div class="table-responsive">
+                        <table class="table align-items-center table-flush">
+                            <thead class="thead-light">
+                                <tr>
+                                    <th>Job Number</th>
+                                    <th>Stand Name</th>
+                                    <th>Show Name</th>
+                                    <th>Status</th>
+                                    <th>DTP</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><a href="#">QT0057642</a></td>
+                                    <td>Medical Conepts</td>
+                                    <td>Hospital Event</td>
+                                    <td><span class="badge badge-success">Delivered</span></td>
+                                    <td>Isaac Faranando</td>
+                                    <td><a href="#" class="btn btn-sm btn-primary">Detail</a></td>
+                                </tr>
+                                <tr>
+                                    <td><a href="#">QT0057673</a></td>
+                                    <td>HQ Mount THCI</td>
+                                    <td>Solar 2025</td>
+                                    <td><span class="badge badge-warning">Waiting for Approval</span></td>
+                                    <td>McFadden Barley</td>
+                                    <td><a href="#" class="btn btn-sm btn-primary">Detail</a></td>
+                                </tr>
+                                <tr>
+                                    <td><a href="#">QT0057805</a></td>
+                                    <td>SARCDA / SEDFA</td>
+                                    <td>SARCDA 2025</td>
+                                    <td><span class="badge badge-danger">Waiting for Artwork</span></td>
+                                    <td>Shameemah Barnett</td>
+                                    <td><a href="#" class="btn btn-sm btn-primary">Detail</a></td>
+                                </tr>
+                                <tr>
+                                    <td><a href="#">QT0058014</a></td>
+                                    <td>Huawei - Office 24</td>
+                                    <td>Solar 2025</td>
+                                    <td><span class="badge badge-info">Printing</span></td>
+                                    <td>Lovejoy Mashiri</td>
+                                    <td><a href="#" class="btn btn-sm btn-primary">Detail</a></td>
+                                </tr>
+                                <tr>
+                                    <td><a href="#">QT0057916</a></td>
+                                    <td>Infinite Energy Storage</td>
+                                    <td>Solar 2025</td>
+                                    <td><span class="badge badge-success">Finishing</span></td>
+                                    <td>Shameemah Barnett</td>
+                                    <td><a href="#" class="btn btn-sm btn-primary">Detail</a></td>
+                                </tr>
+                            </tbody>
+                        </table>
                     </div>
+                    <div class="card-footer"></div>
                 </div>
             </div>
             <!-- Pie Chart -->
             <div class="col-xl-4 col-lg-5">
                 <div class="card mb-4">
                     <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                        <h6 class="m-0 font-weight-bold text-primary">Products Sold</h6>
+                        <h6 class="m-0 font-weight-bold text-primary">Month to Date</h6>
                         <div class="dropdown no-arrow">
                             <a class="dropdown-toggle btn btn-primary btn-sm" href="#" role="button"
                                 id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -139,7 +179,7 @@
                     </div>
                     <div class="card-body">
                         <div class="mb-3">
-                            <div class="small text-gray-500">Oblong T-Shirt
+                            <div class="small text-gray-500">Fascia Names
                                 <div class="small float-right"><b>600 of 800 Items</b></div>
                             </div>
                             <div class="progress" style="height: 12px;">
@@ -148,7 +188,7 @@
                             </div>
                         </div>
                         <div class="mb-3">
-                            <div class="small text-gray-500">Gundam 90'Editions
+                            <div class="small text-gray-500">(UV) Backlit Fabric Banners
                                 <div class="small float-right"><b>500 of 800 Items</b></div>
                             </div>
                             <div class="progress" style="height: 12px;">
@@ -157,7 +197,7 @@
                             </div>
                         </div>
                         <div class="mb-3">
-                            <div class="small text-gray-500">Rounded Hat
+                            <div class="small text-gray-500">(Dye Sub) Fabric Banners
                                 <div class="small float-right"><b>455 of 800 Items</b></div>
                             </div>
                             <div class="progress" style="height: 12px;">
@@ -166,7 +206,7 @@
                             </div>
                         </div>
                         <div class="mb-3">
-                            <div class="small text-gray-500">Indomie Goreng
+                            <div class="small text-gray-500">Vinyl Printing (UV)
                                 <div class="small float-right"><b>400 of 800 Items</b></div>
                             </div>
                             <div class="progress" style="height: 12px;">
@@ -175,7 +215,7 @@
                             </div>
                         </div>
                         <div class="mb-3">
-                            <div class="small text-gray-500">Remote Control Car Racing
+                            <div class="small text-gray-500">Vinyl Printing (Laminated)
                                 <div class="small float-right"><b>200 of 800 Items</b></div>
                             </div>
                             <div class="progress" style="height: 12px;">
@@ -190,72 +230,38 @@
                     </div>
                 </div>
             </div>
-            <!-- Invoice Example -->
-            <div class="col-xl-8 col-lg-7 mb-4">
-                <div class="card">
+            <!-- Area Chart -->
+            <div class="col-xl-8 col-lg-7">
+                <div class="card mb-4">
                     <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                        <h6 class="m-0 font-weight-bold text-primary">Invoice</h6>
-                        <a class="m-0 float-right btn btn-danger btn-sm" href="#">View More <i
-                                class="fas fa-chevron-right"></i></a>
+                        <h6 class="m-0 font-weight-bold text-primary">Graphics - P&L Tracking</h6>
+                        <div class="dropdown no-arrow">
+                            <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
+                                aria-labelledby="dropdownMenuLink">
+                                <div class="dropdown-header">Dropdown Header:</div>
+                                <a class="dropdown-item" href="#">Action</a>
+                                <a class="dropdown-item" href="#">Another action</a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="#">Something else here</a>
+                            </div>
+                        </div>
                     </div>
-                    <div class="table-responsive">
-                        <table class="table align-items-center table-flush">
-                            <thead class="thead-light">
-                                <tr>
-                                    <th>Order ID</th>
-                                    <th>Customer</th>
-                                    <th>Item</th>
-                                    <th>Status</th>
-                                    <th>Action</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td><a href="#">RA0449</a></td>
-                                    <td>Udin Wayang</td>
-                                    <td>Nasi Padang</td>
-                                    <td><span class="badge badge-success">Delivered</span></td>
-                                    <td><a href="#" class="btn btn-sm btn-primary">Detail</a></td>
-                                </tr>
-                                <tr>
-                                    <td><a href="#">RA5324</a></td>
-                                    <td>Jaenab Bajigur</td>
-                                    <td>Gundam 90' Edition</td>
-                                    <td><span class="badge badge-warning">Shipping</span></td>
-                                    <td><a href="#" class="btn btn-sm btn-primary">Detail</a></td>
-                                </tr>
-                                <tr>
-                                    <td><a href="#">RA8568</a></td>
-                                    <td>Rivat Mahesa</td>
-                                    <td>Oblong T-Shirt</td>
-                                    <td><span class="badge badge-danger">Pending</span></td>
-                                    <td><a href="#" class="btn btn-sm btn-primary">Detail</a></td>
-                                </tr>
-                                <tr>
-                                    <td><a href="#">RA1453</a></td>
-                                    <td>Indri Junanda</td>
-                                    <td>Hat Rounded</td>
-                                    <td><span class="badge badge-info">Processing</span></td>
-                                    <td><a href="#" class="btn btn-sm btn-primary">Detail</a></td>
-                                </tr>
-                                <tr>
-                                    <td><a href="#">RA1998</a></td>
-                                    <td>Udin Cilok</td>
-                                    <td>Baby Powder</td>
-                                    <td><span class="badge badge-success">Delivered</span></td>
-                                    <td><a href="#" class="btn btn-sm btn-primary">Detail</a></td>
-                                </tr>
-                            </tbody>
-                        </table>
+                    <div class="card-body">
+                        <div>
+                            <BarChart/>
+                        </div>
                     </div>
-                    <div class="card-footer"></div>
                 </div>
             </div>
             <!-- Message From Customer-->
             <div class="col-xl-4 col-lg-5 ">
                 <div class="card">
                     <div class="card-header py-4 bg-primary d-flex flex-row align-items-center justify-content-between">
-                        <h6 class="m-0 font-weight-bold text-light">Message From Customer</h6>
+                        <h6 class="m-0 font-weight-bold text-light">Message From AE/PM</h6>
                     </div>
                     <div>
                         <div class="customer-message align-items-center">
@@ -306,13 +312,16 @@
 
 
 <script type="text/javascript">
+import BarChart from './charts/BarChart.vue';
+
 
 export default {
+    components: { BarChart },
     created() {
         if (!User.loggedIn()) {
             this.$router.push({ name: '/' })
         }
-    }
+    },
 }
 </script>
 

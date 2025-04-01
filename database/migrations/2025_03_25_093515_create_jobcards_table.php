@@ -20,7 +20,7 @@ class CreateJobcardsTable extends Migration
             $table->string('stand_name');
             $table->string('show_name');
             $table->json('materials');
-            $table->decimal('total_amount', 5,2);
+            $table->decimal('total_amount', 10,2);
             $table->timestamps();
         });
     }

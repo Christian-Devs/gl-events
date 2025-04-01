@@ -24,8 +24,12 @@
         "vue-template-compiler": "^2.7.16"
     },
     "dependencies": {
+        "@canvasjs/vue-charts": "^1.0.4",
+        "chart.js": "^3.8.0",
         "noty": "^3.2.0-beta-deprecated",
         "sweetalert2": "^11.17.2",
+        "vue-chartjs": "^4.1.2",
+        "vue-moment": "^4.1.0",
         "vue-router": "^3.1.6"
     }
 }

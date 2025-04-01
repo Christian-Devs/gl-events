@@ -3,6 +3,10 @@
         <div class="row justify-content-center">
             <div class="col-xl-10 col-lg-12 col-md-9">
                 <div class="card shadow-sm my-5">
+                    <div class="card-header justify-content-center text-center" style="background-color: black">
+                        <img src="backend/img/logo/logo.png">
+                        <h2 class="text-white mt-2" style="font-weight: bolder;">GL Events SA - Business Management System</h2>
+                    </div>
                     <div class="card-body p-0">
                         <div class="row">
                             <div class="col-lg-12">
