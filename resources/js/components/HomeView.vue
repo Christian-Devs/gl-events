@@ -266,35 +266,29 @@
                     <div>
                         <div class="customer-message align-items-center">
                             <a class="font-weight-bold" href="#">
-                                <div class="text-truncate message-title">Hi there! I am wondering if you can help me
-                                    with a
-                                    problem I've been having.</div>
-                                <div class="small text-gray-500 message-time font-weight-bold">Udin Cilok · 58m</div>
+                                <div class="text-truncate message-title">JEC Counter</div>
+                                <div class="small text-gray-500 message-time font-weight-bold">Isaac Faranando · 15:51</div>
                             </a>
                         </div>
                         <div class="customer-message align-items-center">
                             <a href="#">
-                                <div class="text-truncate message-title">But I must explain to you how all this mistaken
-                                    idea
+                                <div class="text-truncate message-title">Network Issues
                                 </div>
-                                <div class="small text-gray-500 message-time">Nana Haminah · 58m</div>
+                                <div class="small text-gray-500 message-time">Seema Ramnath · 12:38</div>
                             </a>
                         </div>
                         <div class="customer-message align-items-center">
                             <a class="font-weight-bold" href="#">
-                                <div class="text-truncate message-title">Lorem ipsum dolor sit amet, consectetur
-                                    adipiscing elit
+                                <div class="text-truncate message-title">Rand Show Meal Vouchers
                                 </div>
-                                <div class="small text-gray-500 message-time font-weight-bold">Jajang Cincau · 25m</div>
+                                <div class="small text-gray-500 message-time font-weight-bold">Saud Khan, Pregasen Francis · Sun 15:10</div>
                             </a>
                         </div>
                         <div class="customer-message align-items-center">
                             <a class="font-weight-bold" href="#">
-                                <div class="text-truncate message-title">At vero eos et accusamus et iusto odio
-                                    dignissimos
-                                    ducimus qui blanditiis
+                                <div class="text-truncate message-title">Meeting - Leshem's Office
                                 </div>
-                                <div class="small text-gray-500 message-time font-weight-bold">Udin Wayang · 54m</div>
+                                <div class="small text-gray-500 message-time font-weight-bold">Leshem Naidoo · Wed 26/03</div>
                             </a>
                         </div>
                         <div class="card-footer text-center">

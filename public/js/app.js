@@ -4447,9 +4447,9 @@ var staticRenderFns = [function () {
     }
   }, [_c("div", {
     staticClass: "text-truncate message-title"
-  }, [_vm._v("Hi there! I am wondering if you can help me\n                                with a\n                                problem I've been having.")]), _vm._v(" "), _c("div", {
+  }, [_vm._v("JEC Counter")]), _vm._v(" "), _c("div", {
     staticClass: "small text-gray-500 message-time font-weight-bold"
-  }, [_vm._v("Udin Cilok · 58m")])])]), _vm._v(" "), _c("div", {
+  }, [_vm._v("Isaac Faranando · 15:51")])])]), _vm._v(" "), _c("div", {
     staticClass: "customer-message align-items-center"
   }, [_c("a", {
     attrs: {
@@ -4457,9 +4457,9 @@ var staticRenderFns = [function () {
     }
   }, [_c("div", {
     staticClass: "text-truncate message-title"
-  }, [_vm._v("But I must explain to you how all this mistaken\n                                idea\n                            ")]), _vm._v(" "), _c("div", {
+  }, [_vm._v("Network Issues\n                            ")]), _vm._v(" "), _c("div", {
     staticClass: "small text-gray-500 message-time"
-  }, [_vm._v("Nana Haminah · 58m")])])]), _vm._v(" "), _c("div", {
+  }, [_vm._v("Seema Ramnath · 12:38")])])]), _vm._v(" "), _c("div", {
     staticClass: "customer-message align-items-center"
   }, [_c("a", {
     staticClass: "font-weight-bold",
@@ -4468,9 +4468,9 @@ var staticRenderFns = [function () {
     }
   }, [_c("div", {
     staticClass: "text-truncate message-title"
-  }, [_vm._v("Lorem ipsum dolor sit amet, consectetur\n                                adipiscing elit\n                            ")]), _vm._v(" "), _c("div", {
+  }, [_vm._v("Rand Show Meal Vouchers\n                            ")]), _vm._v(" "), _c("div", {
     staticClass: "small text-gray-500 message-time font-weight-bold"
-  }, [_vm._v("Jajang Cincau · 25m")])])]), _vm._v(" "), _c("div", {
+  }, [_vm._v("Saud Khan, Pregasen Francis · Sun 15:10")])])]), _vm._v(" "), _c("div", {
     staticClass: "customer-message align-items-center"
   }, [_c("a", {
     staticClass: "font-weight-bold",
@@ -4479,9 +4479,9 @@ var staticRenderFns = [function () {
     }
   }, [_c("div", {
     staticClass: "text-truncate message-title"
-  }, [_vm._v("At vero eos et accusamus et iusto odio\n                                dignissimos\n                                ducimus qui blanditiis\n                            ")]), _vm._v(" "), _c("div", {
+  }, [_vm._v("Meeting - Leshem's Office\n                            ")]), _vm._v(" "), _c("div", {
     staticClass: "small text-gray-500 message-time font-weight-bold"
-  }, [_vm._v("Udin Wayang · 54m")])])]), _vm._v(" "), _c("div", {
+  }, [_vm._v("Leshem Naidoo · Wed 26/03")])])]), _vm._v(" "), _c("div", {
     staticClass: "card-footer text-center"
   }, [_c("a", {
     staticClass: "m-0 small text-primary card-link",
