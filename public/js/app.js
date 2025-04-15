@@ -3276,7 +3276,13 @@ __webpack_require__.r(__webpack_exports__);
         });
         _helpers_Notification__WEBPACK_IMPORTED_MODULE_0__["default"].success();
       })["catch"](function (error) {
-        return _this.errors = error.response.data.errors;
+        if (error.response && error.response.data && error.response.data.errors) {
+          _this.errors = error.response.data.errors;
+        } else {
+          _this.errors = {}; // Reset in case something else went wrong
+          _helpers_Notification__WEBPACK_IMPORTED_MODULE_0__["default"].error('An unexpected error occurred');
+          console.error('Error:', error);
+        }
       });
     },
     onFileSelected: function onFileSelected(event) {

@@ -117,7 +117,7 @@ export default {
         joining_date: null,
         photo: null
       },
-      errors:{}
+      errors: {}
     }
   },
 
@@ -128,9 +128,15 @@ export default {
           this.$router.push({ name: 'employees' })
           Notification.success()
         })
-        .catch(error => 
-            this.errors = error.response.data.errors
-        )
+        .catch((error) => {
+          if (error.response && error.response.data && error.response.data.errors) {
+            this.errors = error.response.data.errors;
+          } else {
+            this.errors = {}; // Reset in case something else went wrong
+            Notification.error('An unexpected error occurred');
+            console.error('Error:', error);
+          }
+        })
     },
 
     onFileSelected(event) {
@@ -146,7 +152,7 @@ export default {
         reader.readAsDataURL(file);
       }
     }
-    
+
   }
 
 }

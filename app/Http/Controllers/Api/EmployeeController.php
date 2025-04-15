@@ -4,9 +4,12 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Model\Employee;
+use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 use Image;
 use DB;
+use Illuminate\Support\Facades\Log;
 
 class EmployeeController extends Controller
 {
@@ -29,40 +32,63 @@ class EmployeeController extends Controller
      */
     public function store(Request $request)
     {
-        $validateData = $request->validate([
-            'name' => 'required|unique:employees|max:255',
-            'email' => 'required|unique:employees|max:255',
-            'phone' => 'required|unique:employees',
+        try {
+            $validateData = $request->validate([
+                'name' => 'required|unique:employees|max:255',
+                'email' => 'required|unique:employees|max:255',
+                'phone' => 'required|unique:employees',
 
-        ]);
-        if ($request->photo) {
-            $position = strpos($request->photo, ';');
-            $sub = substr($request->photo, 0, $position);
-            $ext = explode('/', $sub)[1];
+            ]);
+            $defaultPassword = 'defaultPass';
 
-            $name = time() . '.' . $ext;
-            $img = Image::make($request->photo)->resize(240, 200);
-            $upload_path = 'backend/employee/';
-            $image_url = $upload_path . $name;
-            $img->save($image_url);
+            $data = array();
+            $data['name'] = $request->name;
+            $data['email'] = $request->email;
+            $data['password'] = Hash::make($defaultPassword);
+            DB::table('users')->insert($data);
 
-            $employee = new Employee;
-            $employee->name = $request->name;
-            $employee->email = $request->email;
-            $employee->phone = $request->phone;
-            $employee->photo = $image_url;
-            $employee->nid = $request->nid;
-            $employee->joining_date = $request->joining_date;
-            $employee->save();
-        } else {
-            $employee = new Employee;
-            $employee->name = $request->name;
-            $employee->email = $request->email;
-            $employee->phone = $request->phone;
-            $employee->nid = $request->nid;
-            $employee->joining_date = $request->joining_date;
-            $employee->save();
+            if ($request->photo) {
+                $position = strpos($request->photo, ';');
+                $sub = substr($request->photo, 0, $position);
+                $ext = explode('/', $sub)[1];
+
+                $name = time() . '.' . $ext;
+                $img = Image::make($request->photo)->resize(240, 200);
+                $upload_path = 'backend/employee/';
+                $image_url = $upload_path . $name;
+                $img->save($image_url);
+
+                $employee = new Employee;
+                $employee->name = $request->name;
+                $employee->email = $request->email;
+                $employee->phone = $request->phone;
+                $employee->photo = $image_url;
+                $employee->nid = $request->nid;
+                $employee->joining_date = $request->joining_date;
+                $employee->save();
+
+                return response()->json(['message' => 'Success'], 201);
+            } else {
+                $employee = new Employee;
+                $employee->name = $request->name;
+                $employee->email = $request->email;
+                $employee->phone = $request->phone;
+                $employee->nid = $request->nid;
+                $employee->joining_date = $request->joining_date;
+                $employee->save();
+            }
+        } catch (\Exception $e) {
+            Log::error('Employee/User Creation Failed', [
+                'message' => $e->getMessage(),
+                'trace' => $e->getTraceAsString()
+            ]);
+
+            return response()->json(['message' => 'Server error'], 500);
         }
+
+
+
+
     }
 
     /**
