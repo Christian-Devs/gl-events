@@ -5,10 +5,11 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Model\Employee;
 use App\User;
+use App\Role;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
-use Image;
-use DB;
+use Intervention\Image\ImageManagerStatic as Image;
+use Illuminate\Support\Facades\DB as DB;
 use Illuminate\Support\Facades\Log;
 
 class EmployeeController extends Controller
@@ -33,62 +34,62 @@ class EmployeeController extends Controller
     public function store(Request $request)
     {
         try {
-            $validateData = $request->validate([
-                'name' => 'required|unique:employees|max:255',
-                'email' => 'required|unique:employees|max:255',
-                'phone' => 'required|unique:employees',
-
+            $validated = $request->validate([
+                'name'         => 'required|max:255',
+                'email'        => 'required|email|unique:users,email',
+                'phone'        => 'required|unique:employees',
+                'joining_date' => 'required|date',
+                'nid'          => 'nullable|string',
+                'role_id'      => 'required|exists:roles,id',
             ]);
-            $defaultPassword = 'defaultPass';
 
-            $data = array();
-            $data['name'] = $request->name;
-            $data['email'] = $request->email;
-            $data['password'] = Hash::make($defaultPassword);
-            DB::table('users')->insert($data);
+            // Create the User
+            $user = User::create([
+                'name'     => $validated['name'],
+                'email'    => $validated['email'],
+                'password' => Hash::make('defaultPass'),
+                'role_id'  => $validated['role_id'],
+            ]);
 
+            // Handle image if provided
+            $imagePath = null;
             if ($request->photo) {
                 $position = strpos($request->photo, ';');
                 $sub = substr($request->photo, 0, $position);
                 $ext = explode('/', $sub)[1];
-
                 $name = time() . '.' . $ext;
                 $img = Image::make($request->photo)->resize(240, 200);
                 $upload_path = 'backend/employee/';
-                $image_url = $upload_path . $name;
-                $img->save($image_url);
-
-                $employee = new Employee;
-                $employee->name = $request->name;
-                $employee->email = $request->email;
-                $employee->phone = $request->phone;
-                $employee->photo = $image_url;
-                $employee->nid = $request->nid;
-                $employee->joining_date = $request->joining_date;
-                $employee->save();
-
-                return response()->json(['message' => 'Success'], 201);
-            } else {
-                $employee = new Employee;
-                $employee->name = $request->name;
-                $employee->email = $request->email;
-                $employee->phone = $request->phone;
-                $employee->nid = $request->nid;
-                $employee->joining_date = $request->joining_date;
-                $employee->save();
+                $imagePath = $upload_path . $name;
+                $img->save($imagePath);
             }
+
+            // Create the Employee
+            $employee = Employee::create([
+                'name'         => $validated['name'],
+                'email'        => $validated['email'],
+                'phone'        => $validated['phone'],
+                'nid'          => $request->nid,
+                'joining_date' => $validated['joining_date'],
+                'photo'        => $imagePath,
+                'role_id'      => $validated['role_id'],
+                'user_id'      => $user->id,
+            ]);
+
+            return response()->json([
+                'message'  => 'Employee created successfully',
+                'employee' => $employee,
+            ], 201);
         } catch (\Exception $e) {
             Log::error('Employee/User Creation Failed', [
                 'message' => $e->getMessage(),
-                'trace' => $e->getTraceAsString()
+                'trace'   => $e->getTraceAsString()
             ]);
 
-            return response()->json(['message' => 'Server error'], 500);
+            return response()->json([
+                'message' => 'Server error. Could not create employee.',
+            ], 500);
         }
-
-
-
-
     }
 
     /**
