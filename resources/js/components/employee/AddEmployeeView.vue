@@ -24,7 +24,7 @@
                           </small>
                         </div>
                         <div class="col-md-6">
-                          <input type="text" class="form-control" id="exampleInputPasswordRepeat"
+                          <input type="text" class="form-control" id="employeeCodeInput"
                             placeholder="Enter Employee Code" v-model="form.nid">
                           <small class="text-danger" v-if="errors.nid">
                             {{ errors.nid[0] }}
@@ -56,10 +56,21 @@
                     <div class="form-group">
                       <div class="form-row">
                         <div class="col-md-6">
-                          <input type="date" class="form-control" id="exampleInputPasswordRepeat"
+                          <input type="date" class="form-control" id="JoiningDateInput"
                             placeholder="Date joined" v-model="form.joining_date">
                           <small class="text-danger" v-if="errors.joining_date">
                             {{ errors.joining_date[0] }}
+                          </small>
+                        </div>
+                        <div class="col-md-6">
+                          <select class="form-control" aria-placeholder="Select a Role" v-model="form.role_id" required>
+                            <option value="" disabled>Select a role</option>
+                            <option v-for="role in roles" :key="role.id" :value="role.id">
+                              {{ role.label || role.name }}
+                            </option>
+                          </select>
+                          <small class="text-danger" v-if="errors.role_id">
+                            {{ errors.role_id[0] }}
                           </small>
                         </div>
                       </div>
@@ -105,6 +116,15 @@ export default {
     if (!User.loggedIn()) {
       this.$router.push({ name: '/' })
     }
+    else {
+      axios.get('/api/roles')
+        .then(response => {
+          this.roles = response.data;
+        })
+        .catch(error => {
+          console.error('Failed to load roles', error);
+        });
+    }
   },
 
   data() {
@@ -115,8 +135,10 @@ export default {
         phone: null,
         email: null,
         joining_date: null,
-        photo: null
+        photo: null,
+        role_id: ''
       },
+      roles: [],
       errors: {}
     }
   },

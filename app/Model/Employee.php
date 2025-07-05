@@ -13,11 +13,11 @@ class Employee extends Model
         'name',
         'email',
         'phone',
-        'joining_date',
         'nid',
+        'joining_date',
         'photo',
-        'role_id', // Add this
-        'user_id', // Optional, if you're linking employee to user table
+        'role_id',
+        'user_id',
     ];
 
     public function role()

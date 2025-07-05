@@ -35,20 +35,20 @@ class EmployeeController extends Controller
     {
         try {
             $validated = $request->validate([
-                'name'         => 'required|max:255',
-                'email'        => 'required|email|unique:users,email',
-                'phone'        => 'required|unique:employees',
+                'name' => 'required|max:255',
+                'email' => 'required|email|unique:users,email',
+                'phone' => 'required|unique:employees',
                 'joining_date' => 'required|date',
-                'nid'          => 'nullable|string',
-                'role_id'      => 'required|exists:roles,id',
+                'nid' => 'nullable|string',
+                'role_id' => 'required|exists:roles,id',
             ]);
 
             // Create the User
             $user = User::create([
-                'name'     => $validated['name'],
-                'email'    => $validated['email'],
+                'name' => $validated['name'],
+                'email' => $validated['email'],
                 'password' => Hash::make('defaultPass'),
-                'role_id'  => $validated['role_id'],
+                'role_id' => $validated['role_id'],
             ]);
 
             // Handle image if provided
@@ -66,24 +66,29 @@ class EmployeeController extends Controller
 
             // Create the Employee
             $employee = Employee::create([
-                'name'         => $validated['name'],
-                'email'        => $validated['email'],
-                'phone'        => $validated['phone'],
-                'nid'          => $request->nid,
+                'name' => $validated['name'],
+                'email' => $validated['email'],
+                'phone' => $validated['phone'],
+                'nid' => $request->nid,
                 'joining_date' => $validated['joining_date'],
-                'photo'        => $imagePath,
-                'role_id'      => $validated['role_id'],
-                'user_id'      => $user->id,
+                'photo' => $imagePath,
+                'role_id' => $validated['role_id'],
+                'user_id' => $user->id,
             ]);
 
             return response()->json([
-                'message'  => 'Employee created successfully',
+                'message' => 'Employee created successfully',
                 'employee' => $employee,
             ], 201);
+        } catch (\Illuminate\Validation\ValidationException $ve) {
+            return response()->json([
+                'message' => 'Validation failed',
+                'errors' => $ve->errors()
+            ], 422);
         } catch (\Exception $e) {
             Log::error('Employee/User Creation Failed', [
                 'message' => $e->getMessage(),
-                'trace'   => $e->getTraceAsString()
+                'trace' => $e->getTraceAsString()
             ]);
 
             return response()->json([

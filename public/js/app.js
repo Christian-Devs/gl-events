@@ -3248,9 +3248,16 @@ __webpack_require__.r(__webpack_exports__);
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   created: function created() {
+    var _this = this;
     if (!User.loggedIn()) {
       this.$router.push({
         name: '/'
+      });
+    } else {
+      axios.get('/api/roles').then(function (response) {
+        _this.roles = response.data;
+      })["catch"](function (error) {
+        console.error('Failed to load roles', error);
       });
     }
   },
@@ -3262,38 +3269,40 @@ __webpack_require__.r(__webpack_exports__);
         phone: null,
         email: null,
         joining_date: null,
-        photo: null
+        photo: null,
+        role_id: ''
       },
+      roles: [],
       errors: {}
     };
   },
   methods: {
     employeeInsert: function employeeInsert() {
-      var _this = this;
+      var _this2 = this;
       axios.post('/api/employee', this.form).then(function () {
-        _this.$router.push({
+        _this2.$router.push({
           name: 'employees'
         });
         _helpers_Notification__WEBPACK_IMPORTED_MODULE_0__["default"].success();
       })["catch"](function (error) {
         if (error.response && error.response.data && error.response.data.errors) {
-          _this.errors = error.response.data.errors;
+          _this2.errors = error.response.data.errors;
         } else {
-          _this.errors = {}; // Reset in case something else went wrong
+          _this2.errors = {}; // Reset in case something else went wrong
           _helpers_Notification__WEBPACK_IMPORTED_MODULE_0__["default"].error('An unexpected error occurred');
           console.error('Error:', error);
         }
       });
     },
     onFileSelected: function onFileSelected(event) {
-      var _this2 = this;
+      var _this3 = this;
       var file = event.target.files[0];
       if (file.size > 1048770) {
         _helpers_Notification__WEBPACK_IMPORTED_MODULE_0__["default"].image_validation();
       } else {
         var reader = new FileReader();
         reader.onload = function (event) {
-          _this2.form.photo = event.target.result;
+          _this3.form.photo = event.target.result;
           console.log(event.target.result);
         };
         reader.readAsDataURL(file);
@@ -5051,7 +5060,7 @@ var render = function render() {
     staticClass: "form-control",
     attrs: {
       type: "text",
-      id: "exampleInputPasswordRepeat",
+      id: "employeeCodeInput",
       placeholder: "Enter Employee Code"
     },
     domProps: {
@@ -5138,7 +5147,7 @@ var render = function render() {
     staticClass: "form-control",
     attrs: {
       type: "date",
-      id: "exampleInputPasswordRepeat",
+      id: "JoiningDateInput",
       placeholder: "Date joined"
     },
     domProps: {
@@ -5152,7 +5161,46 @@ var render = function render() {
     }
   }), _vm._v(" "), _vm.errors.joining_date ? _c("small", {
     staticClass: "text-danger"
-  }, [_vm._v("\n                          " + _vm._s(_vm.errors.joining_date[0]) + "\n                        ")]) : _vm._e()])])]), _vm._v(" "), _c("div", {
+  }, [_vm._v("\n                          " + _vm._s(_vm.errors.joining_date[0]) + "\n                        ")]) : _vm._e()]), _vm._v(" "), _c("div", {
+    staticClass: "col-md-6"
+  }, [_c("select", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.form.role_id,
+      expression: "form.role_id"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      "aria-placeholder": "Select a Role",
+      required: ""
+    },
+    on: {
+      change: function change($event) {
+        var $$selectedVal = Array.prototype.filter.call($event.target.options, function (o) {
+          return o.selected;
+        }).map(function (o) {
+          var val = "_value" in o ? o._value : o.value;
+          return val;
+        });
+        _vm.$set(_vm.form, "role_id", $event.target.multiple ? $$selectedVal : $$selectedVal[0]);
+      }
+    }
+  }, [_c("option", {
+    attrs: {
+      value: "",
+      disabled: ""
+    }
+  }, [_vm._v("Select a role")]), _vm._v(" "), _vm._l(_vm.roles, function (role) {
+    return _c("option", {
+      key: role.id,
+      domProps: {
+        value: role.id
+      }
+    }, [_vm._v("\n                            " + _vm._s(role.label || role.name) + "\n                          ")]);
+  })], 2), _vm._v(" "), _vm.errors.role_id ? _c("small", {
+    staticClass: "text-danger"
+  }, [_vm._v("\n                          " + _vm._s(_vm.errors.role_id[0]) + "\n                        ")]) : _vm._e()])])]), _vm._v(" "), _c("div", {
     staticClass: "form-group"
   }, [_c("div", {
     staticClass: "form-row"
@@ -26284,7 +26332,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n#em_photo {\r\n  height: 40px;\r\n  width: 40px;\n}\r\n", ""]);
+exports.push([module.i, "\n#em_photo {\n  height: 40px;\n  width: 40px;\n}\n", ""]);
 
 // exports
 
@@ -87329,8 +87377,8 @@ var routes = [{
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\xampp\htdocs\gl-events\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\xampp\htdocs\gl-events\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! /Users/christianvanwyk/Herd/gl-events/resources/js/app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! /Users/christianvanwyk/Herd/gl-events/resources/sass/app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

@@ -1,4 +1,5 @@
 <?php
+use App\Role;
 
 Route::group([
 
@@ -13,8 +14,12 @@ Route::group([
     Route::post('refresh', 'AuthController@refresh');
     Route::post('me', 'AuthController@me');
 
+
 });
 
+Route::get('/roles', function () {
+    return Role::all();
+});
 
 Route::apiResource('/employee', 'Api\EmployeeController');
 Route::apiResource('/supplier', 'Api\SupplierController');
