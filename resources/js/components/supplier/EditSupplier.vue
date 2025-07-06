@@ -18,16 +18,16 @@
                                             <div class="form-row">
                                                 <div class="col-md-6">
                                                     <input type="text" class="form-control" id="exampleInputFirstName"
-                                                        placeholder="Enter Supplier Name" v-model="form.name">
-                                                    <small class="text-danger" v-if="errors.name">
-                                                        {{ errors.name[0] }}
+                                                        placeholder="Enter Supplier Name" v-model="form.company_name">
+                                                    <small class="text-danger" v-if="errors.company_name">
+                                                        {{ errors.company_name[0] }}
                                                     </small>
                                                 </div>
                                                 <div class="col-md-6">
                                                     <input type="text" class="form-control" id="exampleInputPassword"
-                                                        placeholder="Enter Phone Number" v-model="form.phone">
-                                                    <small class="text-danger" v-if="errors.phone">
-                                                        {{ errors.phone[0] }}
+                                                        placeholder="Enter VAT Number" v-model="form.vat_number">
+                                                    <small class="text-danger" v-if="errors.vat_number">
+                                                        {{ errors.vat_number[0] }}
                                                     </small>
                                                 </div>
                                             </div>
@@ -37,6 +37,13 @@
                                         <div class="form-group">
                                             <div class="form-row">
                                                 <div class="col-md-6">
+                                                    <input type="text" class="form-control" id="exampleInputPassword"
+                                                        placeholder="Enter Phone Number" v-model="form.phone">
+                                                    <small class="text-danger" v-if="errors.phone">
+                                                        {{ errors.phone[0] }}
+                                                    </small>
+                                                </div>
+                                                <div class="col-md-6">
                                                     <input type="email" class="form-control" id="exampleInputEmail"
                                                         aria-describedby="emailHelp" placeholder="Enter Email Address"
                                                         v-model="form.email">
@@ -44,6 +51,11 @@
                                                         {{ errors.email[0] }}
                                                     </small>
                                                 </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <div class="form-row">
                                                 <div class="col-md-6">
                                                     <input type="text" class="form-control" id="exampleInputEmail"
                                                         aria-describedby="emailHelp"
@@ -64,6 +76,18 @@
                                                         v-model="form.address">
                                                     <small class="text-danger" v-if="errors.address">
                                                         {{ errors.address[0] }}
+                                                    </small>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <div class="form-row">
+                                                <div class="col-md-12">
+                                                    <textarea class="form-control" id="exampleInputPasswordRepeat"
+                                                        placeholder="Notes..." v-model="form.notes"></textarea>
+                                                    <small class="text-danger" v-if="errors.notes">
+                                                        {{ errors.notes[0] }}
                                                     </small>
                                                 </div>
                                             </div>
@@ -98,13 +122,15 @@ export default {
     data() {
         return {
             form: {
-          name: null,
-          phone: null,
-          email: null,
-          contact_person: null,
-          address: null
-        },
-        errors:{}
+                company_name: null,
+                phone: null,
+                email: null,
+                contact_person: null,
+                address: null,
+                vat_number: null,
+                notes: null
+            },
+            errors: {}
         }
     },
 

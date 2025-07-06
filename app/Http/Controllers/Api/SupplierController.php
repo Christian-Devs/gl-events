@@ -29,19 +29,28 @@ class SupplierController extends Controller
     public function store(Request $request)
     {
         $validateData = $request->validate([
-            'name' => 'required|unique:suppliers|max:255',
+            'company_name' => 'required|unique:suppliers|max:255',
             'email' => 'required|unique:suppliers|max:255',
             'phone' => 'required|unique:suppliers',
-            'address' => 'required|unique:suppliers'
+            'address' => 'required|unique:suppliers',
+            'vat_number' => 'nullable|string|max:50',
+            'notes' => 'nullable|string|max:2000',
+            'contact_person' => 'nullable|string|max:255',
         ]);
 
         $supplier = new Supplier();
-        $supplier->name = $request->name;
+        $supplier->company_name = $request->company_name;
         $supplier->phone = $request->phone;
         $supplier->email = $request->email;
         $supplier->address = $request->address;
         $supplier->contact_person = $request->contact_person;
+        $supplier->vat_number = $request->vat_number;
+        $supplier->notes = $request->notes;
         $supplier->save();
+
+        return response()->json([
+            'message' => 'Supplier added successfully'
+        ], 200);
     }
 
     /**
@@ -66,13 +75,19 @@ class SupplierController extends Controller
     public function update(Request $request, $id)
     {
         $data = array();
-        $data['name'] = $request->name;
+        $data['company_name'] = $request->name;
         $data['phone'] = $request->phone;
         $data['email'] = $request->email;
         $data['address'] = $request->address;
         $data['contact_person'] = $request->contact_person;
+        $data['vat_number'] = $request->vat_number;
+        $data['notes'] = $request->notes;
 
-        $user = DB::table('suppliers')->where('id', $id)->update($data);
+        $supplier = DB::table('suppliers')->where('id', $id)->update($data);
+        return response()->json([
+            'message' => 'Supplier updated successfully',
+            'supplier' => $supplier,
+        ], 200);
     }
 
     /**
