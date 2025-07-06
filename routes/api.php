@@ -24,3 +24,4 @@ Route::get('/roles', function () {
 Route::apiResource('/employee', 'Api\EmployeeController');
 Route::apiResource('/supplier', 'Api\SupplierController');
 Route::apiResource('/jobcard', 'Api\JobcardController');
+Route::apiResource('/settings', 'Api\SystemSettingController')->only(['index', 'update']);

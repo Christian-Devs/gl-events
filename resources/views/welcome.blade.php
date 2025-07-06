@@ -8,7 +8,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <link href="{{ asset('backend/img/logo/logo.png') }}" rel="icon">
-    <title>GL Events - Dashboard</title>
+    <title>BMS Tool</title>
     <link rel="stylesheet" href="{{ asset('css/app.css') }}" type="text/css">
     <link href="{{ asset('backend/vendor/fontawesome-free/css/all.min.css') }}" rel="stylesheet" type="text/css">
     <link href="{{ asset('backend/vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet" type="text/css">
@@ -27,7 +27,7 @@
                         <div class="sidebar-brand-icon">
                             <img src="{{ asset('backend/img/logo/logo.png') }}">
                         </div>
-                        <div class="sidebar-brand-text mx-3">GL Events</div>
+                        <div class="sidebar-brand-text mx-3">BMS Tool</div>
                     </a>
                     <hr class="sidebar-divider my-0">
                     <li class="nav-item">
@@ -78,6 +78,12 @@
                             </div>
                         </div>
                     </li>
+                    <li class="nav-item">
+                        <router-link class="nav-link" to="/system-settings">
+                            <i class="fas fa-cogs"></i>
+                            <span>System Settings</span>
+                        </router-link>
+                    </li>
 
                     <hr class="sidebar-divider">
                     <div class="version" id="version-ruangadmin"></div>
@@ -117,9 +123,8 @@
                                 </div>
                             </li>
                             <li class="nav-item dropdown no-arrow mx-1">
-                                <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown"
-                                    role="button" data-toggle="dropdown" aria-haspopup="true"
-                                    aria-expanded="false">
+                                <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button"
+                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                     <i class="fas fa-bell fa-fw"></i>
                                     <span class="badge badge-danger badge-counter">3+</span>
                                 </a>
@@ -167,9 +172,8 @@
                                 </div>
                             </li>
                             <li class="nav-item dropdown no-arrow mx-1">
-                                <a class="nav-link dropdown-toggle" href="#" id="messagesDropdown"
-                                    role="button" data-toggle="dropdown" aria-haspopup="true"
-                                    aria-expanded="false">
+                                <a class="nav-link dropdown-toggle" href="#" id="messagesDropdown" role="button"
+                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                     <i class="fas fa-envelope fa-fw"></i>
                                     <span class="badge badge-warning badge-counter">2</span>
                                 </a>
@@ -209,9 +213,8 @@
                                 </div>
                             </li>
                             <li class="nav-item dropdown no-arrow mx-1">
-                                <a class="nav-link dropdown-toggle" href="#" id="messagesDropdown"
-                                    role="button" data-toggle="dropdown" aria-haspopup="true"
-                                    aria-expanded="false">
+                                <a class="nav-link dropdown-toggle" href="#" id="messagesDropdown" role="button"
+                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                     <i class="fas fa-tasks fa-fw"></i>
                                     <span class="badge badge-success badge-counter">3</span>
                                 </a>

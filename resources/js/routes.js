@@ -15,23 +15,26 @@ let editsupplier = require('./components/supplier/EditSupplier.vue').default;
 let storejobcard = require('./components/job_cards/CreateJobcard.vue').default;
 let jobcards = require('./components/job_cards/AllJobcards.vue').default;
 let editjobcard = require('./components/job_cards/EditJobcards.vue').default;
+let systemsettings = require('./components/auth/SystemSettings.vue').default;
 
 export const routes = [
-    { path: '/', component: login, name: '/'},
-    { path: '/register', component: register, name: 'register'},
-    { path: '/forgotPassword', component: forget, name: 'forgotPassword'},
-    { path: '/logout', component: logout, name: 'logout'},
-    { path: '/home', component: home, name: 'home'},
+    { path: '/', component: login, name: '/' },
+    { path: '/register', component: register, name: 'register' },
+    { path: '/forgotPassword', component: forget, name: 'forgotPassword' },
+    { path: '/logout', component: logout, name: 'logout' },
+    { path: '/home', component: home, name: 'home' },
 
-    { path: '/employees', component: employee, name: 'employees'},
-    { path: '/add-employee', component: storeemployee, name: 'add-employee'},
-    { path: '/edit-employee/:id', component: editemployee, name: 'edit-employee'},
+    { path: '/employees', component: employee, name: 'employees' },
+    { path: '/add-employee', component: storeemployee, name: 'add-employee' },
+    { path: '/edit-employee/:id', component: editemployee, name: 'edit-employee' },
 
-    { path: '/suppliers', component: supplier, name: 'suppliers'},
-    { path: '/add-supplier', component: storesupplier, name: 'add-supplier'},
-    { path: '/edit-supplier/:id', component: editsupplier, name: 'edit-supplier'},
+    { path: '/suppliers', component: supplier, name: 'suppliers' },
+    { path: '/add-supplier', component: storesupplier, name: 'add-supplier' },
+    { path: '/edit-supplier/:id', component: editsupplier, name: 'edit-supplier' },
 
-    { path: '/jobcards', component: jobcards, name: 'jobcards'},
-    { path: '/add-jobcard', component: storejobcard, name: 'add-jobcard'},
-    { path: '/edit-jobcard/:id', component: editjobcard, name: 'edit-jobcard'}
+    { path: '/jobcards', component: jobcards, name: 'jobcards' },
+    { path: '/add-jobcard', component: storejobcard, name: 'add-jobcard' },
+    { path: '/edit-jobcard/:id', component: editjobcard, name: 'edit-jobcard' },
+
+    { path: '/system-settings', component: systemsettings, name: 'system-settings' }
 ];

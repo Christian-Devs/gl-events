@@ -11,6 +11,7 @@ import CanvasJSChart from "@canvasjs/vue-charts";
 window.User = User;
 window.Swal = Swal;
 window.Notification = Notification;
+console.log(window.User);
 
 Vue.use(VueRouter);
 Vue.use(CanvasJSChart);
