@@ -3900,7 +3900,7 @@ function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e 
     filtersearch: function filtersearch() {
       var _this = this;
       return this.suppliers.filter(function (supplier) {
-        return supplier.name.toLowerCase().match(_this.search.toLowerCase()) || supplier.phone.match(_this.search) || supplier.email.toLowerCase().match(_this.search.toLowerCase()) || supplier.contact_person.toLowerCase().match(_this.search.toLowerCase());
+        return supplier.company_name.toLowerCase().match(_this.search.toLowerCase()) || supplier.phone.match(_this.search) || supplier.email.toLowerCase().match(_this.search.toLowerCase()) || supplier.contact_person.toLowerCase().match(_this.search.toLowerCase());
       });
     }
   },
@@ -3970,11 +3970,13 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {
       form: {
-        name: null,
+        company_name: null,
         phone: null,
         email: null,
         contact_person: null,
-        address: null
+        address: null,
+        vat_number: null,
+        notes: null
       },
       errors: {}
     };
@@ -4022,11 +4024,13 @@ function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e 
   data: function data() {
     return {
       form: {
-        name: null,
+        company_name: null,
         phone: null,
         email: null,
         contact_person: null,
-        address: null
+        address: null,
+        vat_number: null,
+        notes: null
       },
       errors: {}
     };
@@ -8366,7 +8370,7 @@ var render = function render() {
   }, [_vm._m(1), _vm._v(" "), _c("tbody", _vm._l(_vm.filtersearch, function (supplier) {
     return _c("tr", {
       key: supplier.id
-    }, [_c("td", [_vm._v(_vm._s(supplier.name))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(supplier.phone))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(supplier.email))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(supplier.address))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(supplier.contact_person))]), _vm._v(" "), _c("td", [_c("router-link", {
+    }, [_c("td", [_vm._v(_vm._s(supplier.company_name))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(supplier.phone))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(supplier.email))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(supplier.address))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(supplier.contact_person))]), _vm._v(" "), _c("td", [_c("router-link", {
       staticClass: "btn btn-sm btn-primary",
       attrs: {
         to: {
@@ -8401,7 +8405,7 @@ var staticRenderFns = [function () {
     _c = _vm._self._c;
   return _c("thead", {
     staticClass: "thead-light"
-  }, [_c("tr", [_c("th", [_vm._v("Name")]), _vm._v(" "), _c("th", [_vm._v("Phone")]), _vm._v(" "), _c("th", [_vm._v("Email")]), _vm._v(" "), _c("th", [_vm._v("Address")]), _vm._v(" "), _c("th", [_vm._v("Contact Person")]), _vm._v(" "), _c("th", [_vm._v("Action")])])]);
+  }, [_c("tr", [_c("th", [_vm._v("Company Name")]), _vm._v(" "), _c("th", [_vm._v("Phone")]), _vm._v(" "), _c("th", [_vm._v("Email")]), _vm._v(" "), _c("th", [_vm._v("Address")]), _vm._v(" "), _c("th", [_vm._v("Contact Person")]), _vm._v(" "), _c("th", [_vm._v("Action")])])]);
 }];
 render._withStripped = true;
 
@@ -8464,8 +8468,8 @@ var render = function render() {
     directives: [{
       name: "model",
       rawName: "v-model",
-      value: _vm.form.name,
-      expression: "form.name"
+      value: _vm.form.company_name,
+      expression: "form.company_name"
     }],
     staticClass: "form-control",
     attrs: {
@@ -8474,17 +8478,47 @@ var render = function render() {
       placeholder: "Enter Supplier Name"
     },
     domProps: {
-      value: _vm.form.name
+      value: _vm.form.company_name
     },
     on: {
       input: function input($event) {
         if ($event.target.composing) return;
-        _vm.$set(_vm.form, "name", $event.target.value);
+        _vm.$set(_vm.form, "company_name", $event.target.value);
       }
     }
-  }), _vm._v(" "), _vm.errors.name ? _c("small", {
+  }), _vm._v(" "), _vm.errors.company_name ? _c("small", {
     staticClass: "text-danger"
-  }, [_vm._v("\n                          " + _vm._s(_vm.errors.name[0]) + "\n                        ")]) : _vm._e()]), _vm._v(" "), _c("div", {
+  }, [_vm._v("\n                          " + _vm._s(_vm.errors.company_name[0]) + "\n                        ")]) : _vm._e()]), _vm._v(" "), _c("div", {
+    staticClass: "col-md-6"
+  }, [_c("input", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.form.vat_number,
+      expression: "form.vat_number"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      type: "text",
+      id: "exampleInputPassword",
+      placeholder: "Enter VAT Number"
+    },
+    domProps: {
+      value: _vm.form.vat_number
+    },
+    on: {
+      input: function input($event) {
+        if ($event.target.composing) return;
+        _vm.$set(_vm.form, "vat_number", $event.target.value);
+      }
+    }
+  }), _vm._v(" "), _vm.errors.vat_number ? _c("small", {
+    staticClass: "text-danger"
+  }, [_vm._v("\n                          " + _vm._s(_vm.errors.vat_number[0]) + "\n                        ")]) : _vm._e()])])]), _vm._v(" "), _c("div", {
+    staticClass: "form-group"
+  }, [_c("div", {
+    staticClass: "form-row"
+  }, [_c("div", {
     staticClass: "col-md-6"
   }, [_c("input", {
     directives: [{
@@ -8510,11 +8544,7 @@ var render = function render() {
     }
   }), _vm._v(" "), _vm.errors.phone ? _c("small", {
     staticClass: "text-danger"
-  }, [_vm._v("\n                          " + _vm._s(_vm.errors.phone[0]) + "\n                        ")]) : _vm._e()])])]), _vm._v(" "), _c("div", {
-    staticClass: "form-group"
-  }, [_c("div", {
-    staticClass: "form-row"
-  }, [_c("div", {
+  }, [_vm._v("\n                          " + _vm._s(_vm.errors.phone[0]) + "\n                        ")]) : _vm._e()]), _vm._v(" "), _c("div", {
     staticClass: "col-md-6"
   }, [_c("input", {
     directives: [{
@@ -8541,7 +8571,11 @@ var render = function render() {
     }
   }), _vm._v(" "), _vm.errors.email ? _c("small", {
     staticClass: "text-danger"
-  }, [_vm._v("\n                          " + _vm._s(_vm.errors.email[0]) + "\n                        ")]) : _vm._e()]), _vm._v(" "), _c("div", {
+  }, [_vm._v("\n                          " + _vm._s(_vm.errors.email[0]) + "\n                        ")]) : _vm._e()])])]), _vm._v(" "), _c("div", {
+    staticClass: "form-group"
+  }, [_c("div", {
+    staticClass: "form-row"
+  }, [_c("div", {
     staticClass: "col-md-6"
   }, [_c("input", {
     directives: [{
@@ -8598,7 +8632,36 @@ var render = function render() {
     }
   }), _vm._v(" "), _vm.errors.address ? _c("small", {
     staticClass: "text-danger"
-  }, [_vm._v("\n                          " + _vm._s(_vm.errors.address[0]) + "\n                        ")]) : _vm._e()])])]), _vm._v(" "), _vm._m(1)])])])])])])])])]);
+  }, [_vm._v("\n                          " + _vm._s(_vm.errors.address[0]) + "\n                        ")]) : _vm._e()])])]), _vm._v(" "), _c("div", {
+    staticClass: "form-group"
+  }, [_c("div", {
+    staticClass: "form-row"
+  }, [_c("div", {
+    staticClass: "col-md-12"
+  }, [_c("textarea", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.form.notes,
+      expression: "form.notes"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      id: "exampleInputPasswordRepeat",
+      placeholder: "Notes..."
+    },
+    domProps: {
+      value: _vm.form.notes
+    },
+    on: {
+      input: function input($event) {
+        if ($event.target.composing) return;
+        _vm.$set(_vm.form, "notes", $event.target.value);
+      }
+    }
+  }), _vm._v(" "), _vm.errors.notes ? _c("small", {
+    staticClass: "text-danger"
+  }, [_vm._v("\n                          " + _vm._s(_vm.errors.notes[0]) + "\n                        ")]) : _vm._e()])])]), _vm._v(" "), _vm._m(1)])])])])])])])])]);
 };
 var staticRenderFns = [function () {
   var _vm = this,
@@ -8681,8 +8744,8 @@ var render = function render() {
     directives: [{
       name: "model",
       rawName: "v-model",
-      value: _vm.form.name,
-      expression: "form.name"
+      value: _vm.form.company_name,
+      expression: "form.company_name"
     }],
     staticClass: "form-control",
     attrs: {
@@ -8691,17 +8754,47 @@ var render = function render() {
       placeholder: "Enter Supplier Name"
     },
     domProps: {
-      value: _vm.form.name
+      value: _vm.form.company_name
     },
     on: {
       input: function input($event) {
         if ($event.target.composing) return;
-        _vm.$set(_vm.form, "name", $event.target.value);
+        _vm.$set(_vm.form, "company_name", $event.target.value);
       }
     }
-  }), _vm._v(" "), _vm.errors.name ? _c("small", {
+  }), _vm._v(" "), _vm.errors.company_name ? _c("small", {
     staticClass: "text-danger"
-  }, [_vm._v("\n                                                    " + _vm._s(_vm.errors.name[0]) + "\n                                                ")]) : _vm._e()]), _vm._v(" "), _c("div", {
+  }, [_vm._v("\n                                                    " + _vm._s(_vm.errors.company_name[0]) + "\n                                                ")]) : _vm._e()]), _vm._v(" "), _c("div", {
+    staticClass: "col-md-6"
+  }, [_c("input", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.form.vat_number,
+      expression: "form.vat_number"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      type: "text",
+      id: "exampleInputPassword",
+      placeholder: "Enter VAT Number"
+    },
+    domProps: {
+      value: _vm.form.vat_number
+    },
+    on: {
+      input: function input($event) {
+        if ($event.target.composing) return;
+        _vm.$set(_vm.form, "vat_number", $event.target.value);
+      }
+    }
+  }), _vm._v(" "), _vm.errors.vat_number ? _c("small", {
+    staticClass: "text-danger"
+  }, [_vm._v("\n                                                    " + _vm._s(_vm.errors.vat_number[0]) + "\n                                                ")]) : _vm._e()])])]), _vm._v(" "), _c("div", {
+    staticClass: "form-group"
+  }, [_c("div", {
+    staticClass: "form-row"
+  }, [_c("div", {
     staticClass: "col-md-6"
   }, [_c("input", {
     directives: [{
@@ -8727,11 +8820,7 @@ var render = function render() {
     }
   }), _vm._v(" "), _vm.errors.phone ? _c("small", {
     staticClass: "text-danger"
-  }, [_vm._v("\n                                                    " + _vm._s(_vm.errors.phone[0]) + "\n                                                ")]) : _vm._e()])])]), _vm._v(" "), _c("div", {
-    staticClass: "form-group"
-  }, [_c("div", {
-    staticClass: "form-row"
-  }, [_c("div", {
+  }, [_vm._v("\n                                                    " + _vm._s(_vm.errors.phone[0]) + "\n                                                ")]) : _vm._e()]), _vm._v(" "), _c("div", {
     staticClass: "col-md-6"
   }, [_c("input", {
     directives: [{
@@ -8758,7 +8847,11 @@ var render = function render() {
     }
   }), _vm._v(" "), _vm.errors.email ? _c("small", {
     staticClass: "text-danger"
-  }, [_vm._v("\n                                                    " + _vm._s(_vm.errors.email[0]) + "\n                                                ")]) : _vm._e()]), _vm._v(" "), _c("div", {
+  }, [_vm._v("\n                                                    " + _vm._s(_vm.errors.email[0]) + "\n                                                ")]) : _vm._e()])])]), _vm._v(" "), _c("div", {
+    staticClass: "form-group"
+  }, [_c("div", {
+    staticClass: "form-row"
+  }, [_c("div", {
     staticClass: "col-md-6"
   }, [_c("input", {
     directives: [{
@@ -8815,7 +8908,36 @@ var render = function render() {
     }
   }), _vm._v(" "), _vm.errors.address ? _c("small", {
     staticClass: "text-danger"
-  }, [_vm._v("\n                                                    " + _vm._s(_vm.errors.address[0]) + "\n                                                ")]) : _vm._e()])])]), _vm._v(" "), _vm._m(1)])])])])])])])])]);
+  }, [_vm._v("\n                                                    " + _vm._s(_vm.errors.address[0]) + "\n                                                ")]) : _vm._e()])])]), _vm._v(" "), _c("div", {
+    staticClass: "form-group"
+  }, [_c("div", {
+    staticClass: "form-row"
+  }, [_c("div", {
+    staticClass: "col-md-12"
+  }, [_c("textarea", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.form.notes,
+      expression: "form.notes"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      id: "exampleInputPasswordRepeat",
+      placeholder: "Notes..."
+    },
+    domProps: {
+      value: _vm.form.notes
+    },
+    on: {
+      input: function input($event) {
+        if ($event.target.composing) return;
+        _vm.$set(_vm.form, "notes", $event.target.value);
+      }
+    }
+  }), _vm._v(" "), _vm.errors.notes ? _c("small", {
+    staticClass: "text-danger"
+  }, [_vm._v("\n                                                    " + _vm._s(_vm.errors.notes[0]) + "\n                                                ")]) : _vm._e()])])]), _vm._v(" "), _vm._m(1)])])])])])])])])]);
 };
 var staticRenderFns = [function () {
   var _vm = this,

@@ -19,7 +19,7 @@
               <table class="table align-items-center table-flush">
                 <thead class="thead-light">
                   <tr>
-                    <th>Name</th>
+                    <th>Company Name</th>
                     <th>Phone</th>
                     <th>Email</th>
                     <th>Address</th>
@@ -29,7 +29,7 @@
                 </thead>
                 <tbody>
                   <tr v-for="supplier in filtersearch" :key="supplier.id">
-                    <td>{{ supplier.name }}</td>
+                    <td>{{ supplier.company_name }}</td>
                     <td>{{ supplier.phone }}</td>
                     <td>{{ supplier.email }}</td>
                     <td>{{ supplier.address }}</td>
@@ -68,7 +68,7 @@
     computed: {
       filtersearch() {
         return this.suppliers.filter(supplier => {
-          return supplier.name.toLowerCase().match(this.search.toLowerCase()) || supplier.phone.match(this.search) || supplier.email.toLowerCase().match(this.search.toLowerCase()) ||  supplier.contact_person.toLowerCase().match(this.search.toLowerCase())
+          return supplier.company_name.toLowerCase().match(this.search.toLowerCase()) || supplier.phone.match(this.search) || supplier.email.toLowerCase().match(this.search.toLowerCase()) ||  supplier.contact_person.toLowerCase().match(this.search.toLowerCase())
         })
       }
     },
