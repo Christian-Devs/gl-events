@@ -2,7 +2,7 @@
 
 namespace App\Model;
 
-use App\Quote;
+use App\Model\Quote;
 use Illuminate\Database\Eloquent\Model;
 
 class QuoteItem extends Model

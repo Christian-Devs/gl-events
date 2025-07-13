@@ -12,6 +12,10 @@ let storesupplier = require('./components/supplier/CreateSupplier.vue').default;
 let supplier = require('./components/supplier/AllSuppliers.vue').default;
 let editsupplier = require('./components/supplier/EditSupplier.vue').default;
 
+let storequote = require('./components/quote/CreateQuote.vue').default;
+let quotes = require('./components/quote/AllQuotes.vue').default;
+let editquote = require('./components/quote/EditQuote.vue').default;
+
 let storejobcard = require('./components/job_cards/CreateJobcard.vue').default;
 let jobcards = require('./components/job_cards/AllJobcards.vue').default;
 let editjobcard = require('./components/job_cards/EditJobcards.vue').default;
@@ -31,6 +35,10 @@ export const routes = [
     { path: '/suppliers', component: supplier, name: 'suppliers' },
     { path: '/add-supplier', component: storesupplier, name: 'add-supplier' },
     { path: '/edit-supplier/:id', component: editsupplier, name: 'edit-supplier' },
+
+    { path: '/quotes', component: quotes, name: 'quotes' },
+    { path: '/add-quote', component: storequote, name: 'add-quote' },
+    { path: '/edit-quote/:id', component: editquote, name: 'edit-quote' },
 
     { path: '/jobcards', component: jobcards, name: 'jobcards' },
     { path: '/add-jobcard', component: storejobcard, name: 'add-jobcard' },

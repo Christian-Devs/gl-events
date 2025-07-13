@@ -1,5 +1,7 @@
 <?php
 
+use App\Model\Quote;
+use App\Model\QuoteItem;
 use Illuminate\Database\Seeder;
 use App\User;
 use Illuminate\Support\Facades\Hash;
@@ -14,15 +16,30 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        $adminRole = Role::firstOrCreate(['name' => 'admin'], ['label' => 'Administrator']);
-        $managerRole = Role::firstOrCreate(['name' => 'manager'], ['label' => 'Manager']);
-        $staffRole = Role::firstOrCreate(['name' => 'staff'], ['label' => 'Staff']);
+        $quote = Quote::create([
+            'client_name' => 'Test Client',
+            'client_email' => 'client@example.com',
+            'quote_date' => now()->toDateString(),
+            'status' => 'pending',
+            'subtotal' => 1000.00,
+            'vat' => 150.00,
+            'total' => 1150.00,
+            'notes' => 'This is a test quote created from a seeder.'
+        ]);
 
-        User::create([
-            'name' => 'Admin',
-            'email' => 'admin@example.com',
-            'password' => Hash::make('password'),
-            'role_id' => $adminRole->id,
+        $quote->items()->createMany([
+            [
+                'description' => 'Design Work',
+                'quantity' => 5,
+                'unit_price' => 100.00,
+                'total' => 500.00
+            ],
+            [
+                'description' => 'Development',
+                'quantity' => 10,
+                'unit_price' => 50.00,
+                'total' => 500.00
+            ]
         ]);
     }
 }

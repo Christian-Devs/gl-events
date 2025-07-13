@@ -30,7 +30,7 @@ class QuoteController extends Controller
         $validated = $request->validate([
             'client_name' => 'required|string|max:255',
             'client_email' => 'nullable|email',
-            'quote_date' => 'required|date',
+            'quote_date' => now(),
             'subtotal' => 'required|numeric|min:0',
             'vat' => 'nullable|numeric|min:0',
             'total' => 'required|numeric|min:0',
@@ -77,10 +77,21 @@ class QuoteController extends Controller
     {
         $quote = Quote::findOrFail($id);
 
+        // If only updating status
+        if ($request->has('status') && count($request->all()) === 1) {
+            $request->validate([
+                'status' => 'required|in:pending,approved,rejected'
+            ]);
+
+            $quote->status = $request->status;
+            $quote->save();
+
+            return response()->json(['message' => 'Status updated']);
+        }
+
         $validated = $request->validate([
             'client_name' => 'required|string|max:255',
             'client_email' => 'nullable|email',
-            'quote_date' => 'required|date',
             'subtotal' => 'required|numeric|min:0',
             'vat' => 'nullable|numeric|min:0',
             'total' => 'required|numeric|min:0',

@@ -65,6 +65,20 @@
                         </div>
                     </li>
                     <li class="nav-item">
+                        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#Quotations"
+                            aria-expanded="true" aria-controls="Quotations">
+                            <i class="far fa-fw fa-window-maximize"></i>
+                            <span>Quotations</span>
+                        </a>
+                        <div id="Quotations" class="collapse" aria-labelledby="headingBootstrap"
+                            data-parent="#accordionSidebar">
+                            <div class="bg-white py-2 collapse-inner rounded">
+                                <router-link class="collapse-item" to="/add-quote">Add Quote</router-link>
+                                <router-link class="collapse-item" to="/quotes">All Quotes</router-link>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="nav-item">
                         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#Jobcards"
                             aria-expanded="true" aria-controls="Jobcards">
                             <i class="far fa-fw fa-window-maximize"></i>
