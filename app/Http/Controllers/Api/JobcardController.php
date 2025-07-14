@@ -16,8 +16,8 @@ class JobcardController extends Controller
      */
     public function index()
     {
-        $jobcard = Jobcard::all();
-        return response()->json($jobcard);
+        $jobcards = Jobcard::with('quote')->latest()->get();
+        return response()->json($jobcards);
     }
 
 
@@ -29,23 +29,20 @@ class JobcardController extends Controller
      */
     public function store(Request $request)
     {
-        $validateData = $request->validate([
-            'job_number' => 'required|max:255',
-            'salesperson' => 'required|max:255',
-            'stand_name' => 'required',
-            'show_name' => 'required',
-            'materials' => 'required|array',
-            'total_amount' => 'required|numeric'
+        $validated = $request->validate([
+            'quote_id' => 'required|exists:quotes,id',
+            'assigned_to' => 'nullable|string',
+            'start_date' => 'nullable|date',
+            'due_date' => 'nullable|date',
+            'notes' => 'nullable|string',
         ]);
 
-        $jobcard = new Jobcard();
-        $jobcard->job_number = $request->job_number;
-        $jobcard->salesperson = $request->salesperson;
-        $jobcard->stand_name = $request->stand_name;
-        $jobcard->show_name = $request->show_name;
-        $jobcard->materials = json_encode($request->materials);
-        $jobcard->total_amount = $request->total_amount;
-        $jobcard->save();
+        $jobcard = Jobcard::create($validated);
+
+        return response()->json([
+            'message' => 'Job card created successfully',
+            'jobcard' => $jobcard->load('quote'),
+        ], 201);
     }
 
     /**
@@ -56,7 +53,7 @@ class JobcardController extends Controller
      */
     public function show($id)
     {
-        $jobcard = DB::table('jobcards')->where('id', $id)->first();
+        $jobcard = Jobcard::with('quote')->findOrFail($id);
         return response()->json($jobcard);
     }
 
@@ -70,15 +67,22 @@ class JobcardController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $data = array();
-        $data['job_number'] = $request->job_number;
-        $data['salesperson'] = $request->salesperson;
-        $data['stand_name'] = $request->stand_name;
-        $data['show_name'] = $request->show_name;
-        $data['materials'] = $request->materials;
-        $data['total_amount'] = $request->total_amount;
+        $jobcard = Jobcard::findOrFail($id);
 
-        $user = DB::table('jobcards')->where('id', $id)->update($data);
+        $validated = $request->validate([
+            'assigned_to' => 'nullable|string|max:255',
+            'status' => 'required|in:open,in-progress,completed,cancelled',
+            'start_date' => 'nullable|date',
+            'due_date' => 'nullable|date|after_or_equal:start_date',
+            'notes' => 'nullable|string',
+        ]);
+
+        $jobcard->update($validated);
+
+        return response()->json([
+            'message' => 'Job card updated successfully',
+            'jobcard' => $jobcard->fresh('quote'),
+        ]);
     }
 
     /**

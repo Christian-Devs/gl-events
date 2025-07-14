@@ -3539,85 +3539,6 @@ function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e 
 
 /***/ }),
 
-/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/job_cards/AllJobcards.vue?vue&type=script&lang=js":
-/*!*******************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/job_cards/AllJobcards.vue?vue&type=script&lang=js ***!
-  \*******************************************************************************************************************************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
-function _defineProperty(e, r, t) { return (r = _toPropertyKey(r)) in e ? Object.defineProperty(e, r, { value: t, enumerable: !0, configurable: !0, writable: !0 }) : e[r] = t, e; }
-function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == _typeof(i) ? i : i + ""; }
-function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != _typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
-/* harmony default export */ __webpack_exports__["default"] = (_defineProperty({
-  created: function created() {
-    if (!User.loggedIn()) {
-      this.$router.push({
-        name: '/'
-      });
-    }
-  },
-  data: function data() {
-    return {
-      jobcards: [],
-      search: ''
-    };
-  },
-  computed: {
-    filtersearch: function filtersearch() {
-      var _this = this;
-      return this.jobcards.filter(function (jobcard) {
-        return jobcard.salesperson.toLowerCase().match(_this.search.toLowerCase()) || jobcard.job_number.toLowerCase().match(_this.search.toLowerCase()) || jobcard.stand_name.toLowerCase().match(_this.search.toLowerCase()) || jobcard.show_name.toLowerCase().match(_this.search.toLowerCase());
-      });
-    }
-  },
-  methods: {
-    allJobcards: function allJobcards() {
-      var _this2 = this;
-      axios.get('/api/jobcard/').then(function (_ref) {
-        var data = _ref.data;
-        return _this2.jobcards = data;
-      })["catch"]();
-    },
-    deleteJobcard: function deleteJobcard(id) {
-      var _this3 = this;
-      Swal.fire({
-        title: "Are you sure?",
-        text: "You won't be able to revert this!",
-        icon: "warning",
-        showCancelButton: true,
-        confirmButtonColor: "#3085d6",
-        cancelButtonColor: "#d33",
-        confirmButtonText: "Yes, delete it!"
-      }).then(function (result) {
-        if (result.value) {
-          axios["delete"]('/api/jobcard/' + id).then(function () {
-            _this3.jobcards = _this3.jobcards.filter(function (jobcard) {
-              return jobcard.id !== id;
-            });
-          })["catch"](function () {
-            _this3.$router.push({
-              name: 'jobcards'
-            });
-          });
-          Swal.fire({
-            title: "Deleted!",
-            text: "Your file has been deleted.",
-            icon: "success"
-          });
-        }
-      });
-    }
-  }
-}, "created", function created() {
-  this.allJobcards();
-}));
-
-/***/ }),
-
 /***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/job_cards/CreateJobcard.vue?vue&type=script&lang=js":
 /*!*********************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/job_cards/CreateJobcard.vue?vue&type=script&lang=js ***!
@@ -3627,241 +3548,40 @@ function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e 
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _helpers_Notification__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../helpers/Notification */ "./resources/js/helpers/Notification.js");
-
 /* harmony default export */ __webpack_exports__["default"] = ({
-  created: function created() {
-    if (!User.loggedIn()) {
-      this.$router.push({
-        name: '/'
-      });
-    }
-  },
   data: function data() {
     return {
       form: {
-        job_number: null,
-        salesperson: null,
-        stand_name: null,
-        show_name: null,
-        materials: [{
-          quantity: null,
-          description: null,
-          width: null,
-          height: null,
-          total_sqm: null,
-          banner_type: null,
-          outsourced: null,
-          machine: null,
-          print_medium_sqm: null,
-          total_print_medium: null,
-          ink_sqm: null,
-          total_ink: null,
-          pdfp: null,
-          total_pinnacle: null,
-          silicon_welt_length: null,
-          sw_unit_price_m: null,
-          total_silicon_welt: null,
-          flat_chonk_length: null,
-          fc_unit_price_m: null,
-          total_flat_chonk: null,
-          eyelets_length: null,
-          eyelets_unit_price_m: null,
-          total_eyelets: null,
-          web_vel_length: null,
-          webvel_unit_price_m: null,
-          total_webvel: null,
-          pullup_unit_price: null,
-          pullup_total_hardware: null,
-          pullup_unit_price_sqm: null,
-          total_magnetic: null,
-          consumables: null,
-          unit_price_item: null
-        }],
-        total_amount: null
+        quote_id: this.$route.params.quoteId,
+        assigned_to: '',
+        status: 'open',
+        start_date: '',
+        due_date: '',
+        notes: ''
       },
+      quoteRef: '',
       errors: {}
     };
   },
+  created: function created() {
+    var _this = this;
+    // Optional: fetch quote info for better reference label
+    axios.get("/api/quotes/".concat(this.form.quote_id)).then(function (res) {
+      _this.quoteRef = "Quote #".concat(res.data.id, " - ").concat(res.data.client_name);
+    })["catch"](function () {
+      _this.quoteRef = "Quote ID ".concat(_this.form.quote_id);
+    });
+  },
   methods: {
-    jobcardInsert: function jobcardInsert() {
-      var _this = this;
+    createJobCard: function createJobCard() {
+      var _this2 = this;
       axios.post('/api/jobcard', this.form).then(function () {
-        _this.$router.push({
+        _this2.$router.push({
           name: 'jobcards'
         });
-        _helpers_Notification__WEBPACK_IMPORTED_MODULE_0__["default"].success();
-      })["catch"](function (error) {
-        if (error.response && error.response.data && error.response.data.errors) {
-          _this.errors = error.response.data.errors;
-
-          // ✅ Ensure errors.materials is an array
-          if (!Array.isArray(_this.errors.materials)) {
-            _this.errors.materials = [];
-          }
-        } else {
-          _this.errors = {};
-        }
-      });
-    },
-    addMaterials: function addMaterials() {
-      this.form.materials.push({
-        quantity: null,
-        description: null,
-        width: null,
-        height: null,
-        total_sqm: null,
-        banner_type: null,
-        outsourced: null,
-        machine: null,
-        print_medium_sqm: null,
-        total_print_medium: null,
-        ink_sqm: null,
-        total_ink: null,
-        pdfp: null,
-        total_pinnacle: null,
-        silicon_welt_length: null,
-        sw_unit_price_m: null,
-        total_silicon_welt: null,
-        flat_chonk_length: null,
-        fc_unit_price_m: null,
-        total_flat_chonk: null,
-        eyelets_length: null,
-        eyelets_unit_price_m: null,
-        total_eyelets: null,
-        web_vel_length: null,
-        webvel_unit_price_m: null,
-        total_webvel: null,
-        pullup_unit_price: null,
-        pullup_total_hardware: null,
-        pullup_unit_price_sqm: null,
-        total_magnetic: null,
-        consumables: null,
-        unit_price_item: null
-      });
-      this.errors.materials = this.errors.materials || [];
-      this.errors.materials.push({});
-    },
-    removeMaterials: function removeMaterials(index) {
-      this.form.materials.splice(index, 1);
-    }
-  }
-});
-
-/***/ }),
-
-/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/job_cards/EditJobcards.vue?vue&type=script&lang=js":
-/*!********************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/job_cards/EditJobcards.vue?vue&type=script&lang=js ***!
-  \********************************************************************************************************************************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _helpers_Notification__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../helpers/Notification */ "./resources/js/helpers/Notification.js");
-
-/* harmony default export */ __webpack_exports__["default"] = ({
-  created: function created() {
-    if (!User.loggedIn()) {
-      this.$router.push({
-        name: '/'
-      });
-    }
-  },
-  data: function data() {
-    return {
-      form: {
-        job_number: null,
-        salesperson: null,
-        stand_name: null,
-        show_name: null,
-        materials: [{
-          quantity: '',
-          description: '',
-          width: '',
-          height: '',
-          total_sqm: '',
-          banner_type: '',
-          outsourced: '',
-          machine: '',
-          total_print_medium: '',
-          total_ink: '',
-          pdfp: '',
-          total_pinnacle: '',
-          silicon_welt: '',
-          silicon_welt_length: '',
-          total_silicon_welt: '',
-          flat_chonk: '',
-          flat_chonk_length: '',
-          total_flat_chonk: '',
-          eyelets: '',
-          eyelets_length: '',
-          total_eyelets: '',
-          webvel: '',
-          web_vel_length: '',
-          total_webvel: '',
-          pullup_banner: '',
-          pullup_total_hardware: '',
-          magnetic: '',
-          total_magnetic: '',
-          consumables: '',
-          unit_price_item: ''
-        }],
-        total_amount: ''
-      },
-      errors: {}
-    };
-  },
-  methods: {
-    addMaterials: function addMaterials() {
-      this.form.materials.push({
-        quantity: '',
-        description: '',
-        width: '',
-        height: '',
-        total_sqm: '',
-        banner_type: '',
-        outsourced: '',
-        machine: '',
-        print_medium_sqm: '',
-        total_print_medium: '',
-        ink_sqm: '',
-        total_ink: '',
-        pdfp: '',
-        total_pinnacle: '',
-        silicon_welt_length: '',
-        sw_unit_price_m: '',
-        total_silicon_welt: '',
-        flat_chonk_length: '',
-        fc_unit_price_m: '',
-        total_flat_chonk: '',
-        eyelets_length: '',
-        eyelets_unit_price_m: '',
-        total_eyelets: '',
-        web_vel_length: '',
-        webvel_unit_price_m: '',
-        total_webvel: '',
-        pullup_unit_price: '',
-        pullup_total_hardware: '',
-        pullup_unit_price_sqm: '',
-        total_magnetic: '',
-        consumables: '',
-        unit_price_item: ''
-      });
-    },
-    removeMaterials: function removeMaterials(index) {
-      this.form.materials.splice(index, 1);
-    },
-    jobcardInsert: function jobcardInsert() {
-      var _this = this;
-      axios.post('/api/employee', this.form).then(function () {
-        _this.$router.push({
-          name: 'employees'
-        });
-        _helpers_Notification__WEBPACK_IMPORTED_MODULE_0__["default"].success();
-      })["catch"](function (error) {
-        return _this.errors = error.response.data.errors;
+      })["catch"](function (err) {
+        var _err$response;
+        _this2.errors = ((_err$response = err.response) === null || _err$response === void 0 || (_err$response = _err$response.data) === null || _err$response === void 0 ? void 0 : _err$response.errors) || {};
       });
     }
   }
@@ -3953,71 +3673,58 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
-function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
-function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { _defineProperty(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
-function _defineProperty(e, r, t) { return (r = _toPropertyKey(r)) in e ? Object.defineProperty(e, r, { value: t, enumerable: !0, configurable: !0, writable: !0 }) : e[r] = t, e; }
-function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == _typeof(i) ? i : i + ""; }
-function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != _typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
       form: {
         client_name: '',
         client_email: '',
-        vat: 0,
+        quote_date: '',
         notes: '',
+        subtotal: 0,
+        vat: 0,
+        total: 0,
         items: [{
           description: '',
           quantity: 1,
-          unit_price: 0
-        }],
-        subtotal: 0,
-        total: 0
-      }
+          unit_price: 0,
+          total: 0
+        }]
+      },
+      errors: {}
     };
   },
-  computed: {
-    subtotal: function subtotal() {
-      return this.form.items.reduce(function (sum, item) {
-        return sum + item.quantity * item.unit_price;
-      }, 0);
-    },
-    total: function total() {
-      var vatAmount = this.form.vat / 100 * this.subtotal;
-      return this.subtotal + vatAmount;
-    }
-  },
   methods: {
+    calculateTotals: function calculateTotals() {
+      var subtotal = 0;
+      this.form.items.forEach(function (item) {
+        item.total = item.quantity * item.unit_price;
+        subtotal += item.total;
+      });
+      this.form.subtotal = subtotal;
+      this.form.total = subtotal + (parseFloat(this.form.vat) || 0);
+    },
     addItem: function addItem() {
       this.form.items.push({
         description: '',
         quantity: 1,
-        unit_price: 0
+        unit_price: 0,
+        total: 0
       });
     },
     removeItem: function removeItem(index) {
       this.form.items.splice(index, 1);
-    },
-    recalculate: function recalculate() {
-      // Computed handles this, but you could also sync a hidden field here
+      this.calculateTotals();
     },
     submitQuote: function submitQuote() {
       var _this = this;
-      var payload = _objectSpread(_objectSpread({}, this.form), {}, {
-        subtotal: this.subtotal,
-        total: this.total,
-        items: this.form.items.map(function (item) {
-          return _objectSpread(_objectSpread({}, item), {}, {
-            total: item.quantity * item.unit_price
-          });
-        })
-      });
-      axios.post('/api/quotes', payload).then(function () {
-        _this.$router.push('/quotes');
+      axios.post('/api/quotes', this.form).then(function () {
+        _this.$router.push({
+          name: 'quotes'
+        });
       })["catch"](function (err) {
-        alert('Error creating quote');
-        console.error(err);
+        var _err$response;
+        _this.errors = ((_err$response = err.response) === null || _err$response === void 0 || (_err$response = _err$response.data) === null || _err$response === void 0 ? void 0 : _err$response.errors) || {};
       });
     }
   }
@@ -6191,106 +5898,6 @@ render._withStripped = true;
 
 /***/ }),
 
-/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/job_cards/AllJobcards.vue?vue&type=template&id=19087ffe":
-/*!*****************************************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib/loaders/templateLoader.js??ref--6!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/job_cards/AllJobcards.vue?vue&type=template&id=19087ffe ***!
-  \*****************************************************************************************************************************************************************************************************************************************************/
-/*! exports provided: render, staticRenderFns */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
-var render = function render() {
-  var _vm = this,
-    _c = _vm._self._c;
-  return _c("div", [_c("div", {
-    staticClass: "row"
-  }, [_c("router-link", {
-    staticClass: "btn btn-primary",
-    attrs: {
-      to: "/add-jobcard"
-    }
-  }, [_vm._v("Create Job Card")])], 1), _vm._v(" "), _c("br"), _vm._v(" "), _c("input", {
-    directives: [{
-      name: "model",
-      rawName: "v-model",
-      value: _vm.search,
-      expression: "search"
-    }],
-    staticClass: "form-control",
-    staticStyle: {
-      width: "25%"
-    },
-    attrs: {
-      type: "text",
-      placeholder: "Search Job Card"
-    },
-    domProps: {
-      value: _vm.search
-    },
-    on: {
-      input: function input($event) {
-        if ($event.target.composing) return;
-        _vm.search = $event.target.value;
-      }
-    }
-  }), _vm._v(" "), _c("br"), _vm._v(" "), _c("div", {
-    staticClass: "row"
-  }, [_c("div", {
-    staticClass: "col-lg-12 mb-4"
-  }, [_c("div", {
-    staticClass: "card"
-  }, [_vm._m(0), _vm._v(" "), _c("div", {
-    staticClass: "table-responsive"
-  }, [_c("table", {
-    staticClass: "table align-items-center table-flush"
-  }, [_vm._m(1), _vm._v(" "), _c("tbody", _vm._l(_vm.filtersearch, function (jobcard) {
-    return _c("tr", {
-      key: jobcard.id
-    }, [_c("td", [_vm._v(_vm._s(jobcard.job_number))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(jobcard.stand_name))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(jobcard.show_name))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(jobcard.salesperson))]), _vm._v(" "), _c("td", [_vm._v("R" + _vm._s(jobcard.total_amount))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(_vm._f("moment")(jobcard.created_at, "L hh:MM")))]), _vm._v(" "), _c("td", [_c("router-link", {
-      staticClass: "btn btn-sm btn-primary",
-      attrs: {
-        to: {
-          name: "edit-jobcard",
-          params: {
-            id: jobcard.id
-          }
-        }
-      }
-    }, [_vm._v("Edit")]), _vm._v(" "), _c("a", {
-      staticClass: "btn btn-sm btn-danger text-white",
-      on: {
-        click: function click($event) {
-          return _vm.deleteJobcard(jobcard.id);
-        }
-      }
-    }, [_vm._v("Delete")])], 1)]);
-  }), 0)])]), _vm._v(" "), _c("div", {
-    staticClass: "card-footer"
-  })])])])]);
-};
-var staticRenderFns = [function () {
-  var _vm = this,
-    _c = _vm._self._c;
-  return _c("div", {
-    staticClass: "card-header py-3 d-flex flex-row align-items-center justify-content-between"
-  }, [_c("h6", {
-    staticClass: "m-0 font-weight-bold text-primary"
-  }, [_vm._v("Job Card List")])]);
-}, function () {
-  var _vm = this,
-    _c = _vm._self._c;
-  return _c("thead", {
-    staticClass: "thead-light"
-  }, [_c("tr", [_c("th", [_vm._v("Job Number")]), _vm._v(" "), _c("th", [_vm._v("Stand Name")]), _vm._v(" "), _c("th", [_vm._v("Show Name")]), _vm._v(" "), _c("th", [_vm._v("AM / PM")]), _vm._v(" "), _c("th", [_vm._v("Total Amount")]), _vm._v(" "), _c("th", [_vm._v("Date Created")]), _vm._v(" "), _c("th", [_vm._v("Action")])])]);
-}];
-render._withStripped = true;
-
-
-/***/ }),
-
 /***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/job_cards/CreateJobcard.vue?vue&type=template&id=597b0c68":
 /*!*******************************************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib/loaders/templateLoader.js??ref--6!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/job_cards/CreateJobcard.vue?vue&type=template&id=597b0c68 ***!
@@ -6327,17 +5934,25 @@ var render = function render() {
   }, [_c("div", {
     staticClass: "login-form"
   }, [_vm._m(0), _vm._v(" "), _c("form", {
-    staticClass: "jobcard",
-    attrs: {
-      enctype: "multipart/form-data"
-    },
+    staticClass: "user",
     on: {
       submit: function submit($event) {
         $event.preventDefault();
-        return _vm.jobcardInsert.apply(null, arguments);
+        return _vm.createJobCard.apply(null, arguments);
       }
     }
   }, [_c("div", {
+    staticClass: "form-group"
+  }, [_c("input", {
+    staticClass: "form-control",
+    attrs: {
+      type: "text",
+      disabled: ""
+    },
+    domProps: {
+      value: _vm.quoteRef
+    }
+  })]), _vm._v(" "), _c("div", {
     staticClass: "form-group"
   }, [_c("div", {
     staticClass: "form-row"
@@ -6347,53 +5962,65 @@ var render = function render() {
     directives: [{
       name: "model",
       rawName: "v-model",
-      value: _vm.form.job_number,
-      expression: "form.job_number"
+      value: _vm.form.assigned_to,
+      expression: "form.assigned_to"
     }],
     staticClass: "form-control",
     attrs: {
       type: "text",
-      id: "exampleInputFirstName",
-      placeholder: "Enter Job Number"
+      placeholder: "Assigned To"
     },
     domProps: {
-      value: _vm.form.job_number
+      value: _vm.form.assigned_to
     },
     on: {
       input: function input($event) {
         if ($event.target.composing) return;
-        _vm.$set(_vm.form, "job_number", $event.target.value);
+        _vm.$set(_vm.form, "assigned_to", $event.target.value);
       }
     }
-  }), _vm._v(" "), _vm.errors.job_number ? _c("small", {
+  }), _vm._v(" "), _vm.errors.assigned_to ? _c("small", {
     staticClass: "text-danger"
-  }, [_vm._v("\n                                                    " + _vm._s(_vm.errors.job_number[0]) + "\n                                                ")]) : _vm._e()]), _vm._v(" "), _c("div", {
+  }, [_vm._v(_vm._s(_vm.errors.assigned_to[0]))]) : _vm._e()]), _vm._v(" "), _c("div", {
     staticClass: "col-md-6"
-  }, [_c("input", {
+  }, [_c("select", {
     directives: [{
       name: "model",
       rawName: "v-model",
-      value: _vm.form.salesperson,
-      expression: "form.salesperson"
+      value: _vm.form.status,
+      expression: "form.status"
     }],
     staticClass: "form-control",
-    attrs: {
-      type: "text",
-      id: "exampleInputPasswordRepeat",
-      placeholder: "Salesperson"
-    },
-    domProps: {
-      value: _vm.form.salesperson
-    },
     on: {
-      input: function input($event) {
-        if ($event.target.composing) return;
-        _vm.$set(_vm.form, "salesperson", $event.target.value);
+      change: function change($event) {
+        var $$selectedVal = Array.prototype.filter.call($event.target.options, function (o) {
+          return o.selected;
+        }).map(function (o) {
+          var val = "_value" in o ? o._value : o.value;
+          return val;
+        });
+        _vm.$set(_vm.form, "status", $event.target.multiple ? $$selectedVal : $$selectedVal[0]);
       }
     }
-  }), _vm._v(" "), _vm.errors.salesperson ? _c("small", {
+  }, [_c("option", {
+    attrs: {
+      value: "open"
+    }
+  }, [_vm._v("Open")]), _vm._v(" "), _c("option", {
+    attrs: {
+      value: "in-progress"
+    }
+  }, [_vm._v("In Progress")]), _vm._v(" "), _c("option", {
+    attrs: {
+      value: "completed"
+    }
+  }, [_vm._v("Completed")]), _vm._v(" "), _c("option", {
+    attrs: {
+      value: "cancelled"
+    }
+  }, [_vm._v("Cancelled")])]), _vm._v(" "), _vm.errors.status ? _c("small", {
     staticClass: "text-danger"
-  }, [_vm._v("\n                                                    " + _vm._s(_vm.errors.salesperson[0]) + "\n                                                ")]) : _vm._e()])])]), _vm._v(" "), _c("div", {
+  }, [_vm._v(_vm._s(_vm.errors.status[0]))]) : _vm._e()])])]), _vm._v(" "), _c("div", {
     staticClass: "form-group"
   }, [_c("div", {
     staticClass: "form-row"
@@ -6403,952 +6030,76 @@ var render = function render() {
     directives: [{
       name: "model",
       rawName: "v-model",
-      value: _vm.form.stand_name,
-      expression: "form.stand_name"
+      value: _vm.form.start_date,
+      expression: "form.start_date"
     }],
     staticClass: "form-control",
     attrs: {
-      type: "text",
-      id: "exampleInputPassword",
-      placeholder: "Enter Stand Name"
+      type: "date",
+      placeholder: "Start Date"
     },
     domProps: {
-      value: _vm.form.stand_name
+      value: _vm.form.start_date
     },
     on: {
       input: function input($event) {
         if ($event.target.composing) return;
-        _vm.$set(_vm.form, "stand_name", $event.target.value);
+        _vm.$set(_vm.form, "start_date", $event.target.value);
       }
     }
-  }), _vm._v(" "), _vm.errors.stand_name ? _c("small", {
+  }), _vm._v(" "), _vm.errors.start_date ? _c("small", {
     staticClass: "text-danger"
-  }, [_vm._v("\n                                                    " + _vm._s(_vm.errors.stand_name[0]) + "\n                                                ")]) : _vm._e()]), _vm._v(" "), _c("div", {
+  }, [_vm._v(_vm._s(_vm.errors.start_date[0]))]) : _vm._e()]), _vm._v(" "), _c("div", {
     staticClass: "col-md-6"
   }, [_c("input", {
     directives: [{
       name: "model",
       rawName: "v-model",
-      value: _vm.form.show_name,
-      expression: "form.show_name"
+      value: _vm.form.due_date,
+      expression: "form.due_date"
     }],
     staticClass: "form-control",
     attrs: {
-      type: "text",
-      id: "exampleInputEmail",
-      "aria-describedby": "emailHelp",
-      placeholder: "Enter Show Name"
+      type: "date",
+      placeholder: "Due Date"
     },
     domProps: {
-      value: _vm.form.show_name
+      value: _vm.form.due_date
     },
     on: {
       input: function input($event) {
         if ($event.target.composing) return;
-        _vm.$set(_vm.form, "show_name", $event.target.value);
+        _vm.$set(_vm.form, "due_date", $event.target.value);
       }
     }
-  }), _vm._v(" "), _vm.errors.show_name ? _c("small", {
+  }), _vm._v(" "), _vm.errors.due_date ? _c("small", {
     staticClass: "text-danger"
-  }, [_vm._v("\n                                                    " + _vm._s(_vm.errors.show_name[0]) + "\n                                                ")]) : _vm._e()])])]), _vm._v(" "), _vm._l(_vm.form.materials, function (material, index) {
-    return _c("div", {
-      key: index,
-      staticClass: "form-group"
-    }, [_c("div", {
-      staticClass: "form-row align-items-center"
-    }, [_c("div", {
-      staticClass: "col-md-11"
-    }, [_c("h6", [_c("b", [_vm._v("Material " + _vm._s(index + 1))])])]), _vm._v(" "), _c("div", {
-      staticClass: "col-1 mb-2"
-    }, [_c("button", {
-      staticClass: "btn btn-danger form-control",
-      on: {
-        click: function click($event) {
-          return _vm.removeMaterials(index);
-        }
-      }
-    }, [_vm._v("Remove")])]), _vm._v(" "), _c("div", {
-      staticClass: "col-md-6"
-    }, [_c("input", {
-      directives: [{
-        name: "model",
-        rawName: "v-model",
-        value: material.quantity,
-        expression: "material.quantity"
-      }],
-      staticClass: "form-control",
-      attrs: {
-        type: "text",
-        id: "exampleInputPassword",
-        placeholder: "Quantity"
-      },
-      domProps: {
-        value: material.quantity
-      },
-      on: {
-        input: function input($event) {
-          if ($event.target.composing) return;
-          _vm.$set(material, "quantity", $event.target.value);
-        }
-      }
-    })]), _vm._v(" "), _c("div", {
-      staticClass: "col-md-6"
-    }, [_c("input", {
-      directives: [{
-        name: "model",
-        rawName: "v-model",
-        value: material.description,
-        expression: "material.description"
-      }],
-      staticClass: "form-control",
-      attrs: {
-        type: "text",
-        id: "exampleInputEmail",
-        "aria-describedby": "emailHelp",
-        placeholder: "Description"
-      },
-      domProps: {
-        value: material.description
-      },
-      on: {
-        input: function input($event) {
-          if ($event.target.composing) return;
-          _vm.$set(material, "description", $event.target.value);
-        }
-      }
-    })])]), _vm._v(" "), _c("div", {
-      staticClass: "pt-2 form-row align-items-center"
-    }, [_c("div", {
-      staticClass: "col-md-4"
-    }, [_c("input", {
-      directives: [{
-        name: "model",
-        rawName: "v-model",
-        value: material.width,
-        expression: "material.width"
-      }],
-      staticClass: "form-control",
-      attrs: {
-        type: "text",
-        id: "exampleInputEmail",
-        "aria-describedby": "emailHelp",
-        placeholder: "Width"
-      },
-      domProps: {
-        value: material.width
-      },
-      on: {
-        input: function input($event) {
-          if ($event.target.composing) return;
-          _vm.$set(material, "width", $event.target.value);
-        }
-      }
-    })]), _vm._v(" "), _c("div", {
-      staticClass: "col-md-4"
-    }, [_c("input", {
-      directives: [{
-        name: "model",
-        rawName: "v-model",
-        value: material.height,
-        expression: "material.height"
-      }],
-      staticClass: "form-control",
-      attrs: {
-        type: "text",
-        id: "exampleInputEmail",
-        "aria-describedby": "emailHelp",
-        placeholder: "Height"
-      },
-      domProps: {
-        value: material.height
-      },
-      on: {
-        input: function input($event) {
-          if ($event.target.composing) return;
-          _vm.$set(material, "height", $event.target.value);
-        }
-      }
-    })]), _vm._v(" "), _c("div", {
-      staticClass: "col-md-4"
-    }, [_c("input", {
-      directives: [{
-        name: "model",
-        rawName: "v-model",
-        value: material.total_sqm,
-        expression: "material.total_sqm"
-      }],
-      staticClass: "form-control",
-      attrs: {
-        type: "text",
-        id: "exampleInputEmail",
-        "aria-describedby": "emailHelp",
-        placeholder: "Total m²"
-      },
-      domProps: {
-        value: material.total_sqm
-      },
-      on: {
-        input: function input($event) {
-          if ($event.target.composing) return;
-          _vm.$set(material, "total_sqm", $event.target.value);
-        }
-      }
-    })])]), _vm._v(" "), _c("div", {
-      staticClass: "pt-2 form-row align-items-center"
-    }, [_c("div", {
-      staticClass: "col-md-4"
-    }, [_c("input", {
-      directives: [{
-        name: "model",
-        rawName: "v-model",
-        value: material.banner_type,
-        expression: "material.banner_type"
-      }],
-      staticClass: "form-control",
-      attrs: {
-        type: "text",
-        id: "exampleInputEmail",
-        "aria-describedby": "emailHelp",
-        placeholder: "Fabric Banner Type"
-      },
-      domProps: {
-        value: material.banner_type
-      },
-      on: {
-        input: function input($event) {
-          if ($event.target.composing) return;
-          _vm.$set(material, "banner_type", $event.target.value);
-        }
-      }
-    })]), _vm._v(" "), _c("div", {
-      staticClass: "col-md-4"
-    }, [_c("label", {
-      attrs: {
-        "for": "outsourced"
-      }
-    }, [_vm._v("Out-sourced: ")]), _vm._v(" "), _c("select", {
-      directives: [{
-        name: "model",
-        rawName: "v-model",
-        value: material.outsourced,
-        expression: "material.outsourced"
-      }],
-      attrs: {
-        name: "outsourced",
-        id: "outsourced"
-      },
-      on: {
-        change: function change($event) {
-          var $$selectedVal = Array.prototype.filter.call($event.target.options, function (o) {
-            return o.selected;
-          }).map(function (o) {
-            var val = "_value" in o ? o._value : o.value;
-            return val;
-          });
-          _vm.$set(material, "outsourced", $event.target.multiple ? $$selectedVal : $$selectedVal[0]);
-        }
-      }
-    }, [_c("option", {
-      attrs: {
-        value: "true"
-      }
-    }, [_vm._v("Yes")]), _vm._v(" "), _c("option", {
-      attrs: {
-        selected: "selected",
-        value: "false"
-      }
-    }, [_vm._v("No")])])]), _vm._v(" "), _c("div", {
-      staticClass: "col-md-4"
-    }, [_c("input", {
-      directives: [{
-        name: "model",
-        rawName: "v-model",
-        value: material.machine,
-        expression: "material.machine"
-      }],
-      staticClass: "form-control",
-      attrs: {
-        type: "text",
-        id: "exampleInputEmail",
-        "aria-describedby": "emailHelp",
-        placeholder: "Machine"
-      },
-      domProps: {
-        value: material.machine
-      },
-      on: {
-        input: function input($event) {
-          if ($event.target.composing) return;
-          _vm.$set(material, "machine", $event.target.value);
-        }
-      }
-    })])]), _vm._v(" "), _c("div", {
-      staticClass: "pt-2 form-row align-items-center"
-    }, [_c("div", {
-      staticClass: "col-md-3"
-    }, [_c("input", {
-      directives: [{
-        name: "model",
-        rawName: "v-model",
-        value: material.print_medium_sqm,
-        expression: "material.print_medium_sqm"
-      }],
-      staticClass: "form-control",
-      attrs: {
-        type: "text",
-        id: "exampleInputEmail",
-        "aria-describedby": "emailHelp",
-        placeholder: "Print Medium / m²"
-      },
-      domProps: {
-        value: material.print_medium_sqm
-      },
-      on: {
-        input: function input($event) {
-          if ($event.target.composing) return;
-          _vm.$set(material, "print_medium_sqm", $event.target.value);
-        }
-      }
-    })]), _vm._v(" "), _c("div", {
-      staticClass: "col-md-3"
-    }, [_c("input", {
-      directives: [{
-        name: "model",
-        rawName: "v-model",
-        value: material.total_print_medium,
-        expression: "material.total_print_medium"
-      }],
-      staticClass: "form-control",
-      attrs: {
-        type: "text",
-        id: "exampleInputEmail",
-        "aria-describedby": "emailHelp",
-        placeholder: "Total Print Medium"
-      },
-      domProps: {
-        value: material.total_print_medium
-      },
-      on: {
-        input: function input($event) {
-          if ($event.target.composing) return;
-          _vm.$set(material, "total_print_medium", $event.target.value);
-        }
-      }
-    })]), _vm._v(" "), _c("div", {
-      staticClass: "col-md-3"
-    }, [_c("input", {
-      directives: [{
-        name: "model",
-        rawName: "v-model",
-        value: material.ink_sqm,
-        expression: "material.ink_sqm"
-      }],
-      staticClass: "form-control",
-      attrs: {
-        type: "text",
-        id: "exampleInputEmail",
-        "aria-describedby": "emailHelp",
-        placeholder: "Ink / m²"
-      },
-      domProps: {
-        value: material.ink_sqm
-      },
-      on: {
-        input: function input($event) {
-          if ($event.target.composing) return;
-          _vm.$set(material, "ink_sqm", $event.target.value);
-        }
-      }
-    })]), _vm._v(" "), _c("div", {
-      staticClass: "col-md-3"
-    }, [_c("input", {
-      directives: [{
-        name: "model",
-        rawName: "v-model",
-        value: material.total_ink,
-        expression: "material.total_ink"
-      }],
-      staticClass: "form-control",
-      attrs: {
-        type: "text",
-        id: "exampleInputEmail",
-        "aria-describedby": "emailHelp",
-        placeholder: "Total Ink"
-      },
-      domProps: {
-        value: material.total_ink
-      },
-      on: {
-        input: function input($event) {
-          if ($event.target.composing) return;
-          _vm.$set(material, "total_ink", $event.target.value);
-        }
-      }
-    })])]), _vm._v(" "), _c("div", {
-      staticClass: "pt-2 form-row align-items-center"
-    }, [_c("div", {
-      staticClass: "col-md-6"
-    }, [_c("label", {
-      attrs: {
-        "for": "outsourced"
-      }
-    }, [_vm._v("Pinnacle Digital Fabric Printing:")]), _vm._v(" "), _c("select", {
-      directives: [{
-        name: "model",
-        rawName: "v-model",
-        value: material.pdfp,
-        expression: "material.pdfp"
-      }],
-      attrs: {
-        name: "outsourced",
-        id: "outsourced"
-      },
-      on: {
-        change: function change($event) {
-          var $$selectedVal = Array.prototype.filter.call($event.target.options, function (o) {
-            return o.selected;
-          }).map(function (o) {
-            var val = "_value" in o ? o._value : o.value;
-            return val;
-          });
-          _vm.$set(material, "pdfp", $event.target.multiple ? $$selectedVal : $$selectedVal[0]);
-        }
-      }
-    }, [_c("option", {
-      attrs: {
-        value: "true"
-      }
-    }, [_vm._v("Yes")]), _vm._v(" "), _c("option", {
-      attrs: {
-        selected: ""
-      }
-    }, [_vm._v("No")])])]), _vm._v(" "), _c("div", {
-      staticClass: "col-md-6"
-    }, [_c("input", {
-      directives: [{
-        name: "model",
-        rawName: "v-model",
-        value: material.total_pinnacle,
-        expression: "material.total_pinnacle"
-      }],
-      staticClass: "form-control",
-      attrs: {
-        type: "text",
-        id: "exampleInputEmail",
-        "aria-describedby": "emailHelp",
-        placeholder: "Total Pinnacle"
-      },
-      domProps: {
-        value: material.total_pinnacle
-      },
-      on: {
-        input: function input($event) {
-          if ($event.target.composing) return;
-          _vm.$set(material, "total_pinnacle", $event.target.value);
-        }
-      }
-    })])]), _vm._v(" "), _c("div", {
-      staticClass: "pt-2 form-row align-items-center"
-    }, [_c("div", {
-      staticClass: "col-md-4"
-    }, [_c("input", {
-      directives: [{
-        name: "model",
-        rawName: "v-model",
-        value: material.silicon_welt_length,
-        expression: "material.silicon_welt_length"
-      }],
-      staticClass: "form-control",
-      attrs: {
-        type: "text",
-        id: "exampleInputEmail",
-        "aria-describedby": "emailHelp",
-        placeholder: "Silicon Welt Length"
-      },
-      domProps: {
-        value: material.silicon_welt_length
-      },
-      on: {
-        input: function input($event) {
-          if ($event.target.composing) return;
-          _vm.$set(material, "silicon_welt_length", $event.target.value);
-        }
-      }
-    })]), _vm._v(" "), _c("div", {
-      staticClass: "col-md-4"
-    }, [_c("input", {
-      directives: [{
-        name: "model",
-        rawName: "v-model",
-        value: material.sw_unit_price_m,
-        expression: "material.sw_unit_price_m"
-      }],
-      staticClass: "form-control",
-      attrs: {
-        type: "text",
-        id: "exampleInputEmail",
-        "aria-describedby": "emailHelp",
-        placeholder: "Unit Price / m"
-      },
-      domProps: {
-        value: material.sw_unit_price_m
-      },
-      on: {
-        input: function input($event) {
-          if ($event.target.composing) return;
-          _vm.$set(material, "sw_unit_price_m", $event.target.value);
-        }
-      }
-    })]), _vm._v(" "), _c("div", {
-      staticClass: "col-md-4"
-    }, [_c("input", {
-      directives: [{
-        name: "model",
-        rawName: "v-model",
-        value: material.total_silicon_welt,
-        expression: "material.total_silicon_welt"
-      }],
-      staticClass: "form-control",
-      attrs: {
-        type: "text",
-        id: "exampleInputEmail",
-        "aria-describedby": "emailHelp",
-        placeholder: "Total Silicon Welt"
-      },
-      domProps: {
-        value: material.total_silicon_welt
-      },
-      on: {
-        input: function input($event) {
-          if ($event.target.composing) return;
-          _vm.$set(material, "total_silicon_welt", $event.target.value);
-        }
-      }
-    })])]), _vm._v(" "), _c("div", {
-      staticClass: "pt-2 form-row align-items-center"
-    }, [_c("div", {
-      staticClass: "col-md-4"
-    }, [_c("input", {
-      directives: [{
-        name: "model",
-        rawName: "v-model",
-        value: material.flat_chonk_length,
-        expression: "material.flat_chonk_length"
-      }],
-      staticClass: "form-control",
-      attrs: {
-        type: "text",
-        id: "exampleInputEmail",
-        "aria-describedby": "emailHelp",
-        placeholder: "Flat Chonk Length"
-      },
-      domProps: {
-        value: material.flat_chonk_length
-      },
-      on: {
-        input: function input($event) {
-          if ($event.target.composing) return;
-          _vm.$set(material, "flat_chonk_length", $event.target.value);
-        }
-      }
-    })]), _vm._v(" "), _c("div", {
-      staticClass: "col-md-4"
-    }, [_c("input", {
-      directives: [{
-        name: "model",
-        rawName: "v-model",
-        value: material.fc_unit_price_m,
-        expression: "material.fc_unit_price_m"
-      }],
-      staticClass: "form-control",
-      attrs: {
-        type: "text",
-        id: "exampleInputEmail",
-        "aria-describedby": "emailHelp",
-        placeholder: "Unit Price / m"
-      },
-      domProps: {
-        value: material.fc_unit_price_m
-      },
-      on: {
-        input: function input($event) {
-          if ($event.target.composing) return;
-          _vm.$set(material, "fc_unit_price_m", $event.target.value);
-        }
-      }
-    })]), _vm._v(" "), _c("div", {
-      staticClass: "col-md-4"
-    }, [_c("input", {
-      directives: [{
-        name: "model",
-        rawName: "v-model",
-        value: material.total_flat_chonk,
-        expression: "material.total_flat_chonk"
-      }],
-      staticClass: "form-control",
-      attrs: {
-        type: "text",
-        id: "exampleInputEmail",
-        "aria-describedby": "emailHelp",
-        placeholder: "Total Flat Chonk"
-      },
-      domProps: {
-        value: material.total_flat_chonk
-      },
-      on: {
-        input: function input($event) {
-          if ($event.target.composing) return;
-          _vm.$set(material, "total_flat_chonk", $event.target.value);
-        }
-      }
-    })])]), _vm._v(" "), _c("div", {
-      staticClass: "pt-2 form-row align-items-center"
-    }, [_c("div", {
-      staticClass: "col-md-4"
-    }, [_c("input", {
-      directives: [{
-        name: "model",
-        rawName: "v-model",
-        value: material.eyelets_length,
-        expression: "material.eyelets_length"
-      }],
-      staticClass: "form-control",
-      attrs: {
-        type: "text",
-        id: "exampleInputEmail",
-        "aria-describedby": "emailHelp",
-        placeholder: "Eyelets Length"
-      },
-      domProps: {
-        value: material.eyelets_length
-      },
-      on: {
-        input: function input($event) {
-          if ($event.target.composing) return;
-          _vm.$set(material, "eyelets_length", $event.target.value);
-        }
-      }
-    })]), _vm._v(" "), _c("div", {
-      staticClass: "col-md-4"
-    }, [_c("input", {
-      directives: [{
-        name: "model",
-        rawName: "v-model",
-        value: material.eyelets_unit_price_m,
-        expression: "material.eyelets_unit_price_m"
-      }],
-      staticClass: "form-control",
-      attrs: {
-        type: "text",
-        id: "exampleInputEmail",
-        "aria-describedby": "emailHelp",
-        placeholder: "Unit Price / m"
-      },
-      domProps: {
-        value: material.eyelets_unit_price_m
-      },
-      on: {
-        input: function input($event) {
-          if ($event.target.composing) return;
-          _vm.$set(material, "eyelets_unit_price_m", $event.target.value);
-        }
-      }
-    })]), _vm._v(" "), _c("div", {
-      staticClass: "col-md-4"
-    }, [_c("input", {
-      directives: [{
-        name: "model",
-        rawName: "v-model",
-        value: material.total_eyelets,
-        expression: "material.total_eyelets"
-      }],
-      staticClass: "form-control",
-      attrs: {
-        type: "text",
-        id: "exampleInputEmail",
-        "aria-describedby": "emailHelp",
-        placeholder: "Total Eyelets"
-      },
-      domProps: {
-        value: material.total_eyelets
-      },
-      on: {
-        input: function input($event) {
-          if ($event.target.composing) return;
-          _vm.$set(material, "total_eyelets", $event.target.value);
-        }
-      }
-    })])]), _vm._v(" "), _c("div", {
-      staticClass: "pt-2 form-row align-items-center"
-    }, [_c("div", {
-      staticClass: "col-md-4"
-    }, [_c("input", {
-      directives: [{
-        name: "model",
-        rawName: "v-model",
-        value: material.web_vel_length,
-        expression: "material.web_vel_length"
-      }],
-      staticClass: "form-control",
-      attrs: {
-        type: "text",
-        id: "exampleInputEmail",
-        "aria-describedby": "emailHelp",
-        placeholder: "Webbing / Velcro Length"
-      },
-      domProps: {
-        value: material.web_vel_length
-      },
-      on: {
-        input: function input($event) {
-          if ($event.target.composing) return;
-          _vm.$set(material, "web_vel_length", $event.target.value);
-        }
-      }
-    })]), _vm._v(" "), _c("div", {
-      staticClass: "col-md-4"
-    }, [_c("input", {
-      directives: [{
-        name: "model",
-        rawName: "v-model",
-        value: material.webvel_unit_price_m,
-        expression: "material.webvel_unit_price_m"
-      }],
-      staticClass: "form-control",
-      attrs: {
-        type: "text",
-        id: "exampleInputEmail",
-        "aria-describedby": "emailHelp",
-        placeholder: "Unit Price / m"
-      },
-      domProps: {
-        value: material.webvel_unit_price_m
-      },
-      on: {
-        input: function input($event) {
-          if ($event.target.composing) return;
-          _vm.$set(material, "webvel_unit_price_m", $event.target.value);
-        }
-      }
-    })]), _vm._v(" "), _c("div", {
-      staticClass: "col-md-4"
-    }, [_c("input", {
-      directives: [{
-        name: "model",
-        rawName: "v-model",
-        value: material.total_webvel,
-        expression: "material.total_webvel"
-      }],
-      staticClass: "form-control",
-      attrs: {
-        type: "text",
-        id: "exampleInputEmail",
-        "aria-describedby": "emailHelp",
-        placeholder: "Total Webbing / Velcro"
-      },
-      domProps: {
-        value: material.total_webvel
-      },
-      on: {
-        input: function input($event) {
-          if ($event.target.composing) return;
-          _vm.$set(material, "total_webvel", $event.target.value);
-        }
-      }
-    })])]), _vm._v(" "), _c("div", {
-      staticClass: "pt-2 form-row align-items-center"
-    }, [_c("div", {
-      staticClass: "col-md-2"
-    }, [_c("input", {
-      directives: [{
-        name: "model",
-        rawName: "v-model",
-        value: material.pullup_unit_price,
-        expression: "material.pullup_unit_price"
-      }],
-      staticClass: "form-control",
-      attrs: {
-        type: "text",
-        id: "exampleInputEmail",
-        "aria-describedby": "emailHelp",
-        placeholder: "Pull-up Banner Unit Price"
-      },
-      domProps: {
-        value: material.pullup_unit_price
-      },
-      on: {
-        input: function input($event) {
-          if ($event.target.composing) return;
-          _vm.$set(material, "pullup_unit_price", $event.target.value);
-        }
-      }
-    })]), _vm._v(" "), _c("div", {
-      staticClass: "col-md-2"
-    }, [_c("input", {
-      directives: [{
-        name: "model",
-        rawName: "v-model",
-        value: material.pullup_total_hardware,
-        expression: "material.pullup_total_hardware"
-      }],
-      staticClass: "form-control",
-      attrs: {
-        type: "text",
-        id: "exampleInputEmail",
-        "aria-describedby": "emailHelp",
-        placeholder: "Total Pull-up Banner Hardware"
-      },
-      domProps: {
-        value: material.pullup_total_hardware
-      },
-      on: {
-        input: function input($event) {
-          if ($event.target.composing) return;
-          _vm.$set(material, "pullup_total_hardware", $event.target.value);
-        }
-      }
-    })]), _vm._v(" "), _c("div", {
-      staticClass: "col-md-2"
-    }, [_c("input", {
-      directives: [{
-        name: "model",
-        rawName: "v-model",
-        value: material.pullup_unit_price_sqm,
-        expression: "material.pullup_unit_price_sqm"
-      }],
-      staticClass: "form-control",
-      attrs: {
-        type: "text",
-        id: "exampleInputEmail",
-        "aria-describedby": "emailHelp",
-        placeholder: "Unit Price / m²"
-      },
-      domProps: {
-        value: material.pullup_unit_price_sqm
-      },
-      on: {
-        input: function input($event) {
-          if ($event.target.composing) return;
-          _vm.$set(material, "pullup_unit_price_sqm", $event.target.value);
-        }
-      }
-    })]), _vm._v(" "), _c("div", {
-      staticClass: "col-md-2"
-    }, [_c("input", {
-      directives: [{
-        name: "model",
-        rawName: "v-model",
-        value: material.total_magnetic,
-        expression: "material.total_magnetic"
-      }],
-      staticClass: "form-control",
-      attrs: {
-        type: "text",
-        id: "exampleInputEmail",
-        "aria-describedby": "emailHelp",
-        placeholder: "Total Magnetic"
-      },
-      domProps: {
-        value: material.total_magnetic
-      },
-      on: {
-        input: function input($event) {
-          if ($event.target.composing) return;
-          _vm.$set(material, "total_magnetic", $event.target.value);
-        }
-      }
-    })]), _vm._v(" "), _c("div", {
-      staticClass: "col-md-2"
-    }, [_c("input", {
-      directives: [{
-        name: "model",
-        rawName: "v-model",
-        value: material.consumables,
-        expression: "material.consumables"
-      }],
-      staticClass: "form-control",
-      attrs: {
-        type: "text",
-        id: "exampleInputEmail",
-        "aria-describedby": "emailHelp",
-        placeholder: "Consumables"
-      },
-      domProps: {
-        value: material.consumables
-      },
-      on: {
-        input: function input($event) {
-          if ($event.target.composing) return;
-          _vm.$set(material, "consumables", $event.target.value);
-        }
-      }
-    })]), _vm._v(" "), _c("div", {
-      staticClass: "col-md-2"
-    }, [_c("input", {
-      directives: [{
-        name: "model",
-        rawName: "v-model",
-        value: material.unit_price_item,
-        expression: "material.unit_price_item"
-      }],
-      staticClass: "form-control",
-      attrs: {
-        type: "text",
-        id: "exampleInputEmail",
-        "aria-describedby": "emailHelp",
-        placeholder: "Unit Price / Item"
-      },
-      domProps: {
-        value: material.unit_price_item
-      },
-      on: {
-        input: function input($event) {
-          if ($event.target.composing) return;
-          _vm.$set(material, "unit_price_item", $event.target.value);
-        }
-      }
-    })])])]);
-  }), _vm._v(" "), _c("div", {
+  }, [_vm._v(_vm._s(_vm.errors.due_date[0]))]) : _vm._e()])])]), _vm._v(" "), _c("div", {
     staticClass: "form-group"
-  }, [_c("div", {
-    staticClass: "form-row"
-  }, [_c("div", {
-    staticClass: "col-1"
-  }, [_c("button", {
-    staticClass: "btn btn-success form-control",
-    on: {
-      click: _vm.addMaterials
-    }
-  }, [_vm._v("Add\n                                                    Material")])])]), _vm._v(" "), _c("div", {
-    staticClass: "pt-4 form-row align-items-center"
-  }, [_c("div", {
-    staticClass: "col-md-6"
-  }, [_c("h4", [_vm._v("Total Amount: ")]), _vm._v(" "), _c("input", {
+  }, [_c("textarea", {
     directives: [{
       name: "model",
       rawName: "v-model",
-      value: _vm.form.total_amount,
-      expression: "form.total_amount"
+      value: _vm.form.notes,
+      expression: "form.notes"
     }],
     staticClass: "form-control",
     attrs: {
-      type: "text",
-      id: "exampleInputEmail",
-      "aria-describedby": "emailHelp",
-      placeholder: "R0.00"
+      rows: "4",
+      placeholder: "Notes..."
     },
     domProps: {
-      value: _vm.form.total_amount
+      value: _vm.form.notes
     },
     on: {
       input: function input($event) {
         if ($event.target.composing) return;
-        _vm.$set(_vm.form, "total_amount", $event.target.value);
+        _vm.$set(_vm.form, "notes", $event.target.value);
       }
     }
-  }), _vm._v(" "), _vm.errors.total_amount ? _c("small", {
+  }), _vm._v(" "), _vm.errors.notes ? _c("small", {
     staticClass: "text-danger"
-  }, [_vm._v("\n                                                    " + _vm._s(_vm.errors.total_amount[0]) + "\n                                                ")]) : _vm._e()])])]), _vm._v(" "), _vm._m(1)], 2)])])])])])])])]);
+  }, [_vm._v(_vm._s(_vm.errors.notes[0]))]) : _vm._e()]), _vm._v(" "), _vm._m(1)])])])])])])])])]);
 };
 var staticRenderFns = [function () {
   var _vm = this,
@@ -7368,1190 +6119,7 @@ var staticRenderFns = [function () {
     attrs: {
       type: "submit"
     }
-  }, [_vm._v("Create\n                                            Jobcard")])]);
-}];
-render._withStripped = true;
-
-
-/***/ }),
-
-/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/job_cards/EditJobcards.vue?vue&type=template&id=6981b3ee":
-/*!******************************************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib/loaders/templateLoader.js??ref--6!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/job_cards/EditJobcards.vue?vue&type=template&id=6981b3ee ***!
-  \******************************************************************************************************************************************************************************************************************************************************/
-/*! exports provided: render, staticRenderFns */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
-var render = function render() {
-  var _vm = this,
-    _c = _vm._self._c;
-  return _c("div", [_c("div", {
-    staticClass: "row"
-  }, [_c("router-link", {
-    staticClass: "btn btn-primary",
-    attrs: {
-      to: "/jobcards"
-    }
-  }, [_vm._v("All Job Cards")])], 1), _vm._v(" "), _c("div", {
-    staticClass: "row justify-content-center"
-  }, [_c("div", {
-    staticClass: "col-xl-12 col-lg-12 col-md-12"
-  }, [_c("div", {
-    staticClass: "card shadow-sm my-5"
-  }, [_c("div", {
-    staticClass: "card-body p-0"
-  }, [_c("div", {
-    staticClass: "row"
-  }, [_c("div", {
-    staticClass: "col-lg-12"
-  }, [_c("div", {
-    staticClass: "login-form"
-  }, [_vm._m(0), _vm._v(" "), _c("form", {
-    staticClass: "jobcard",
-    attrs: {
-      enctype: "multipart/form-data"
-    },
-    on: {
-      submit: function submit($event) {
-        $event.preventDefault();
-        return _vm.jobcardInsert.apply(null, arguments);
-      }
-    }
-  }, [_c("div", {
-    staticClass: "form-group"
-  }, [_c("div", {
-    staticClass: "form-row"
-  }, [_c("div", {
-    staticClass: "col-md-6"
-  }, [_c("input", {
-    directives: [{
-      name: "model",
-      rawName: "v-model",
-      value: _vm.form.job_number,
-      expression: "form.job_number"
-    }],
-    staticClass: "form-control",
-    attrs: {
-      type: "text",
-      id: "exampleInputFirstName",
-      placeholder: "Enter Job Number"
-    },
-    domProps: {
-      value: _vm.form.job_number
-    },
-    on: {
-      input: function input($event) {
-        if ($event.target.composing) return;
-        _vm.$set(_vm.form, "job_number", $event.target.value);
-      }
-    }
-  }), _vm._v(" "), _vm.errors.job_number ? _c("small", {
-    staticClass: "text-danger"
-  }, [_vm._v("\n                                                    " + _vm._s(_vm.errors.job_number[0]) + "\n                                                ")]) : _vm._e()]), _vm._v(" "), _c("div", {
-    staticClass: "col-md-6"
-  }, [_c("input", {
-    directives: [{
-      name: "model",
-      rawName: "v-model",
-      value: _vm.form.salesperson,
-      expression: "form.salesperson"
-    }],
-    staticClass: "form-control",
-    attrs: {
-      type: "text",
-      id: "exampleInputPasswordRepeat",
-      placeholder: "Salesperson"
-    },
-    domProps: {
-      value: _vm.form.salesperson
-    },
-    on: {
-      input: function input($event) {
-        if ($event.target.composing) return;
-        _vm.$set(_vm.form, "salesperson", $event.target.value);
-      }
-    }
-  }), _vm._v(" "), _vm.errors.salesperson ? _c("small", {
-    staticClass: "text-danger"
-  }, [_vm._v("\n                                                    " + _vm._s(_vm.errors.salesperson[0]) + "\n                                                ")]) : _vm._e()])])]), _vm._v(" "), _c("div", {
-    staticClass: "form-group"
-  }, [_c("div", {
-    staticClass: "form-row"
-  }, [_c("div", {
-    staticClass: "col-md-6"
-  }, [_c("input", {
-    directives: [{
-      name: "model",
-      rawName: "v-model",
-      value: _vm.form.stand_name,
-      expression: "form.stand_name"
-    }],
-    staticClass: "form-control",
-    attrs: {
-      type: "text",
-      id: "exampleInputPassword",
-      placeholder: "Enter Stand Name"
-    },
-    domProps: {
-      value: _vm.form.stand_name
-    },
-    on: {
-      input: function input($event) {
-        if ($event.target.composing) return;
-        _vm.$set(_vm.form, "stand_name", $event.target.value);
-      }
-    }
-  }), _vm._v(" "), _vm.errors.stand_name ? _c("small", {
-    staticClass: "text-danger"
-  }, [_vm._v("\n                                                    " + _vm._s(_vm.errors.stand_name[0]) + "\n                                                ")]) : _vm._e()]), _vm._v(" "), _c("div", {
-    staticClass: "col-md-6"
-  }, [_c("input", {
-    directives: [{
-      name: "model",
-      rawName: "v-model",
-      value: _vm.form.show_name,
-      expression: "form.show_name"
-    }],
-    staticClass: "form-control",
-    attrs: {
-      type: "text",
-      id: "exampleInputEmail",
-      "aria-describedby": "emailHelp",
-      placeholder: "Enter Show Name"
-    },
-    domProps: {
-      value: _vm.form.show_name
-    },
-    on: {
-      input: function input($event) {
-        if ($event.target.composing) return;
-        _vm.$set(_vm.form, "show_name", $event.target.value);
-      }
-    }
-  }), _vm._v(" "), _vm.errors.show_name ? _c("small", {
-    staticClass: "text-danger"
-  }, [_vm._v("\n                                                    " + _vm._s(_vm.errors.show_name[0]) + "\n                                                ")]) : _vm._e()])])]), _vm._v(" "), _vm._l(_vm.form.materials, function (material, index) {
-    return _c("div", {
-      key: index,
-      staticClass: "form-group"
-    }, [_c("div", {
-      staticClass: "form-row align-items-center"
-    }, [_c("div", {
-      staticClass: "col-md-11"
-    }, [_c("h6", [_c("b", [_vm._v("Material " + _vm._s(index + 1))])])]), _vm._v(" "), _c("div", {
-      staticClass: "col-1 mb-2"
-    }, [_c("button", {
-      staticClass: "btn btn-danger form-control",
-      on: {
-        click: function click($event) {
-          return _vm.removeMaterials(index);
-        }
-      }
-    }, [_vm._v("Remove")])]), _vm._v(" "), _c("div", {
-      staticClass: "col-md-6"
-    }, [_c("input", {
-      directives: [{
-        name: "model",
-        rawName: "v-model",
-        value: material.quantity,
-        expression: "material.quantity"
-      }],
-      staticClass: "form-control",
-      attrs: {
-        type: "text",
-        id: "exampleInputPassword",
-        placeholder: "Quantity"
-      },
-      domProps: {
-        value: material.quantity
-      },
-      on: {
-        input: function input($event) {
-          if ($event.target.composing) return;
-          _vm.$set(material, "quantity", $event.target.value);
-        }
-      }
-    }), _vm._v(" "), _vm.errors.quantity ? _c("small", {
-      staticClass: "text-danger"
-    }, [_vm._v("\n                                                    " + _vm._s(_vm.errors.quantity[0]) + "\n                                                ")]) : _vm._e()]), _vm._v(" "), _c("div", {
-      staticClass: "col-md-6"
-    }, [_c("label", {
-      attrs: {
-        "for": "outsourced"
-      }
-    }, [_vm._v("Description: ")]), _vm._v(" "), _c("select", {
-      directives: [{
-        name: "model",
-        rawName: "v-model",
-        value: material.description,
-        expression: "material.description"
-      }],
-      attrs: {
-        name: "description",
-        id: "description"
-      },
-      on: {
-        change: function change($event) {
-          var $$selectedVal = Array.prototype.filter.call($event.target.options, function (o) {
-            return o.selected;
-          }).map(function (o) {
-            var val = "_value" in o ? o._value : o.value;
-            return val;
-          });
-          _vm.$set(material, "description", $event.target.multiple ? $$selectedVal : $$selectedVal[0]);
-        }
-      }
-    }, [_c("option", {
-      attrs: {
-        value: "fabric_banner"
-      }
-    }, [_vm._v("Fabric Banner")]), _vm._v(" "), _c("option", {
-      attrs: {
-        value: "full_vinyl_print"
-      }
-    }, [_vm._v("Full Vinyl Print")])]), _vm._v(" "), _vm.errors.description ? _c("small", {
-      staticClass: "text-danger"
-    }, [_vm._v("\n                                                    " + _vm._s(_vm.errors.description[0]) + "\n                                                ")]) : _vm._e()])]), _vm._v(" "), _c("div", {
-      staticClass: "pt-2 form-row align-items-center"
-    }, [_c("div", {
-      staticClass: "col-md-4"
-    }, [_c("input", {
-      directives: [{
-        name: "model",
-        rawName: "v-model",
-        value: material.width,
-        expression: "material.width"
-      }],
-      staticClass: "form-control",
-      attrs: {
-        type: "text",
-        id: "exampleInputEmail",
-        "aria-describedby": "emailHelp",
-        placeholder: "Width"
-      },
-      domProps: {
-        value: material.width
-      },
-      on: {
-        input: function input($event) {
-          if ($event.target.composing) return;
-          _vm.$set(material, "width", $event.target.value);
-        }
-      }
-    }), _vm._v(" "), _vm.errors.width ? _c("small", {
-      staticClass: "text-danger"
-    }, [_vm._v("\n                                                    " + _vm._s(_vm.errors.width[0]) + "\n                                                ")]) : _vm._e()]), _vm._v(" "), _c("div", {
-      staticClass: "col-md-4"
-    }, [_c("input", {
-      directives: [{
-        name: "model",
-        rawName: "v-model",
-        value: material.height,
-        expression: "material.height"
-      }],
-      staticClass: "form-control",
-      attrs: {
-        type: "text",
-        id: "exampleInputEmail",
-        "aria-describedby": "emailHelp",
-        placeholder: "Height"
-      },
-      domProps: {
-        value: material.height
-      },
-      on: {
-        input: function input($event) {
-          if ($event.target.composing) return;
-          _vm.$set(material, "height", $event.target.value);
-        }
-      }
-    }), _vm._v(" "), _vm.errors.height ? _c("small", {
-      staticClass: "text-danger"
-    }, [_vm._v("\n                                                    " + _vm._s(_vm.errors.height[0]) + "\n                                                ")]) : _vm._e()]), _vm._v(" "), _c("div", {
-      staticClass: "col-md-4"
-    }, [_c("input", {
-      directives: [{
-        name: "model",
-        rawName: "v-model",
-        value: material.total_sqm,
-        expression: "material.total_sqm"
-      }],
-      staticClass: "form-control",
-      attrs: {
-        type: "text",
-        disabled: "",
-        id: "exampleInputEmail",
-        "aria-describedby": "emailHelp",
-        placeholder: "Total m²"
-      },
-      domProps: {
-        value: material.total_sqm
-      },
-      on: {
-        input: function input($event) {
-          if ($event.target.composing) return;
-          _vm.$set(material, "total_sqm", $event.target.value);
-        }
-      }
-    }), _vm._v(" "), _vm.errors.total_sqm ? _c("small", {
-      staticClass: "text-danger"
-    }, [_vm._v("\n                                                    " + _vm._s(_vm.errors.total_sqm[0]) + "\n                                                ")]) : _vm._e()])]), _vm._v(" "), _c("div", {
-      staticClass: "pt-2 form-row align-items-center"
-    }, [_c("div", {
-      staticClass: "col-md-4"
-    }, [_c("input", {
-      directives: [{
-        name: "model",
-        rawName: "v-model",
-        value: material.banner_type,
-        expression: "material.banner_type"
-      }],
-      staticClass: "form-control",
-      attrs: {
-        type: "text",
-        id: "exampleInputEmail",
-        "aria-describedby": "emailHelp",
-        placeholder: "Fabric Banner Type"
-      },
-      domProps: {
-        value: material.banner_type
-      },
-      on: {
-        input: function input($event) {
-          if ($event.target.composing) return;
-          _vm.$set(material, "banner_type", $event.target.value);
-        }
-      }
-    }), _vm._v(" "), _vm.errors.banner_type ? _c("small", {
-      staticClass: "text-danger"
-    }, [_vm._v("\n                                                    " + _vm._s(_vm.errors.banner_type[0]) + "\n                                                ")]) : _vm._e()]), _vm._v(" "), _c("div", {
-      staticClass: "col-md-4"
-    }, [_c("label", {
-      attrs: {
-        "for": "outsourced"
-      }
-    }, [_vm._v("Out-sourced: ")]), _vm._v(" "), _c("select", {
-      directives: [{
-        name: "model",
-        rawName: "v-model",
-        value: material.outsourced,
-        expression: "material.outsourced"
-      }],
-      attrs: {
-        name: "outsourced",
-        id: "outsourced"
-      },
-      on: {
-        change: function change($event) {
-          var $$selectedVal = Array.prototype.filter.call($event.target.options, function (o) {
-            return o.selected;
-          }).map(function (o) {
-            var val = "_value" in o ? o._value : o.value;
-            return val;
-          });
-          _vm.$set(material, "outsourced", $event.target.multiple ? $$selectedVal : $$selectedVal[0]);
-        }
-      }
-    }, [_c("option", {
-      attrs: {
-        value: "true"
-      }
-    }, [_vm._v("Yes")]), _vm._v(" "), _c("option", {
-      attrs: {
-        selected: "selected",
-        value: "false"
-      }
-    }, [_vm._v("No")])]), _vm._v(" "), _vm.errors.outsourced ? _c("small", {
-      staticClass: "text-danger"
-    }, [_vm._v("\n                                                    " + _vm._s(_vm.errors.outsourced[0]) + "\n                                                ")]) : _vm._e()]), _vm._v(" "), _c("div", {
-      staticClass: "col-md-4"
-    }, [_c("input", {
-      directives: [{
-        name: "model",
-        rawName: "v-model",
-        value: material.machine,
-        expression: "material.machine"
-      }],
-      staticClass: "form-control",
-      attrs: {
-        type: "text",
-        id: "exampleInputEmail",
-        "aria-describedby": "emailHelp",
-        placeholder: "Machine"
-      },
-      domProps: {
-        value: material.machine
-      },
-      on: {
-        input: function input($event) {
-          if ($event.target.composing) return;
-          _vm.$set(material, "machine", $event.target.value);
-        }
-      }
-    }), _vm._v(" "), _vm.errors.machine ? _c("small", {
-      staticClass: "text-danger"
-    }, [_vm._v("\n                                                    " + _vm._s(_vm.errors.machine[0]) + "\n                                                ")]) : _vm._e()])]), _vm._v(" "), _c("div", {
-      staticClass: "pt-2 form-row align-items-center"
-    }, [_c("div", {
-      staticClass: "col-md-3"
-    }, [_c("input", {
-      directives: [{
-        name: "model",
-        rawName: "v-model",
-        value: material.total_print_medium,
-        expression: "material.total_print_medium"
-      }],
-      staticClass: "form-control",
-      attrs: {
-        type: "text",
-        id: "exampleInputEmail",
-        "aria-describedby": "emailHelp",
-        placeholder: "Total Print Medium"
-      },
-      domProps: {
-        value: material.total_print_medium
-      },
-      on: {
-        input: function input($event) {
-          if ($event.target.composing) return;
-          _vm.$set(material, "total_print_medium", $event.target.value);
-        }
-      }
-    }), _vm._v(" "), _vm.errors.total_print_medium ? _c("small", {
-      staticClass: "text-danger"
-    }, [_vm._v("\n                                                    " + _vm._s(_vm.errors.total_print_medium[0]) + "\n                                                ")]) : _vm._e()]), _vm._v(" "), _c("div", {
-      staticClass: "col-md-3"
-    }, [_c("input", {
-      directives: [{
-        name: "model",
-        rawName: "v-model",
-        value: material.total_ink,
-        expression: "material.total_ink"
-      }],
-      staticClass: "form-control",
-      attrs: {
-        type: "text",
-        id: "exampleInputEmail",
-        "aria-describedby": "emailHelp",
-        placeholder: "Total Ink"
-      },
-      domProps: {
-        value: material.total_ink
-      },
-      on: {
-        input: function input($event) {
-          if ($event.target.composing) return;
-          _vm.$set(material, "total_ink", $event.target.value);
-        }
-      }
-    }), _vm._v(" "), _vm.errors.total_ink ? _c("small", {
-      staticClass: "text-danger"
-    }, [_vm._v("\n                                                    " + _vm._s(_vm.errors.total_ink[0]) + "\n                                                ")]) : _vm._e()])]), _vm._v(" "), _c("div", {
-      staticClass: "pt-2 form-row align-items-center"
-    }, [_c("div", {
-      staticClass: "col-md-6"
-    }, [_c("label", {
-      attrs: {
-        "for": "outsourced"
-      }
-    }, [_vm._v("Pinnacle Digital Fabric Printing:")]), _vm._v(" "), _c("select", {
-      directives: [{
-        name: "model",
-        rawName: "v-model",
-        value: material.pdfp,
-        expression: "material.pdfp"
-      }],
-      attrs: {
-        name: "outsourced",
-        id: "outsourced"
-      },
-      on: {
-        change: function change($event) {
-          var $$selectedVal = Array.prototype.filter.call($event.target.options, function (o) {
-            return o.selected;
-          }).map(function (o) {
-            var val = "_value" in o ? o._value : o.value;
-            return val;
-          });
-          _vm.$set(material, "pdfp", $event.target.multiple ? $$selectedVal : $$selectedVal[0]);
-        }
-      }
-    }, [_c("option", {
-      attrs: {
-        value: "yes"
-      }
-    }, [_vm._v("Yes")]), _vm._v(" "), _c("option", {
-      attrs: {
-        selected: "",
-        value: "no"
-      }
-    }, [_vm._v("No")])]), _vm._v(" "), _vm.errors.pdfp ? _c("small", {
-      staticClass: "text-danger"
-    }, [_vm._v("\n                                                    " + _vm._s(_vm.errors.pdfp[0]) + "\n                                                ")]) : _vm._e()]), _vm._v(" "), material.pdfp == "yes" ? _c("div", {
-      staticClass: "col-md-6"
-    }, [_c("input", {
-      directives: [{
-        name: "model",
-        rawName: "v-model",
-        value: material.total_pinnacle,
-        expression: "material.total_pinnacle"
-      }],
-      staticClass: "form-control",
-      attrs: {
-        type: "text",
-        id: "exampleInputEmail",
-        "aria-describedby": "emailHelp",
-        placeholder: "Total Pinnacle"
-      },
-      domProps: {
-        value: material.total_pinnacle
-      },
-      on: {
-        input: function input($event) {
-          if ($event.target.composing) return;
-          _vm.$set(material, "total_pinnacle", $event.target.value);
-        }
-      }
-    }), _vm._v(" "), _vm.errors.total_pinnacle ? _c("small", {
-      staticClass: "text-danger"
-    }, [_vm._v("\n                                                    " + _vm._s(_vm.errors.total_pinnacle[0]) + "\n                                                ")]) : _vm._e()]) : _vm._e()]), _vm._v(" "), _c("div", {
-      staticClass: "pt-2 form-row align-items-center"
-    }, [_c("div", {
-      staticClass: "col-md-4"
-    }, [_c("label", {
-      attrs: {
-        "for": "outsourced"
-      }
-    }, [_vm._v("Silicon Welt:")]), _vm._v(" "), _c("select", {
-      directives: [{
-        name: "model",
-        rawName: "v-model",
-        value: material.silicon_welt,
-        expression: "material.silicon_welt"
-      }],
-      attrs: {
-        name: "outsourced",
-        id: "outsourced"
-      },
-      on: {
-        change: function change($event) {
-          var $$selectedVal = Array.prototype.filter.call($event.target.options, function (o) {
-            return o.selected;
-          }).map(function (o) {
-            var val = "_value" in o ? o._value : o.value;
-            return val;
-          });
-          _vm.$set(material, "silicon_welt", $event.target.multiple ? $$selectedVal : $$selectedVal[0]);
-        }
-      }
-    }, [_c("option", {
-      attrs: {
-        value: "yes"
-      }
-    }, [_vm._v("Yes")]), _vm._v(" "), _c("option", {
-      attrs: {
-        selected: "",
-        value: "no"
-      }
-    }, [_vm._v("No")])]), _vm._v(" "), _vm.errors.pdfp ? _c("small", {
-      staticClass: "text-danger"
-    }, [_vm._v("\n                                                    " + _vm._s(_vm.errors.pdfp[0]) + "\n                                                ")]) : _vm._e()]), _vm._v(" "), material.silicon_welt == "yes" ? _c("div", {
-      staticClass: "col-md-4"
-    }, [_c("input", {
-      directives: [{
-        name: "model",
-        rawName: "v-model",
-        value: material.silicon_welt_length,
-        expression: "material.silicon_welt_length"
-      }],
-      staticClass: "form-control",
-      attrs: {
-        type: "text",
-        id: "exampleInputEmail",
-        "aria-describedby": "emailHelp",
-        placeholder: "Silicon Welt Length"
-      },
-      domProps: {
-        value: material.silicon_welt_length
-      },
-      on: {
-        input: function input($event) {
-          if ($event.target.composing) return;
-          _vm.$set(material, "silicon_welt_length", $event.target.value);
-        }
-      }
-    }), _vm._v(" "), _vm.errors.silicon_welt_length ? _c("small", {
-      staticClass: "text-danger"
-    }, [_vm._v("\n                                                    " + _vm._s(_vm.errors.silicon_welt_length[0]) + "\n                                                ")]) : _vm._e()]) : _vm._e(), _vm._v(" "), material.silicon_welt == "yes" ? _c("div", {
-      staticClass: "col-md-4"
-    }, [_c("input", {
-      directives: [{
-        name: "model",
-        rawName: "v-model",
-        value: material.total_silicon_welt,
-        expression: "material.total_silicon_welt"
-      }],
-      staticClass: "form-control",
-      attrs: {
-        type: "text",
-        disabled: "",
-        id: "exampleInputEmail",
-        "aria-describedby": "emailHelp",
-        placeholder: "Total Silicon Welt"
-      },
-      domProps: {
-        value: material.total_silicon_welt
-      },
-      on: {
-        input: function input($event) {
-          if ($event.target.composing) return;
-          _vm.$set(material, "total_silicon_welt", $event.target.value);
-        }
-      }
-    }), _vm._v(" "), _vm.errors.total_silicon_welt ? _c("small", {
-      staticClass: "text-danger"
-    }, [_vm._v("\n                                                    " + _vm._s(_vm.errors.total_silicon_welt[0]) + "\n                                                ")]) : _vm._e()]) : _vm._e()]), _vm._v(" "), _c("div", {
-      staticClass: "pt-2 form-row align-items-center"
-    }, [_c("div", {
-      staticClass: "col-md-4"
-    }, [_c("label", {
-      attrs: {
-        "for": "outsourced"
-      }
-    }, [_vm._v("Flat Chonk:")]), _vm._v(" "), _c("select", {
-      directives: [{
-        name: "model",
-        rawName: "v-model",
-        value: material.flat_chonk,
-        expression: "material.flat_chonk"
-      }],
-      attrs: {
-        name: "outsourced",
-        id: "outsourced"
-      },
-      on: {
-        change: function change($event) {
-          var $$selectedVal = Array.prototype.filter.call($event.target.options, function (o) {
-            return o.selected;
-          }).map(function (o) {
-            var val = "_value" in o ? o._value : o.value;
-            return val;
-          });
-          _vm.$set(material, "flat_chonk", $event.target.multiple ? $$selectedVal : $$selectedVal[0]);
-        }
-      }
-    }, [_c("option", {
-      attrs: {
-        value: "yes"
-      }
-    }, [_vm._v("Yes")]), _vm._v(" "), _c("option", {
-      attrs: {
-        selected: "",
-        value: "no"
-      }
-    }, [_vm._v("No")])]), _vm._v(" "), _vm.errors.pdfp ? _c("small", {
-      staticClass: "text-danger"
-    }, [_vm._v("\n                                                    " + _vm._s(_vm.errors.pdfp[0]) + "\n                                                ")]) : _vm._e()]), _vm._v(" "), material.flat_chonk == "yes" ? _c("div", {
-      staticClass: "col-md-4"
-    }, [_c("input", {
-      directives: [{
-        name: "model",
-        rawName: "v-model",
-        value: material.flat_chonk_length,
-        expression: "material.flat_chonk_length"
-      }],
-      staticClass: "form-control",
-      attrs: {
-        type: "text",
-        id: "exampleInputEmail",
-        "aria-describedby": "emailHelp",
-        placeholder: "Flat Chonk Length"
-      },
-      domProps: {
-        value: material.flat_chonk_length
-      },
-      on: {
-        input: function input($event) {
-          if ($event.target.composing) return;
-          _vm.$set(material, "flat_chonk_length", $event.target.value);
-        }
-      }
-    }), _vm._v(" "), _vm.errors.flat_chonk_length ? _c("small", {
-      staticClass: "text-danger"
-    }, [_vm._v("\n                                                    " + _vm._s(_vm.errors.flat_chonk_length[0]) + "\n                                                ")]) : _vm._e()]) : _vm._e(), _vm._v(" "), material.flat_chonk == "yes" ? _c("div", {
-      staticClass: "col-md-4"
-    }, [_c("input", {
-      directives: [{
-        name: "model",
-        rawName: "v-model",
-        value: material.total_flat_chonk,
-        expression: "material.total_flat_chonk"
-      }],
-      staticClass: "form-control",
-      attrs: {
-        type: "text",
-        disabled: "",
-        id: "exampleInputEmail",
-        "aria-describedby": "emailHelp",
-        placeholder: "Total Flat Chonk"
-      },
-      domProps: {
-        value: material.total_flat_chonk
-      },
-      on: {
-        input: function input($event) {
-          if ($event.target.composing) return;
-          _vm.$set(material, "total_flat_chonk", $event.target.value);
-        }
-      }
-    }), _vm._v(" "), _vm.errors.total_flat_chonk ? _c("small", {
-      staticClass: "text-danger"
-    }, [_vm._v("\n                                                    " + _vm._s(_vm.errors.total_flat_chonk[0]) + "\n                                                ")]) : _vm._e()]) : _vm._e()]), _vm._v(" "), _c("div", {
-      staticClass: "pt-2 form-row align-items-center"
-    }, [_c("div", {
-      staticClass: "col-md-4"
-    }, [_c("label", {
-      attrs: {
-        "for": "outsourced"
-      }
-    }, [_vm._v("Eyelets:")]), _vm._v(" "), _c("select", {
-      directives: [{
-        name: "model",
-        rawName: "v-model",
-        value: material.eyelets,
-        expression: "material.eyelets"
-      }],
-      attrs: {
-        name: "outsourced",
-        id: "outsourced"
-      },
-      on: {
-        change: function change($event) {
-          var $$selectedVal = Array.prototype.filter.call($event.target.options, function (o) {
-            return o.selected;
-          }).map(function (o) {
-            var val = "_value" in o ? o._value : o.value;
-            return val;
-          });
-          _vm.$set(material, "eyelets", $event.target.multiple ? $$selectedVal : $$selectedVal[0]);
-        }
-      }
-    }, [_c("option", {
-      attrs: {
-        value: "yes"
-      }
-    }, [_vm._v("Yes")]), _vm._v(" "), _c("option", {
-      attrs: {
-        selected: "",
-        value: "no"
-      }
-    }, [_vm._v("No")])]), _vm._v(" "), _vm.errors.eyelets ? _c("small", {
-      staticClass: "text-danger"
-    }, [_vm._v("\n                                                    " + _vm._s(_vm.errors.eyelets[0]) + "\n                                                ")]) : _vm._e()]), _vm._v(" "), material.eyelets == "yes" ? _c("div", {
-      staticClass: "col-md-4"
-    }, [_c("input", {
-      directives: [{
-        name: "model",
-        rawName: "v-model",
-        value: material.eyelets_length,
-        expression: "material.eyelets_length"
-      }],
-      staticClass: "form-control",
-      attrs: {
-        type: "text",
-        id: "exampleInputEmail",
-        "aria-describedby": "emailHelp",
-        placeholder: "Eyelets Length"
-      },
-      domProps: {
-        value: material.eyelets_length
-      },
-      on: {
-        input: function input($event) {
-          if ($event.target.composing) return;
-          _vm.$set(material, "eyelets_length", $event.target.value);
-        }
-      }
-    }), _vm._v(" "), _vm.errors.eyelets_length ? _c("small", {
-      staticClass: "text-danger"
-    }, [_vm._v("\n                                                    " + _vm._s(_vm.errors.eyelets_length[0]) + "\n                                                ")]) : _vm._e()]) : _vm._e(), _vm._v(" "), material.eyelets == "yes" ? _c("div", {
-      staticClass: "col-md-4"
-    }, [_c("input", {
-      directives: [{
-        name: "model",
-        rawName: "v-model",
-        value: material.total_eyelets,
-        expression: "material.total_eyelets"
-      }],
-      staticClass: "form-control",
-      attrs: {
-        type: "text",
-        disabled: "",
-        id: "exampleInputEmail",
-        "aria-describedby": "emailHelp",
-        placeholder: "Total Eyelets"
-      },
-      domProps: {
-        value: material.total_eyelets
-      },
-      on: {
-        input: function input($event) {
-          if ($event.target.composing) return;
-          _vm.$set(material, "total_eyelets", $event.target.value);
-        }
-      }
-    }), _vm._v(" "), _vm.errors.total_eyelets ? _c("small", {
-      staticClass: "text-danger"
-    }, [_vm._v("\n                                                    " + _vm._s(_vm.errors.total_eyelets[0]) + "\n                                                ")]) : _vm._e()]) : _vm._e()]), _vm._v(" "), _c("div", {
-      staticClass: "pt-2 form-row align-items-center"
-    }, [_c("div", {
-      staticClass: "col-md-4"
-    }, [_c("label", {
-      attrs: {
-        "for": "outsourced"
-      }
-    }, [_vm._v("Webbing/Velcro:")]), _vm._v(" "), _c("select", {
-      directives: [{
-        name: "model",
-        rawName: "v-model",
-        value: material.webvel,
-        expression: "material.webvel"
-      }],
-      attrs: {
-        name: "outsourced",
-        id: "outsourced"
-      },
-      on: {
-        change: function change($event) {
-          var $$selectedVal = Array.prototype.filter.call($event.target.options, function (o) {
-            return o.selected;
-          }).map(function (o) {
-            var val = "_value" in o ? o._value : o.value;
-            return val;
-          });
-          _vm.$set(material, "webvel", $event.target.multiple ? $$selectedVal : $$selectedVal[0]);
-        }
-      }
-    }, [_c("option", {
-      attrs: {
-        value: "yes"
-      }
-    }, [_vm._v("Yes")]), _vm._v(" "), _c("option", {
-      attrs: {
-        selected: "",
-        value: "no"
-      }
-    }, [_vm._v("No")])]), _vm._v(" "), _vm.errors.eyelets ? _c("small", {
-      staticClass: "text-danger"
-    }, [_vm._v("\n                                                    " + _vm._s(_vm.errors.eyelets[0]) + "\n                                                ")]) : _vm._e()]), _vm._v(" "), material.webvel == "yes" ? _c("div", {
-      staticClass: "col-md-4"
-    }, [_c("input", {
-      directives: [{
-        name: "model",
-        rawName: "v-model",
-        value: material.web_vel_length,
-        expression: "material.web_vel_length"
-      }],
-      staticClass: "form-control",
-      attrs: {
-        type: "text",
-        id: "exampleInputEmail",
-        "aria-describedby": "emailHelp",
-        placeholder: "Webbing / Velcro Length"
-      },
-      domProps: {
-        value: material.web_vel_length
-      },
-      on: {
-        input: function input($event) {
-          if ($event.target.composing) return;
-          _vm.$set(material, "web_vel_length", $event.target.value);
-        }
-      }
-    }), _vm._v(" "), _vm.errors.web_vel_length ? _c("small", {
-      staticClass: "text-danger"
-    }, [_vm._v("\n                                                    " + _vm._s(_vm.errors.web_vel_length[0]) + "\n                                                ")]) : _vm._e()]) : _vm._e(), _vm._v(" "), material.webvel == "yes" ? _c("div", {
-      staticClass: "col-md-4"
-    }, [_c("input", {
-      directives: [{
-        name: "model",
-        rawName: "v-model",
-        value: material.total_webvel,
-        expression: "material.total_webvel"
-      }],
-      staticClass: "form-control",
-      attrs: {
-        type: "text",
-        disabled: "",
-        id: "exampleInputEmail",
-        "aria-describedby": "emailHelp",
-        placeholder: "Total Webbing / Velcro"
-      },
-      domProps: {
-        value: material.total_webvel
-      },
-      on: {
-        input: function input($event) {
-          if ($event.target.composing) return;
-          _vm.$set(material, "total_webvel", $event.target.value);
-        }
-      }
-    }), _vm._v(" "), _vm.errors.total_webvel ? _c("small", {
-      staticClass: "text-danger"
-    }, [_vm._v("\n                                                    " + _vm._s(_vm.errors.total_webvel[0]) + "\n                                                ")]) : _vm._e()]) : _vm._e()]), _vm._v(" "), _c("div", {
-      staticClass: "pt-2 form-row align-items-center"
-    }, [_c("div", {
-      staticClass: "col-md-2"
-    }, [_c("label", {
-      attrs: {
-        "for": "outsourced"
-      }
-    }, [_vm._v("Pull Up Banner: ")]), _vm._v(" "), _c("select", {
-      directives: [{
-        name: "model",
-        rawName: "v-model",
-        value: material.pullup_banner,
-        expression: "material.pullup_banner"
-      }],
-      attrs: {
-        name: "outsourced",
-        id: "outsourced"
-      },
-      on: {
-        change: function change($event) {
-          var $$selectedVal = Array.prototype.filter.call($event.target.options, function (o) {
-            return o.selected;
-          }).map(function (o) {
-            var val = "_value" in o ? o._value : o.value;
-            return val;
-          });
-          _vm.$set(material, "pullup_banner", $event.target.multiple ? $$selectedVal : $$selectedVal[0]);
-        }
-      }
-    }, [_c("option", {
-      attrs: {
-        value: "yes"
-      }
-    }, [_vm._v("Yes")]), _vm._v(" "), _c("option", {
-      attrs: {
-        selected: "",
-        value: "no"
-      }
-    }, [_vm._v("No")])]), _vm._v(" "), _vm.errors.pdfp ? _c("small", {
-      staticClass: "text-danger"
-    }, [_vm._v("\n                                                    " + _vm._s(_vm.errors.pdfp[0]) + "\n                                                ")]) : _vm._e()]), _vm._v(" "), material.pullup_banner == "yes" ? _c("div", {
-      staticClass: "col-md-2"
-    }, [_c("input", {
-      directives: [{
-        name: "model",
-        rawName: "v-model",
-        value: material.pullup_total_hardware,
-        expression: "material.pullup_total_hardware"
-      }],
-      staticClass: "form-control",
-      attrs: {
-        type: "text",
-        id: "exampleInputEmail",
-        "aria-describedby": "emailHelp",
-        placeholder: "Total Pull-up Banner Hardware"
-      },
-      domProps: {
-        value: material.pullup_total_hardware
-      },
-      on: {
-        input: function input($event) {
-          if ($event.target.composing) return;
-          _vm.$set(material, "pullup_total_hardware", $event.target.value);
-        }
-      }
-    }), _vm._v(" "), _vm.errors.pullup_total_hardware ? _c("small", {
-      staticClass: "text-danger"
-    }, [_vm._v("\n                                                    " + _vm._s(_vm.errors.pullup_total_hardware[0]) + "\n                                                ")]) : _vm._e()]) : _vm._e(), _vm._v(" "), _c("div", {
-      staticClass: "col-md-2"
-    }, [_c("label", {
-      attrs: {
-        "for": "outsourced"
-      }
-    }, [_vm._v("Magnetic: ")]), _vm._v(" "), _c("select", {
-      directives: [{
-        name: "model",
-        rawName: "v-model",
-        value: material.magnetic,
-        expression: "material.magnetic"
-      }],
-      attrs: {
-        name: "outsourced",
-        id: "outsourced"
-      },
-      on: {
-        change: function change($event) {
-          var $$selectedVal = Array.prototype.filter.call($event.target.options, function (o) {
-            return o.selected;
-          }).map(function (o) {
-            var val = "_value" in o ? o._value : o.value;
-            return val;
-          });
-          _vm.$set(material, "magnetic", $event.target.multiple ? $$selectedVal : $$selectedVal[0]);
-        }
-      }
-    }, [_c("option", {
-      attrs: {
-        value: "yes"
-      }
-    }, [_vm._v("Yes")]), _vm._v(" "), _c("option", {
-      attrs: {
-        selected: "",
-        value: "no"
-      }
-    }, [_vm._v("No")])]), _vm._v(" "), _vm.errors.pdfp ? _c("small", {
-      staticClass: "text-danger"
-    }, [_vm._v("\n                                                    " + _vm._s(_vm.errors.pdfp[0]) + "\n                                                ")]) : _vm._e()]), _vm._v(" "), material.magnetic == "yes" ? _c("div", {
-      staticClass: "col-md-2"
-    }, [_c("input", {
-      directives: [{
-        name: "model",
-        rawName: "v-model",
-        value: material.total_magnetic,
-        expression: "material.total_magnetic"
-      }],
-      staticClass: "form-control",
-      attrs: {
-        type: "text",
-        id: "exampleInputEmail",
-        "aria-describedby": "emailHelp",
-        placeholder: "Total Magnetic"
-      },
-      domProps: {
-        value: material.total_magnetic
-      },
-      on: {
-        input: function input($event) {
-          if ($event.target.composing) return;
-          _vm.$set(material, "total_magnetic", $event.target.value);
-        }
-      }
-    }), _vm._v(" "), _vm.errors.total_magnetic ? _c("small", {
-      staticClass: "text-danger"
-    }, [_vm._v("\n                                                    " + _vm._s(_vm.errors.total_magnetic[0]) + "\n                                                ")]) : _vm._e()]) : _vm._e(), _vm._v(" "), _c("div", {
-      staticClass: "col-md-2"
-    }, [_c("input", {
-      directives: [{
-        name: "model",
-        rawName: "v-model",
-        value: material.consumables,
-        expression: "material.consumables"
-      }],
-      staticClass: "form-control",
-      attrs: {
-        type: "text",
-        id: "exampleInputEmail",
-        "aria-describedby": "emailHelp",
-        placeholder: "Consumables"
-      },
-      domProps: {
-        value: material.consumables
-      },
-      on: {
-        input: function input($event) {
-          if ($event.target.composing) return;
-          _vm.$set(material, "consumables", $event.target.value);
-        }
-      }
-    }), _vm._v(" "), _vm.errors.consumables ? _c("small", {
-      staticClass: "text-danger"
-    }, [_vm._v("\n                                                    " + _vm._s(_vm.errors.consumables[0]) + "\n                                                ")]) : _vm._e()]), _vm._v(" "), _c("div", {
-      staticClass: "col-md-2"
-    }, [_c("input", {
-      directives: [{
-        name: "model",
-        rawName: "v-model",
-        value: material.unit_price_item,
-        expression: "material.unit_price_item"
-      }],
-      staticClass: "form-control",
-      attrs: {
-        type: "text",
-        id: "exampleInputEmail",
-        "aria-describedby": "emailHelp",
-        placeholder: "Unit Price / Item"
-      },
-      domProps: {
-        value: material.unit_price_item
-      },
-      on: {
-        input: function input($event) {
-          if ($event.target.composing) return;
-          _vm.$set(material, "unit_price_item", $event.target.value);
-        }
-      }
-    }), _vm._v(" "), _vm.errors.unit_price_item ? _c("small", {
-      staticClass: "text-danger"
-    }, [_vm._v("\n                                                    " + _vm._s(_vm.errors.unit_price_item[0]) + "\n                                                ")]) : _vm._e()])])]);
-  }), _vm._v(" "), _c("div", {
-    staticClass: "form-group"
-  }, [_c("div", {
-    staticClass: "form-row"
-  }, [_c("div", {
-    staticClass: "col-1"
-  }, [_c("button", {
-    staticClass: "btn btn-success form-control",
-    on: {
-      click: _vm.addMaterials
-    }
-  }, [_vm._v("Add\n                                                    Material")])])])]), _vm._v(" "), _c("div", {
-    staticClass: "form-group"
-  }, [_c("div", {
-    staticClass: "pt-2 form-row align-items-center"
-  }, [_c("div", {
-    staticClass: "col-md-6"
-  }, [_c("h6", [_vm._v("Total Amount: ")]), _vm._v(" "), _c("input", {
-    directives: [{
-      name: "model",
-      rawName: "v-model",
-      value: _vm.form.total_amount,
-      expression: "form.total_amount"
-    }],
-    staticClass: "form-control",
-    attrs: {
-      type: "text",
-      id: "exampleInputEmail",
-      "aria-describedby": "emailHelp",
-      placeholder: "R0.00"
-    },
-    domProps: {
-      value: _vm.form.total_amount
-    },
-    on: {
-      input: function input($event) {
-        if ($event.target.composing) return;
-        _vm.$set(_vm.form, "total_amount", $event.target.value);
-      }
-    }
-  })])])]), _vm._v(" "), _vm._m(1)], 2)])])])])])])])]);
-};
-var staticRenderFns = [function () {
-  var _vm = this,
-    _c = _vm._self._c;
-  return _c("div", {
-    staticClass: "text-center"
-  }, [_c("h1", {
-    staticClass: "h4 text-gray-900 mb-4"
-  }, [_vm._v("Create Job Card")])]);
-}, function () {
-  var _vm = this,
-    _c = _vm._self._c;
-  return _c("div", {
-    staticClass: "form-group"
-  }, [_c("button", {
-    staticClass: "btn btn-primary btn-block",
-    attrs: {
-      type: "submit"
-    }
-  }, [_vm._v("Create\n                                            Jobcard")])]);
+  }, [_vm._v("Save Job\n                                            Card")])]);
 }];
 render._withStripped = true;
 
@@ -8709,9 +6277,29 @@ __webpack_require__.r(__webpack_exports__);
 var render = function render() {
   var _vm = this,
     _c = _vm._self._c;
-  return _c("div", {
-    staticClass: "container"
-  }, [_c("h3", [_vm._v("Create New Quote")]), _vm._v(" "), _c("form", {
+  return _c("div", [_c("div", {
+    staticClass: "row"
+  }, [_c("router-link", {
+    staticClass: "btn btn-primary",
+    attrs: {
+      to: "/quotes"
+    }
+  }, [_vm._v("All Quotes")])], 1), _vm._v(" "), _c("div", {
+    staticClass: "row justify-content-center"
+  }, [_c("div", {
+    staticClass: "col-xl-12 col-lg-12 col-md-12"
+  }, [_c("div", {
+    staticClass: "card shadow-sm my-5"
+  }, [_c("div", {
+    staticClass: "card-body p-0"
+  }, [_c("div", {
+    staticClass: "row"
+  }, [_c("div", {
+    staticClass: "col-lg-12"
+  }, [_c("div", {
+    staticClass: "login-form"
+  }, [_vm._m(0), _vm._v(" "), _c("form", {
+    staticClass: "user",
     on: {
       submit: function submit($event) {
         $event.preventDefault();
@@ -8724,7 +6312,7 @@ var render = function render() {
     staticClass: "form-row"
   }, [_c("div", {
     staticClass: "col-md-6"
-  }, [_c("label", [_vm._v("Client Name")]), _vm._v(" "), _c("input", {
+  }, [_c("input", {
     directives: [{
       name: "model",
       rawName: "v-model",
@@ -8734,7 +6322,7 @@ var render = function render() {
     staticClass: "form-control",
     attrs: {
       type: "text",
-      required: ""
+      placeholder: "Client Name"
     },
     domProps: {
       value: _vm.form.client_name
@@ -8745,9 +6333,11 @@ var render = function render() {
         _vm.$set(_vm.form, "client_name", $event.target.value);
       }
     }
-  })]), _vm._v(" "), _c("div", {
+  }), _vm._v(" "), _vm.errors.client_name ? _c("small", {
+    staticClass: "text-danger"
+  }, [_vm._v(_vm._s(_vm.errors.client_name[0]))]) : _vm._e()]), _vm._v(" "), _c("div", {
     staticClass: "col-md-6"
-  }, [_c("label", [_vm._v("Client Email")]), _vm._v(" "), _c("input", {
+  }, [_c("input", {
     directives: [{
       name: "model",
       rawName: "v-model",
@@ -8756,7 +6346,8 @@ var render = function render() {
     }],
     staticClass: "form-control",
     attrs: {
-      type: "email"
+      type: "email",
+      placeholder: "Client Email"
     },
     domProps: {
       value: _vm.form.client_email
@@ -8767,10 +6358,69 @@ var render = function render() {
         _vm.$set(_vm.form, "client_email", $event.target.value);
       }
     }
-  })])])]), _vm._v(" "), _c("hr"), _vm._v(" "), _c("h5", [_vm._v("Quote Line Items")]), _vm._v(" "), _vm._l(_vm.form.items, function (item, index) {
+  }), _vm._v(" "), _vm.errors.client_email ? _c("small", {
+    staticClass: "text-danger"
+  }, [_vm._v(_vm._s(_vm.errors.client_email[0]))]) : _vm._e()])])]), _vm._v(" "), _c("div", {
+    staticClass: "form-group"
+  }, [_c("div", {
+    staticClass: "form-row"
+  }, [_c("div", {
+    staticClass: "col-md-6"
+  }, [_c("input", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.form.quote_date,
+      expression: "form.quote_date"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      type: "date",
+      placeholder: "Quote Date"
+    },
+    domProps: {
+      value: _vm.form.quote_date
+    },
+    on: {
+      input: function input($event) {
+        if ($event.target.composing) return;
+        _vm.$set(_vm.form, "quote_date", $event.target.value);
+      }
+    }
+  }), _vm._v(" "), _vm.errors.quote_date ? _c("small", {
+    staticClass: "text-danger"
+  }, [_vm._v(_vm._s(_vm.errors.quote_date[0]))]) : _vm._e()])])]), _vm._v(" "), _c("div", {
+    staticClass: "form-group"
+  }, [_c("textarea", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.form.notes,
+      expression: "form.notes"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      placeholder: "Notes..."
+    },
+    domProps: {
+      value: _vm.form.notes
+    },
+    on: {
+      input: function input($event) {
+        if ($event.target.composing) return;
+        _vm.$set(_vm.form, "notes", $event.target.value);
+      }
+    }
+  }), _vm._v(" "), _vm.errors.notes ? _c("small", {
+    staticClass: "text-danger"
+  }, [_vm._v(_vm._s(_vm.errors.notes[0]))]) : _vm._e()]), _vm._v(" "), _c("div", {
+    staticClass: "form-group"
+  }, [_c("label", {
+    staticClass: "font-weight-bold"
+  }, [_vm._v("Quote Line Items")]), _vm._v(" "), _vm._l(_vm.form.items, function (item, index) {
     return _c("div", {
       key: index,
-      staticClass: "row mb-2"
+      staticClass: "form-row mb-2"
     }, [_c("div", {
       staticClass: "col-md-4"
     }, [_c("input", {
@@ -8782,8 +6432,7 @@ var render = function render() {
       }],
       staticClass: "form-control",
       attrs: {
-        placeholder: "Description",
-        required: ""
+        placeholder: "Description"
       },
       domProps: {
         value: item.description
@@ -8809,9 +6458,7 @@ var render = function render() {
       staticClass: "form-control",
       attrs: {
         type: "number",
-        min: "1",
-        placeholder: "Qty",
-        required: ""
+        placeholder: "Qty"
       },
       domProps: {
         value: item.quantity
@@ -8820,7 +6467,7 @@ var render = function render() {
         input: [function ($event) {
           if ($event.target.composing) return;
           _vm.$set(item, "quantity", _vm._n($event.target.value));
-        }, _vm.recalculate],
+        }, _vm.calculateTotals],
         blur: function blur($event) {
           return _vm.$forceUpdate();
         }
@@ -8840,10 +6487,7 @@ var render = function render() {
       staticClass: "form-control",
       attrs: {
         type: "number",
-        min: "0",
-        step: "0.01",
-        placeholder: "Unit Price",
-        required: ""
+        placeholder: "Price"
       },
       domProps: {
         value: item.unit_price
@@ -8852,7 +6496,7 @@ var render = function render() {
         input: [function ($event) {
           if ($event.target.composing) return;
           _vm.$set(item, "unit_price", _vm._n($event.target.value));
-        }, _vm.recalculate],
+        }, _vm.calculateTotals],
         blur: function blur($event) {
           return _vm.$forceUpdate();
         }
@@ -8862,45 +6506,50 @@ var render = function render() {
     }, [_c("input", {
       staticClass: "form-control",
       attrs: {
-        disabled: ""
+        readonly: ""
       },
       domProps: {
-        value: (item.quantity * item.unit_price).toFixed(2)
+        value: item.total.toFixed(2)
       }
     })]), _vm._v(" "), _c("div", {
       staticClass: "col-md-2"
     }, [_c("button", {
       staticClass: "btn btn-danger btn-sm",
+      attrs: {
+        type: "button"
+      },
       on: {
         click: function click($event) {
-          $event.preventDefault();
           return _vm.removeItem(index);
         }
       }
-    }, [_vm._v("Remove")])])]);
+    }, [_vm._v("X")])])]);
   }), _vm._v(" "), _c("button", {
-    staticClass: "btn btn-sm btn-info mb-3",
+    staticClass: "btn btn-secondary btn-sm",
+    attrs: {
+      type: "button"
+    },
     on: {
-      click: function click($event) {
-        $event.preventDefault();
-        return _vm.addItem.apply(null, arguments);
-      }
+      click: _vm.addItem
     }
-  }, [_vm._v("+ Add Item")]), _vm._v(" "), _c("hr"), _vm._v(" "), _c("div", {
-    staticClass: "form-group row"
+  }, [_vm._v("+\n                                            Add Item")])], 2), _vm._v(" "), _c("div", {
+    staticClass: "form-group"
   }, [_c("div", {
-    staticClass: "col-md-4 offset-md-8"
-  }, [_c("label", [_vm._v("Subtotal")]), _vm._v(" "), _c("input", {
+    staticClass: "form-row"
+  }, [_c("div", {
+    staticClass: "col-md-4"
+  }, [_c("input", {
     staticClass: "form-control",
     attrs: {
-      disabled: ""
+      placeholder: "Subtotal",
+      readonly: ""
     },
     domProps: {
-      value: _vm.subtotal.toFixed(2)
+      value: _vm.form.subtotal.toFixed(2)
     }
   })]), _vm._v(" "), _c("div", {
-    staticClass: "col-md-4 offset-md-8 mt-2"
-  }, [_c("label", [_vm._v("VAT (%)")]), _vm._v(" "), _c("input", {
+    staticClass: "col-md-4"
+  }, [_c("input", {
     directives: [{
       name: "model",
       rawName: "v-model.number",
@@ -8912,8 +6561,7 @@ var render = function render() {
     }],
     staticClass: "form-control",
     attrs: {
-      type: "number",
-      min: "0"
+      placeholder: "VAT"
     },
     domProps: {
       value: _vm.form.vat
@@ -8922,45 +6570,44 @@ var render = function render() {
       input: [function ($event) {
         if ($event.target.composing) return;
         _vm.$set(_vm.form, "vat", _vm._n($event.target.value));
-      }, _vm.recalculate],
+      }, _vm.calculateTotals],
       blur: function blur($event) {
         return _vm.$forceUpdate();
       }
     }
   })]), _vm._v(" "), _c("div", {
-    staticClass: "col-md-4 offset-md-8 mt-2"
-  }, [_c("label", [_vm._v("Total")]), _vm._v(" "), _c("input", {
+    staticClass: "col-md-4"
+  }, [_c("input", {
     staticClass: "form-control",
     attrs: {
-      disabled: ""
+      placeholder: "Total",
+      readonly: ""
     },
     domProps: {
-      value: _vm.total.toFixed(2)
+      value: _vm.form.total.toFixed(2)
     }
-  })])]), _vm._v(" "), _c("div", {
-    staticClass: "form-group mt-3"
-  }, [_c("label", [_vm._v("Notes")]), _vm._v(" "), _c("textarea", {
-    directives: [{
-      name: "model",
-      rawName: "v-model",
-      value: _vm.form.notes,
-      expression: "form.notes"
-    }],
-    staticClass: "form-control",
-    domProps: {
-      value: _vm.form.notes
-    },
-    on: {
-      input: function input($event) {
-        if ($event.target.composing) return;
-        _vm.$set(_vm.form, "notes", $event.target.value);
-      }
-    }
-  })]), _vm._v(" "), _c("button", {
-    staticClass: "btn btn-success"
-  }, [_vm._v("Create Quote")])], 2)]);
+  })])])]), _vm._v(" "), _vm._m(1)])])])])])])])])]);
 };
-var staticRenderFns = [];
+var staticRenderFns = [function () {
+  var _vm = this,
+    _c = _vm._self._c;
+  return _c("div", {
+    staticClass: "text-center"
+  }, [_c("h1", {
+    staticClass: "h4 text-gray-900 mb-4"
+  }, [_vm._v("Add Quote")])]);
+}, function () {
+  var _vm = this,
+    _c = _vm._self._c;
+  return _c("div", {
+    staticClass: "form-group"
+  }, [_c("button", {
+    staticClass: "btn btn-primary btn-block",
+    attrs: {
+      type: "submit"
+    }
+  }, [_vm._v("Save Quote")])]);
+}];
 render._withStripped = true;
 
 
@@ -88186,20 +85833,17 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _AllJobcards_vue_vue_type_template_id_19087ffe__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./AllJobcards.vue?vue&type=template&id=19087ffe */ "./resources/js/components/job_cards/AllJobcards.vue?vue&type=template&id=19087ffe");
-/* harmony import */ var _AllJobcards_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./AllJobcards.vue?vue&type=script&lang=js */ "./resources/js/components/job_cards/AllJobcards.vue?vue&type=script&lang=js");
-/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
-
-
-
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+var render, staticRenderFns
+var script = {}
 
 
 /* normalize component */
 
-var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
-  _AllJobcards_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__["default"],
-  _AllJobcards_vue_vue_type_template_id_19087ffe__WEBPACK_IMPORTED_MODULE_0__["render"],
-  _AllJobcards_vue_vue_type_template_id_19087ffe__WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_0__["default"])(
+  script,
+  render,
+  staticRenderFns,
   false,
   null,
   null,
@@ -88207,42 +85851,8 @@ var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_
   
 )
 
-/* hot reload */
-if (false) { var api; }
 component.options.__file = "resources/js/components/job_cards/AllJobcards.vue"
 /* harmony default export */ __webpack_exports__["default"] = (component.exports);
-
-/***/ }),
-
-/***/ "./resources/js/components/job_cards/AllJobcards.vue?vue&type=script&lang=js":
-/*!***********************************************************************************!*\
-  !*** ./resources/js/components/job_cards/AllJobcards.vue?vue&type=script&lang=js ***!
-  \***********************************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_AllJobcards_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./AllJobcards.vue?vue&type=script&lang=js */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/job_cards/AllJobcards.vue?vue&type=script&lang=js");
-/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_AllJobcards_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_0__["default"]); 
-
-/***/ }),
-
-/***/ "./resources/js/components/job_cards/AllJobcards.vue?vue&type=template&id=19087ffe":
-/*!*****************************************************************************************!*\
-  !*** ./resources/js/components/job_cards/AllJobcards.vue?vue&type=template&id=19087ffe ***!
-  \*****************************************************************************************/
-/*! exports provided: render, staticRenderFns */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ref_6_node_modules_vue_loader_lib_index_js_vue_loader_options_AllJobcards_vue_vue_type_template_id_19087ffe__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??ref--6!../../../../node_modules/vue-loader/lib??vue-loader-options!./AllJobcards.vue?vue&type=template&id=19087ffe */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/job_cards/AllJobcards.vue?vue&type=template&id=19087ffe");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ref_6_node_modules_vue_loader_lib_index_js_vue_loader_options_AllJobcards_vue_vue_type_template_id_19087ffe__WEBPACK_IMPORTED_MODULE_0__["render"]; });
-
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ref_6_node_modules_vue_loader_lib_index_js_vue_loader_options_AllJobcards_vue_vue_type_template_id_19087ffe__WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
-
-
 
 /***/ }),
 
@@ -88324,20 +85934,17 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _EditJobcards_vue_vue_type_template_id_6981b3ee__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./EditJobcards.vue?vue&type=template&id=6981b3ee */ "./resources/js/components/job_cards/EditJobcards.vue?vue&type=template&id=6981b3ee");
-/* harmony import */ var _EditJobcards_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./EditJobcards.vue?vue&type=script&lang=js */ "./resources/js/components/job_cards/EditJobcards.vue?vue&type=script&lang=js");
-/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
-
-
-
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+var render, staticRenderFns
+var script = {}
 
 
 /* normalize component */
 
-var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
-  _EditJobcards_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__["default"],
-  _EditJobcards_vue_vue_type_template_id_6981b3ee__WEBPACK_IMPORTED_MODULE_0__["render"],
-  _EditJobcards_vue_vue_type_template_id_6981b3ee__WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_0__["default"])(
+  script,
+  render,
+  staticRenderFns,
   false,
   null,
   null,
@@ -88345,42 +85952,8 @@ var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_
   
 )
 
-/* hot reload */
-if (false) { var api; }
 component.options.__file = "resources/js/components/job_cards/EditJobcards.vue"
 /* harmony default export */ __webpack_exports__["default"] = (component.exports);
-
-/***/ }),
-
-/***/ "./resources/js/components/job_cards/EditJobcards.vue?vue&type=script&lang=js":
-/*!************************************************************************************!*\
-  !*** ./resources/js/components/job_cards/EditJobcards.vue?vue&type=script&lang=js ***!
-  \************************************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_EditJobcards_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./EditJobcards.vue?vue&type=script&lang=js */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/job_cards/EditJobcards.vue?vue&type=script&lang=js");
-/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_EditJobcards_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_0__["default"]); 
-
-/***/ }),
-
-/***/ "./resources/js/components/job_cards/EditJobcards.vue?vue&type=template&id=6981b3ee":
-/*!******************************************************************************************!*\
-  !*** ./resources/js/components/job_cards/EditJobcards.vue?vue&type=template&id=6981b3ee ***!
-  \******************************************************************************************/
-/*! exports provided: render, staticRenderFns */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ref_6_node_modules_vue_loader_lib_index_js_vue_loader_options_EditJobcards_vue_vue_type_template_id_6981b3ee__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??ref--6!../../../../node_modules/vue-loader/lib??vue-loader-options!./EditJobcards.vue?vue&type=template&id=6981b3ee */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/job_cards/EditJobcards.vue?vue&type=template&id=6981b3ee");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ref_6_node_modules_vue_loader_lib_index_js_vue_loader_options_EditJobcards_vue_vue_type_template_id_6981b3ee__WEBPACK_IMPORTED_MODULE_0__["render"]; });
-
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ref_6_node_modules_vue_loader_lib_index_js_vue_loader_options_EditJobcards_vue_vue_type_template_id_6981b3ee__WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
-
-
 
 /***/ }),
 
