@@ -3,10 +3,10 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Model\Quote;
 use Illuminate\Http\Request;
+use App\Model\Invoice;
 
-class QuoteController extends Controller
+class InvoiceController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,11 +15,9 @@ class QuoteController extends Controller
      */
     public function index()
     {
-        $quotes = Quote::with(['items', 'jobcard', 'invoice'])
-            ->orderByDesc('created_at')
-            ->get();
-
-        return response()->json($quotes);
+        return response()->json(
+            Invoice::with('items', 'quote')->latest()->get()
+        );
     }
 
     /**
@@ -30,13 +28,18 @@ class QuoteController extends Controller
      */
     public function store(Request $request)
     {
+        $latestInvoice = Invoice::orderBy('id', 'desc')->first();
+        $nextNumber = $latestInvoice ? $latestInvoice->id + 1 : 1;
+        $invoiceNumber = 'INV-' . str_pad($nextNumber, 5, '0', STR_PAD_LEFT);
+
         $validated = $request->validate([
-            'client_name' => 'required|string|max:255',
-            'client_email' => 'nullable|email',
-            'quote_date' => now(),
+            'quote_id' => 'required|unique:invoices,quote_id',
+            'invoice_date' => 'required|date',
+            'due_date' => 'nullable|date',
             'subtotal' => 'required|numeric|min:0',
             'vat' => 'nullable|numeric|min:0',
             'total' => 'required|numeric|min:0',
+            'status' => 'required|string',
             'notes' => 'nullable|string',
             'items' => 'required|array|min:1',
             'items.*.description' => 'required|string',
@@ -45,15 +48,26 @@ class QuoteController extends Controller
             'items.*.total' => 'required|numeric|min:0',
         ]);
 
-        $quote = Quote::create($validated);
+        // Set invoice_number manually
+        $invoice = Invoice::create([
+            'quote_id' => $validated['quote_id'],
+            'invoice_number' => $invoiceNumber,
+            'invoice_date' => $validated['invoice_date'],
+            'due_date' => $validated['due_date'],
+            'subtotal' => $validated['subtotal'],
+            'vat' => $validated['vat'],
+            'total' => $validated['total'],
+            'status' => $validated['status'],
+            'notes' => $validated['notes'],
+        ]);
 
         foreach ($validated['items'] as $item) {
-            $quote->items()->create($item);
+            $invoice->items()->create($item);
         }
 
         return response()->json([
-            'message' => 'Quote created successfully',
-            'quote' => $quote->load('items'),
+            'message' => 'Invoice created successfully',
+            'invoice' => $invoice->load('items')
         ], 201);
     }
 
@@ -65,8 +79,9 @@ class QuoteController extends Controller
      */
     public function show($id)
     {
-        $quote = Quote::with('items')->findOrFail($id);
-        return response()->json($quote);
+        return response()->json(
+            Invoice::with('items', 'quote')->findOrFail($id)
+        );
     }
 
     /**
@@ -78,26 +93,15 @@ class QuoteController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $quote = Quote::findOrFail($id);
-
-        // If only updating status
-        if ($request->has('status') && count($request->all()) === 1) {
-            $request->validate([
-                'status' => 'required|in:pending,approved,rejected'
-            ]);
-
-            $quote->status = $request->status;
-            $quote->save();
-
-            return response()->json(['message' => 'Status updated']);
-        }
+        $invoice = Invoice::findOrFail($id);
 
         $validated = $request->validate([
-            'client_name' => 'required|string|max:255',
-            'client_email' => 'nullable|email',
+            'invoice_date' => 'required|date',
+            'due_date' => 'nullable|date',
             'subtotal' => 'required|numeric|min:0',
             'vat' => 'nullable|numeric|min:0',
             'total' => 'required|numeric|min:0',
+            'status' => 'required|string',
             'notes' => 'nullable|string',
             'items' => 'required|array|min:1',
             'items.*.description' => 'required|string',
@@ -106,18 +110,17 @@ class QuoteController extends Controller
             'items.*.total' => 'required|numeric|min:0',
         ]);
 
-        $quote->update($validated);
+        $invoice->update($validated);
 
-        // Delete old items and re-create
-        $quote->items()->delete();
-
+        // Optional: clear + reinsert items
+        $invoice->items()->delete();
         foreach ($validated['items'] as $item) {
-            $quote->items()->create($item);
+            $invoice->items()->create($item);
         }
 
         return response()->json([
-            'message' => 'Quote updated',
-            'quote' => $quote->load('items'),
+            'message' => 'Invoice updated',
+            'invoice' => $invoice->load('items', 'quote'),
         ]);
     }
 
@@ -129,9 +132,7 @@ class QuoteController extends Controller
      */
     public function destroy($id)
     {
-        $quote = Quote::findOrFail($id);
-        $quote->delete();
-
-        return response()->json(['message' => 'Quote deleted']);
+        Invoice::findOrFail($id)->delete();
+        return response()->json(['message' => 'Invoice deleted']);
     }
 }

@@ -27,3 +27,4 @@ Route::apiResource('/supplier', 'Api\SupplierController');
 Route::apiResource('/jobcard', 'Api\JobcardController');
 Route::apiResource('/settings', 'Api\SystemSettingController')->only(['index', 'update']);
 Route::apiResource('/quotes', 'Api\QuoteController');
+Route::apiResource('/invoices', 'Api\InvoiceController');

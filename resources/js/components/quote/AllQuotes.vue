@@ -39,14 +39,38 @@
                                                 <option value="rejected">Rejected</option>
                                             </select>
                                             <span :class="['badge', statusClass(quote.status)]">{{ quote.status
-                                                }}</span>
+                                            }}</span>
                                         </div>
                                     </td>
                                     <td>
-                                        <router-link :to="{name: 'edit-quote', params:{id:quote.id}}"
+                                        <router-link :to="{ name: 'edit-quote', params: { id: quote.id } }"
                                             class="btn btn-sm btn-primary ml-1">Edit</router-link>
-                                        <button @click="deleteQuote(quote.id)"
+                                        <button v-if="!quote.jobcard" @click="deleteQuote(quote.id)"
                                             class="btn btn-sm btn-danger ml-1">Delete</button>
+                                        <!-- Show Generate button if quote is approved and has no job card -->
+                                        <router-link v-if="quote.status === 'approved' && !quote.jobcard"
+                                            :to="{ name: 'add-jobcard', params: { quoteId: quote.id } }"
+                                            class="btn btn-sm btn-secondary ml-1">
+                                            Generate Job Card
+                                        </router-link>
+                                        <router-link v-if="quote.status === 'approved' && !quote.invoice"
+                                            :to="{ name: 'add-invoice', params: { quoteId: quote.id } }"
+                                            class="btn btn-sm btn-success ml-2">
+                                            Generate Invoice
+                                        </router-link>
+
+                                        <!-- Show View button if job card already exists -->
+                                        <router-link v-if="quote.status === 'approved' && quote.jobcard"
+                                            :to="{ name: 'edit-jobcard', params: { id: quote.jobcard.id } }"
+                                            class="btn btn-sm btn-outline-secondary ml-1">
+                                            View Job Card
+                                        </router-link>
+                                        <!-- Show View Invoice button if invoice exists -->
+                                        <router-link v-if="quote.invoice"
+                                            :to="{ name: 'edit-invoice', params: { id: quote.invoice.id } }"
+                                            class="btn btn-sm btn-info ml-1">
+                                            View Invoice
+                                        </router-link>
                                     </td>
                                 </tr>
                             </tbody>

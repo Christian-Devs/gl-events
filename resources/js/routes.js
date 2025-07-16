@@ -16,6 +16,10 @@ let storequote = require('./components/quote/CreateQuote.vue').default;
 let quotes = require('./components/quote/AllQuotes.vue').default;
 let editquote = require('./components/quote/EditQuote.vue').default;
 
+let storeinvoice = require('./components/invoice/CreateInvoice.vue').default;
+let invoices = require('./components/invoice/AllInvoices.vue').default;
+let editinvoice = require('./components/invoice/EditInvoice.vue').default;
+
 let storejobcard = require('./components/job_cards/CreateJobcard.vue').default;
 let jobcards = require('./components/job_cards/AllJobcards.vue').default;
 let editjobcard = require('./components/job_cards/EditJobcards.vue').default;
@@ -42,7 +46,17 @@ export const routes = [
 
     { path: '/jobcards', component: jobcards, name: 'jobcards' },
     { path: '/add-jobcard', component: storejobcard, name: 'add-jobcard' },
+    {
+        path: '/add-jobcard/:quoteId',
+        name: 'add-jobcard',
+        component: storejobcard
+    },
     { path: '/edit-jobcard/:id', component: editjobcard, name: 'edit-jobcard' },
+
+    { path: '/invoices', component: invoices, name: 'invoices' },
+    { path: '/add-invoice', component: storeinvoice, name: 'add-invoice' },
+    { path: '/edit-invoice/:id', component: editinvoice, name: 'edit-invoice' },
+    { path: '/add-invoice/:quoteId', name: 'add-invoice', component: storeinvoice },
 
     { path: '/system-settings', component: systemsettings, name: 'system-settings' }
 ];

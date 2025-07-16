@@ -93,6 +93,20 @@
                         </div>
                     </li>
                     <li class="nav-item">
+                        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#Invoices"
+                            aria-expanded="true" aria-controls="Invoices">
+                            <i class="far fa-fw fa-window-maximize"></i>
+                            <span>Invoices</span>
+                        </a>
+                        <div id="Invoices" class="collapse" aria-labelledby="headingBootstrap"
+                            data-parent="#accordionSidebar">
+                            <div class="bg-white py-2 collapse-inner rounded">
+                                <router-link class="collapse-item" to="/add-invoice">Add Invoice</router-link>
+                                <router-link class="collapse-item" to="/invoices">All Invoices</router-link>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="nav-item">
                         <router-link class="nav-link" to="/system-settings">
                             <i class="fas fa-cogs"></i>
                             <span>System Settings</span>
