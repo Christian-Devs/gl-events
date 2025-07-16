@@ -36,7 +36,7 @@
                       {{ invoice.status }}
                     </span>
                   </td>
-                  <td>R {{ invoice.total.toFixed(2) }}</td>
+                  <td>R{{ parseFloat(invoice.total).toFixed(2) }}</td>
                   <td>
                     <router-link :to="{ name: 'edit-invoice', params: { id: invoice.id } }" class="btn btn-sm btn-primary">Edit</router-link>
                     <button class="btn btn-sm btn-danger" @click="deleteInvoice(invoice.id)">Delete</button>

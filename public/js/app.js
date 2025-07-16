@@ -3617,6 +3617,7 @@ __webpack_require__.r(__webpack_exports__);
         quote_id: this.$route.params.quoteId || '',
         // set via route
         invoice_number: '',
+        status: 'draft',
         invoice_date: '',
         due_date: '',
         vat: 0,
@@ -3638,7 +3639,10 @@ __webpack_require__.r(__webpack_exports__);
         _this.quote = data;
 
         // Optional: pre-fill invoice_date from quote date
-        _this.form.invoice_date = data.quote_date;
+        var now = new Date();
+        var formattedDate = now.toISOString().substr(0, 10);
+        _this.form.invoice_date = formattedDate;
+        console.log(formattedDate);
         _this.form.vat = data.vat;
 
         // Pre-fill items
@@ -3653,13 +3657,7 @@ __webpack_require__.r(__webpack_exports__);
 
         // Calculate totals
         _this.updateAllTotals();
-
-        // Set due date = invoice date + 30 days
-        if (_this.form.invoice_date) {
-          var date = new Date(_this.form.invoice_date);
-          date.setDate(date.getDate() + 30);
-          _this.form.due_date = date.toISOString().substr(0, 10); // format YYYY-MM-DD
-        }
+        _this.updateDueDate();
       });
     }
   },
@@ -3694,6 +3692,14 @@ __webpack_require__.r(__webpack_exports__);
     },
     total: function total() {
       return this.subtotal() + parseFloat(this.form.vat || 0);
+    },
+    updateDueDate: function updateDueDate() {
+      // Set due date = invoice date + 30 days
+      if (this.form.invoice_date) {
+        var date = new Date(this.form.invoice_date);
+        date.setDate(date.getDate() + 30);
+        this.form.due_date = date.toISOString().substr(0, 10); // format YYYY-MM-DD
+      }
     },
     submitInvoice: function submitInvoice() {
       var _this3 = this;
@@ -6358,7 +6364,7 @@ var render = function render() {
       key: invoice.id
     }, [_c("td", [_vm._v(_vm._s(invoice.invoice_number))]), _vm._v(" "), _c("td", [_vm._v(_vm._s((_invoice$quote = invoice.quote) === null || _invoice$quote === void 0 ? void 0 : _invoice$quote.client_name))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(invoice.invoice_date))]), _vm._v(" "), _c("td", [_c("span", {
       "class": _vm.statusBadge(invoice.status)
-    }, [_vm._v("\n                    " + _vm._s(invoice.status) + "\n                  ")])]), _vm._v(" "), _c("td", [_vm._v("R " + _vm._s(invoice.total.toFixed(2)))]), _vm._v(" "), _c("td", [_c("router-link", {
+    }, [_vm._v("\n                    " + _vm._s(invoice.status) + "\n                  ")])]), _vm._v(" "), _c("td", [_vm._v("R" + _vm._s(parseFloat(invoice.total).toFixed(2)))]), _vm._v(" "), _c("td", [_c("router-link", {
       staticClass: "btn btn-sm btn-primary",
       attrs: {
         to: {
@@ -6440,7 +6446,11 @@ var render = function render() {
     staticClass: "form-group"
   }, [_c("label", [_vm._v("Quote Info:")]), _vm._v(" "), _vm.quote ? _c("div", [_c("p", [_c("strong", [_vm._v("Client:")]), _vm._v(" " + _vm._s(_vm.quote.client_name))]), _vm._v(" "), _c("p", [_c("strong", [_vm._v("Email:")]), _vm._v(" " + _vm._s(_vm.quote.client_email))]), _vm._v(" "), _c("p", [_c("strong", [_vm._v("Quote Date:")]), _vm._v(" " + _vm._s(_vm.quote.quote_date))])]) : _vm._e()]), _vm._v(" "), _c("div", {
     staticClass: "form-group"
-  }, [_c("input", {
+  }, [_c("div", {
+    staticClass: "form-row"
+  }, [_c("div", {
+    staticClass: "col-md-6"
+  }, [_c("label", [_vm._v("Invoice Number")]), _vm._v(" "), _c("input", {
     directives: [{
       name: "model",
       rawName: "v-model",
@@ -6464,10 +6474,49 @@ var render = function render() {
   }), _vm._v(" "), _vm.errors.invoice_number ? _c("small", {
     staticClass: "text-danger"
   }, [_vm._v(_vm._s(_vm.errors.invoice_number[0]))]) : _vm._e()]), _vm._v(" "), _c("div", {
+    staticClass: "col-md-6"
+  }, [_c("label", [_vm._v("Status")]), _vm._v(" "), _c("select", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.form.status,
+      expression: "form.status"
+    }],
+    staticClass: "form-control",
+    on: {
+      change: function change($event) {
+        var $$selectedVal = Array.prototype.filter.call($event.target.options, function (o) {
+          return o.selected;
+        }).map(function (o) {
+          var val = "_value" in o ? o._value : o.value;
+          return val;
+        });
+        _vm.$set(_vm.form, "status", $event.target.multiple ? $$selectedVal : $$selectedVal[0]);
+      }
+    }
+  }, [_c("option", {
+    attrs: {
+      value: "draft"
+    }
+  }, [_vm._v("Draft")]), _vm._v(" "), _c("option", {
+    attrs: {
+      value: "sent"
+    }
+  }, [_vm._v("Sent")]), _vm._v(" "), _c("option", {
+    attrs: {
+      value: "paid"
+    }
+  }, [_vm._v("Paid")]), _vm._v(" "), _c("option", {
+    attrs: {
+      value: "overdue"
+    }
+  }, [_vm._v("Overdue")])]), _vm._v(" "), _vm.errors.status ? _c("small", {
+    staticClass: "text-danger"
+  }, [_vm._v(_vm._s(_vm.errors.status[0]))]) : _vm._e()])])]), _vm._v(" "), _c("div", {
     staticClass: "form-row"
   }, [_c("div", {
     staticClass: "col-md-6"
-  }, [_c("input", {
+  }, [_c("label", [_vm._v("Invoice Date")]), _vm._v(" "), _c("input", {
     directives: [{
       name: "model",
       rawName: "v-model",
@@ -6482,16 +6531,16 @@ var render = function render() {
       value: _vm.form.invoice_date
     },
     on: {
-      input: function input($event) {
+      input: [function ($event) {
         if ($event.target.composing) return;
         _vm.$set(_vm.form, "invoice_date", $event.target.value);
-      }
+      }, _vm.updateDueDate]
     }
   }), _vm._v(" "), _vm.errors.invoice_date ? _c("small", {
     staticClass: "text-danger"
   }, [_vm._v(_vm._s(_vm.errors.invoice_date[0]))]) : _vm._e()]), _vm._v(" "), _c("div", {
     staticClass: "col-md-6"
-  }, [_c("input", {
+  }, [_c("label", [_vm._v("Due Date")]), _vm._v(" "), _c("input", {
     directives: [{
       name: "model",
       rawName: "v-model",
@@ -6500,7 +6549,8 @@ var render = function render() {
     }],
     staticClass: "form-control",
     attrs: {
-      type: "date"
+      type: "date",
+      readonly: ""
     },
     domProps: {
       value: _vm.form.due_date

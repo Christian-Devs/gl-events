@@ -24,20 +24,41 @@
                                 </div>
                                 <!-- Invoice Details -->
                                 <div class="form-group">
-                                    <input type="text" class="form-control" placeholder="Invoice Number"
-                                        v-model="form.invoice_number">
-                                    <small class="text-danger" v-if="errors.invoice_number">{{ errors.invoice_number[0]
-                                        }}</small>
+                                    <div class="form-row">
+                                        <div class="col-md-6">
+                                            <label>Invoice Number</label>
+                                            <input type="text" class="form-control" placeholder="Invoice Number"
+                                                v-model="form.invoice_number">
+                                            <small class="text-danger" v-if="errors.invoice_number">{{
+                                                errors.invoice_number[0]
+                                            }}</small>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label>Status</label>
+                                            <select class="form-control" v-model="form.status">
+                                                <option value="draft">Draft</option>
+                                                <option value="sent">Sent</option>
+                                                <option value="paid">Paid</option>
+                                                <option value="overdue">Overdue</option>
+                                            </select>
+                                            <small class="text-danger" v-if="errors.status">{{ errors.status[0]
+                                            }}</small>
+                                        </div>
+                                    </div>
                                 </div>
+
 
                                 <div class="form-row">
                                     <div class="col-md-6">
-                                        <input type="date" class="form-control" v-model="form.invoice_date">
+                                        <label>Invoice Date</label>
+                                        <input type="date" class="form-control" v-model="form.invoice_date"
+                                            @input="updateDueDate">
                                         <small class="text-danger" v-if="errors.invoice_date">{{ errors.invoice_date[0]
-                                            }}</small>
+                                        }}</small>
                                     </div>
                                     <div class="col-md-6">
-                                        <input type="date" class="form-control" v-model="form.due_date">
+                                        <label>Due Date</label>
+                                        <input type="date" class="form-control" v-model="form.due_date" readonly>
                                     </div>
                                 </div>
 
@@ -78,7 +99,7 @@
                                         <div class="form-group">
                                             <label>Subtotal</label>
                                             <input class="form-control" placeholder="Subtotal"
-                                                        :value="subtotal.toFixed(2)" readonly />
+                                                :value="subtotal.toFixed(2)" readonly />
                                         </div>
                                         <div class="form-group">
                                             <label>VAT</label>
@@ -86,8 +107,7 @@
                                         </div>
                                         <div class="form-group">
                                             <label>Total</label>
-                                            <input class="form-control" placeholder="Total"
-                                                        :value="total" readonly />
+                                            <input class="form-control" placeholder="Total" :value="total" readonly />
                                         </div>
                                     </div>
                                 </div>
@@ -119,6 +139,7 @@ export default {
             form: {
                 quote_id: this.$route.params.quoteId || '', // set via route
                 invoice_number: '',
+                status: 'draft',
                 invoice_date: '',
                 due_date: '',
                 vat: 0,
@@ -138,7 +159,10 @@ export default {
                     this.quote = data;
 
                     // Optional: pre-fill invoice_date from quote date
-                    this.form.invoice_date = data.quote_date;
+                    const now = new Date();
+                    const formattedDate = now.toISOString().substr(0, 10);
+                    this.form.invoice_date = formattedDate;
+                    console.log(formattedDate)
                     this.form.vat = data.vat;
 
                     // Pre-fill items
@@ -151,13 +175,8 @@ export default {
 
                     // Calculate totals
                     this.updateAllTotals();
+                    this.updateDueDate();
 
-                    // Set due date = invoice date + 30 days
-                    if (this.form.invoice_date) {
-                        const date = new Date(this.form.invoice_date);
-                        date.setDate(date.getDate() + 30);
-                        this.form.due_date = date.toISOString().substr(0, 10); // format YYYY-MM-DD
-                    }
                 });
         }
     },
@@ -165,7 +184,7 @@ export default {
         subtotal() {
             return this.form.items.reduce((sum, item) => sum + item.total, 0);
         },
-        vat(){
+        vat() {
             return parseFloat(this.form.vat);
         },
         total() {
@@ -185,6 +204,14 @@ export default {
         },
         total() {
             return this.subtotal() + parseFloat(this.form.vat || 0);
+        },
+        updateDueDate() {
+            // Set due date = invoice date + 30 days
+            if (this.form.invoice_date) {
+                const date = new Date(this.form.invoice_date);
+                date.setDate(date.getDate() + 30);
+                this.form.due_date = date.toISOString().substr(0, 10); // format YYYY-MM-DD
+            }
         },
         submitInvoice() {
             this.form.subtotal = this.subtotal;
