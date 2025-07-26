@@ -7,13 +7,12 @@ import User from "./helpers/User";
 import Swal from "sweetalert2";
 import Notification from "./helpers/Notification";
 import CanvasJSChart from "@canvasjs/vue-charts";
-import VTooltip from 'v-tooltip';
+import VTooltip from 'v-tooltip'
 
 
 window.User = User;
 window.Swal = Swal;
 window.Notification = Notification;
-console.log(window.User);
 
 Vue.use(VueRouter);
 Vue.use(CanvasJSChart);

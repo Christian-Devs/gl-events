@@ -3671,6 +3671,12 @@ __webpack_require__.r(__webpack_exports__);
       search: ''
     };
   },
+  mounted: function mounted() {
+    var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+    tooltipTriggerList.map(function (el) {
+      return new bootstrap.Tooltip(el);
+    });
+  },
   computed: {
     filteredInvoices: function filteredInvoices() {
       var _this = this;
@@ -6499,13 +6505,12 @@ var render = function render() {
         }
       }
     }, [_vm._v("Edit")]), _vm._v(" "), _c("button", {
-      directives: [{
-        name: "tooltip",
-        rawName: "v-tooltip",
-        value: "Download PDF",
-        expression: "'Download PDF'"
-      }],
-      staticClass: "btn btn-sm btn-outline-secondary mr-2",
+      staticClass: "btn btn-sm btn-outline-secondary",
+      attrs: {
+        "data-bs-toggle": "tooltip",
+        "data-bs-placement": "top",
+        title: "Download PDF"
+      },
       on: {
         click: function click($event) {
           return _vm.downloadPdf(invoice.id);
@@ -6514,13 +6519,12 @@ var render = function render() {
     }, [_c("i", {
       staticClass: "fas fa-file-pdf"
     })]), _vm._v(" "), _c("button", {
-      directives: [{
-        name: "tooltip",
-        rawName: "v-tooltip",
-        value: "Send via Email",
-        expression: "'Send via Email'"
-      }],
       staticClass: "btn btn-sm btn-outline-primary",
+      attrs: {
+        "data-bs-toggle": "tooltip",
+        "data-bs-placement": "top",
+        title: "Send via email"
+      },
       on: {
         click: function click($event) {
           return _vm.sendEmail(invoice.id);
@@ -93744,7 +93748,6 @@ __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 window.User = _helpers_User__WEBPACK_IMPORTED_MODULE_3__["default"];
 window.Swal = sweetalert2__WEBPACK_IMPORTED_MODULE_4___default.a;
 window.Notification = _helpers_Notification__WEBPACK_IMPORTED_MODULE_5__["default"];
-console.log(window.User);
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]);
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(_canvasjs_vue_charts__WEBPACK_IMPORTED_MODULE_6__["default"]);
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(__webpack_require__(/*! vue-moment */ "./node_modules/vue-moment/dist/vue-moment.js"));

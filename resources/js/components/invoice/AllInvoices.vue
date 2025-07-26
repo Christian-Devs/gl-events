@@ -40,12 +40,12 @@
                   <td>
                     <router-link :to="{ name: 'edit-invoice', params: { id: invoice.id } }"
                       class="btn btn-sm btn-primary">Edit</router-link>
-                    <button class="btn btn-sm btn-outline-secondary mr-2" @click="downloadPdf(invoice.id)"
-                      v-tooltip="'Download PDF'">
+                    <button class="btn btn-sm btn-outline-secondary" @click="downloadPdf(invoice.id)"
+                      data-bs-toggle="tooltip" data-bs-placement="top" title="Download PDF">
                       <i class="fas fa-file-pdf"></i>
                     </button>
                     <button class="btn btn-sm btn-outline-primary" @click="sendEmail(invoice.id)"
-                      v-tooltip="'Send via Email'">
+                      data-bs-toggle="tooltip" data-bs-placement="top" title="Send via email">
                       <i class="fas fa-envelope"></i>
                     </button>
                     <button class="btn btn-sm btn-danger" @click="deleteInvoice(invoice.id)">Delete</button>
@@ -67,6 +67,10 @@ export default {
       invoices: [],
       search: ''
     }
+  },
+  mounted() {
+    const tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+    tooltipTriggerList.map(el => new bootstrap.Tooltip(el))
   },
   computed: {
     filteredInvoices() {
