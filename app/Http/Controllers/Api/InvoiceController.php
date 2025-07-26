@@ -5,6 +5,9 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Model\Invoice;
+use Barryvdh\DomPDF\Facade\Pdf;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\InvoiceMail;
 
 class InvoiceController extends Controller
 {
@@ -93,6 +96,7 @@ class InvoiceController extends Controller
      */
     public function update(Request $request, $id)
     {
+
         $invoice = Invoice::findOrFail($id);
 
         $validated = $request->validate([
@@ -134,5 +138,25 @@ class InvoiceController extends Controller
     {
         Invoice::findOrFail($id)->delete();
         return response()->json(['message' => 'Invoice deleted']);
+    }
+
+    public function downloadPdf($id)
+    {
+        $invoice = Invoice::with('items', 'quote')->findOrFail($id);
+        $pdf = Pdf::loadView('pdfs.invoice', compact('invoice'))->setPaper('a4');
+
+        return $pdf->download("Invoice_{$invoice->invoice_number}.pdf");
+    }
+
+    public function sendInvoiceEmail($id)
+    {
+        $invoice = Invoice::with('items', 'quote')->findOrFail($id);
+
+        $pdf = Pdf::loadView('pdfs.invoice', compact('invoice'))->setPaper('a4');
+        $pdfContent = $pdf->output();
+
+        Mail::to($invoice->quote->client_email)->send(new InvoiceMail($invoice, $pdfContent));
+
+        return response()->json(['message' => 'Invoice emailed successfully']);
     }
 }

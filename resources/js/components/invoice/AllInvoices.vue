@@ -38,7 +38,16 @@
                   </td>
                   <td>R{{ parseFloat(invoice.total).toFixed(2) }}</td>
                   <td>
-                    <router-link :to="{ name: 'edit-invoice', params: { id: invoice.id } }" class="btn btn-sm btn-primary">Edit</router-link>
+                    <router-link :to="{ name: 'edit-invoice', params: { id: invoice.id } }"
+                      class="btn btn-sm btn-primary">Edit</router-link>
+                    <button class="btn btn-sm btn-outline-secondary mr-2" @click="downloadPdf(invoice.id)"
+                      v-tooltip="'Download PDF'">
+                      <i class="fas fa-file-pdf"></i>
+                    </button>
+                    <button class="btn btn-sm btn-outline-primary" @click="sendEmail(invoice.id)"
+                      v-tooltip="'Send via Email'">
+                      <i class="fas fa-envelope"></i>
+                    </button>
                     <button class="btn btn-sm btn-danger" @click="deleteInvoice(invoice.id)">Delete</button>
                   </td>
                 </tr>
@@ -88,6 +97,18 @@ export default {
         case 'overdue': return 'badge badge-danger';
         default: return 'badge badge-light';
       }
+    },
+    downloadPdf(id) {
+      window.open(`/api/invoices/${id}/download`, '_blank');
+    },
+    sendEmail(id) {
+      axios.post(`/api/invoices/${id}/send`)
+        .then(() => {
+          Swal.fire('Success', 'Invoice emailed to client!', 'success');
+        })
+        .catch(() => {
+          Swal.fire('Error', 'Failed to send email', 'error');
+        });
     }
   }
 }

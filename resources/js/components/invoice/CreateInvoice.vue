@@ -26,14 +26,6 @@
                                 <div class="form-group">
                                     <div class="form-row">
                                         <div class="col-md-6">
-                                            <label>Invoice Number</label>
-                                            <input type="text" class="form-control" placeholder="Invoice Number"
-                                                v-model="form.invoice_number">
-                                            <small class="text-danger" v-if="errors.invoice_number">{{
-                                                errors.invoice_number[0]
-                                            }}</small>
-                                        </div>
-                                        <div class="col-md-6">
                                             <label>Status</label>
                                             <select class="form-control" v-model="form.status">
                                                 <option value="draft">Draft</option>

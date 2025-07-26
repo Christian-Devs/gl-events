@@ -1,5 +1,5 @@
 <?php
-use App\Http\Controllers\Api\QuoteController;
+use App\Http\Controllers\Api\InvoiceController;
 use App\Role;
 
 Route::group([
@@ -28,3 +28,7 @@ Route::apiResource('/jobcard', 'Api\JobcardController');
 Route::apiResource('/settings', 'Api\SystemSettingController')->only(['index', 'update']);
 Route::apiResource('/quotes', 'Api\QuoteController');
 Route::apiResource('/invoices', 'Api\InvoiceController');
+
+//custom routes
+Route::get('/invoices/{id}/download', [InvoiceController::class, 'downloadPdf']);
+Route::post('/invoices/{id}/send', [InvoiceController::class, 'sendInvoiceEmail']);

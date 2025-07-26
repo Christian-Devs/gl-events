@@ -15,7 +15,8 @@
 
               <form @submit.prevent="updateInvoice">
                 <div class="form-group">
-                  <input type="text" class="form-control" placeholder="Invoice Number" v-model="form.invoice_number" disabled>
+                  <input type="text" class="form-control" placeholder="Invoice Number" v-model="form.invoice_number"
+                    disabled>
                 </div>
 
                 <div class="form-row">
@@ -42,9 +43,11 @@
                     <tbody>
                       <tr v-for="(item, index) in form.items" :key="index">
                         <td><input type="text" class="form-control" v-model="item.description"></td>
-                        <td><input type="number" class="form-control" v-model.number="item.quantity" @input="updateItemTotal(index)"></td>
-                        <td><input type="number" class="form-control" v-model.number="item.unit_price" @input="updateItemTotal(index)"></td>
-                        <td>{{ item.total.toFixed(2) }}</td>
+                        <td><input type="number" class="form-control" v-model.number="item.quantity"
+                            @input="calculateTotals"></td>
+                        <td><input type="number" class="form-control" v-model.number="item.unit_price"
+                            @input="calculateTotals"></td>
+                        <td>{{ Number(item.total).toFixed(2) }}</td>
                         <td><button class="btn btn-sm btn-danger" @click="removeItem(index)">x</button></td>
                       </tr>
                     </tbody>
@@ -56,7 +59,7 @@
                   <div class="col-md-4 offset-md-8">
                     <div class="form-group">
                       <label>Subtotal</label>
-                      <input type="text" class="form-control" :value="subtotal.toFixed(2)" disabled>
+                      <input v-model="form.subtotal" class="form-control" readonly />
                     </div>
                     <div class="form-group">
                       <label>VAT</label>
@@ -64,7 +67,7 @@
                     </div>
                     <div class="form-group">
                       <label>Total</label>
-                      <input type="text" class="form-control" :value="total.toFixed(2)" disabled>
+                      <input v-model="form.total" class="form-control" readonly />
                     </div>
                   </div>
                 </div>
@@ -112,14 +115,6 @@ export default {
       errors: {}
     }
   },
-  computed: {
-    subtotal() {
-      return this.form.items.reduce((sum, item) => sum + item.total, 0);
-    },
-    total() {
-      return this.subtotal + (this.form.vat || 0);
-    }
-  },
   created() {
     axios.get(`/api/invoices/${this.$route.params.id}`)
       .then(res => {
@@ -136,14 +131,23 @@ export default {
             quantity: item.quantity,
             unit_price: item.unit_price,
             total: item.total
-          }))
+          })),
+          subtotal: invoice.subtotal,
+          total: invoice.total
         };
+        this.calculateTotals();
       });
   },
   methods: {
-    updateItemTotal(index) {
-      const item = this.form.items[index];
-      item.total = item.quantity * item.unit_price;
+    calculateTotals() {
+      let subtotal = 0;
+      this.form.items.forEach(item => {
+        item.total = item.quantity * item.unit_price;
+        subtotal += item.total;
+      });
+
+      this.form.subtotal = subtotal;
+      this.form.total = subtotal + (parseFloat(this.form.vat) || 0);
     },
     addItem() {
       this.form.items.push({ description: '', quantity: 1, unit_price: 0, total: 0 });
@@ -155,9 +159,9 @@ export default {
       const payload = {
         invoice_date: this.form.invoice_date,
         due_date: this.form.due_date,
-        subtotal: this.subtotal,
+        subtotal: this.form.subtotal,
         vat: this.form.vat,
-        total: this.total,
+        total: this.form.total,
         status: this.form.status,
         notes: this.form.notes,
         items: this.form.items

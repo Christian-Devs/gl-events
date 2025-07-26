@@ -7,6 +7,8 @@ import User from "./helpers/User";
 import Swal from "sweetalert2";
 import Notification from "./helpers/Notification";
 import CanvasJSChart from "@canvasjs/vue-charts";
+import VTooltip from 'v-tooltip';
+
 
 window.User = User;
 window.Swal = Swal;
@@ -16,6 +18,7 @@ console.log(window.User);
 Vue.use(VueRouter);
 Vue.use(CanvasJSChart);
 Vue.use(require('vue-moment'));
+Vue.use(VTooltip);
 
 const router = new VueRouter({
     routes,
