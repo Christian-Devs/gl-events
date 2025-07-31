@@ -28,7 +28,12 @@ Route::apiResource('/jobcard', 'Api\JobcardController');
 Route::apiResource('/settings', 'Api\SystemSettingController')->only(['index', 'update']);
 Route::apiResource('/quotes', 'Api\QuoteController');
 Route::apiResource('/invoices', 'Api\InvoiceController');
+Route::apiResource('/payments', 'Api\PaymentController');
+Route::apiResource('/salaries', 'Api\SalaryController');
+
+
 
 //custom routes
 Route::get('/invoices/{id}/download', [InvoiceController::class, 'downloadPdf']);
 Route::post('/invoices/{id}/send', [InvoiceController::class, 'sendInvoiceEmail']);
+Route::post('/invoices/{id}/generate-payment', [InvoiceController::class, 'generatePayment']);

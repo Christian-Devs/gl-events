@@ -107,6 +107,33 @@
                         </div>
                     </li>
                     <li class="nav-item">
+                        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#Salaries"
+                            aria-expanded="true" aria-controls="Invoices">
+                            <i class="far fa-fw fa-window-maximize"></i>
+                            <span>Salaries</span>
+                        </a>
+                        <div id="Salaries" class="collapse" aria-labelledby="headingBootstrap"
+                            data-parent="#accordionSidebar">
+                            <div class="bg-white py-2 collapse-inner rounded">
+                                <router-link class="collapse-item" to="/add-salary">Add Salary</router-link>
+                                <router-link class="collapse-item" to="/salaries">All Salaries</router-link>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#Payments"
+                            aria-expanded="true" aria-controls="Payments">
+                            <i class="far fa-fw fa-window-maximize"></i>
+                            <span>Payments</span>
+                        </a>
+                        <div id="Payments" class="collapse" aria-labelledby="headingBootstrap"
+                            data-parent="#accordionSidebar">
+                            <div class="bg-white py-2 collapse-inner rounded">
+                                <router-link class="collapse-item" to="/payments">All Payments</router-link>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="nav-item">
                         <router-link class="nav-link" to="/system-settings">
                             <i class="fas fa-cogs"></i>
                             <span>System Settings</span>

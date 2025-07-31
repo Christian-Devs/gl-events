@@ -40,6 +40,9 @@
                   <td>
                     <router-link :to="{ name: 'edit-invoice', params: { id: invoice.id } }"
                       class="btn btn-sm btn-primary">Edit</router-link>
+                    <button class="btn btn-sm btn-success" v-if="!invoice.payment" @click="generatePayment(invoice.id)">
+                      <i class="fas fa-money-bill-wave"></i> Generate Payment
+                    </button>
                     <button class="btn btn-sm btn-outline-secondary" @click="downloadPdf(invoice.id)"
                       data-bs-toggle="tooltip" data-bs-placement="top" title="Download PDF">
                       <i class="fas fa-file-pdf"></i>
@@ -113,7 +116,25 @@ export default {
         .catch(() => {
           Swal.fire('Error', 'Failed to send email', 'error');
         });
+    },
+    async generatePayment(id) {
+      try {
+        const response = await axios.post(`/api/invoices/${id}/generate-payment`);
+        console.log('Payment created:', response.data);
+
+        // SAFELY push to local state
+        if (this.invoice && Array.isArray(this.invoice.payments)) {
+          this.invoice.payments.push(response.data.payment);
+        }
+
+        Swal.fire('Success', response.data.message, 'success');
+      } catch (err) {
+        console.error('Payment creation error:', err);
+        const message = err.response?.data?.message || 'Something went wrong';
+        Swal.fire('Error', message, 'error');
+      }
     }
+
   }
 }
 </script>

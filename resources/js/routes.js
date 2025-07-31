@@ -23,6 +23,13 @@ let editinvoice = require('./components/invoice/EditInvoice.vue').default;
 let storejobcard = require('./components/job_cards/CreateJobcard.vue').default;
 let jobcards = require('./components/job_cards/AllJobcards.vue').default;
 let editjobcard = require('./components/job_cards/EditJobcards.vue').default;
+
+let storesalary = require('./components/salaries/CreateSalary.vue').default;
+let salaries = require('./components/salaries/AllSalaries.vue').default;
+let editsalary = require('./components/salaries/EditSalary.vue').default;
+
+let payments = require('./components/payments/AllPayments.vue').default;
+
 let systemsettings = require('./components/auth/SystemSettings.vue').default;
 
 export const routes = [
@@ -57,6 +64,12 @@ export const routes = [
     { path: '/add-invoice', component: storeinvoice, name: 'add-invoice' },
     { path: '/edit-invoice/:id', component: editinvoice, name: 'edit-invoice' },
     { path: '/add-invoice/:quoteId', name: 'add-invoice', component: storeinvoice },
+
+    { path: '/salaries', component: salaries, name: 'salaries' },
+    { path: '/add-salary', component: storesalary, name: 'add-salary' },
+    { path: '/edit-salary/:id', component: editsalary, name: 'edit-salary' },
+
+    { path: '/payments', name: 'payments', component: payments },
 
     { path: '/system-settings', component: systemsettings, name: 'system-settings' }
 ];

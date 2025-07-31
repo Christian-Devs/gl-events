@@ -8,6 +8,7 @@ use App\Model\Invoice;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\InvoiceMail;
+use App\Model\Payment;
 
 class InvoiceController extends Controller
 {
@@ -83,7 +84,7 @@ class InvoiceController extends Controller
     public function show($id)
     {
         return response()->json(
-            Invoice::with('items', 'quote')->findOrFail($id)
+            Invoice::with(['items', 'quote', 'payments'])->findOrFail($id)
         );
     }
 
@@ -159,4 +160,30 @@ class InvoiceController extends Controller
 
         return response()->json(['message' => 'Invoice emailed successfully']);
     }
+
+    public function generatePayment($id)
+    {
+        $invoice = Invoice::with('quote')->findOrFail($id);
+
+        // Check if a payment exists directly by invoice_id
+        if ($invoice->payments()->exists()) {
+            return response()->json(['message' => 'Payment already exists for this invoice'], 409);
+        }
+
+        $payment = Payment::create([
+            'invoice_id' => $invoice->id,  // ✅ use the correct foreign key
+            'amount' => $invoice->total,
+            'payment_date' => now()->toDateString(),
+            'payment_method' => 'EFT',
+            'status' => 'paid',
+            'notes' => 'Auto-generated payment for Invoice #' . $invoice->invoice_number,
+        ]);
+
+        return response()->json([
+            'message' => 'Payment generated successfully',
+            'payment' => $payment
+        ], 201);
+    }
+
+
 }

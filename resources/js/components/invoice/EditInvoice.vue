@@ -91,6 +91,46 @@
                 </div>
               </form>
 
+
+
+            </div>
+          </div>
+        </div>
+        <!-- Payment Summary -->
+        <div class="card shadow-sm">
+          <div class="card-header">
+            <h5>Payment Information</h5>
+          </div>
+          <div class="card-body">
+            <div v-if="invoice.payments && invoice.payments.length">
+              <table class="table table-bordered">
+                <thead>
+                  <tr>
+                    <th>Amount</th>
+                    <th>Payment Date</th>
+                    <th>Method</th>
+                    <th>Status</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr v-for="payment in invoice.payments" :key="payment.id">
+                    <td>R {{ parseFloat(payment.amount).toFixed(2) }}</td>
+                    <td>{{ payment.payment_date }}</td>
+                    <td>{{ payment.payment_method || 'N/A' }}</td>
+                    <td>
+                      <span class="badge" :class="{
+                        'badge-success': payment.status === 'paid',
+                        'badge-warning': payment.status === 'pending'
+                      }">
+                        {{ payment.status }}
+                      </span>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div v-else>
+              <p class="text-muted">No payment has been recorded for this invoice yet.</p>
             </div>
           </div>
         </div>
@@ -112,6 +152,7 @@ export default {
         status: 'draft',
         items: []
       },
+      invoice:{},
       errors: {}
     }
   },
