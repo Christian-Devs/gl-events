@@ -134,6 +134,23 @@
                         </div>
                     </li>
                     <li class="nav-item">
+                        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#Reports"
+                            aria-expanded="true" aria-controls="Payments">
+                            <i class="far fa-fw fa-window-maximize"></i>
+                            <span>Reports</span>
+                        </a>
+                        <div id="Reports" class="collapse" aria-labelledby="headingBootstrap"
+                            data-parent="#accordionSidebar">
+                            <div class="bg-white py-2 collapse-inner rounded">
+                                <router-link class="collapse-item" to="/quote-report">Quotes Report</router-link>
+                                <router-link class="collapse-item" to="/invoice-report">Invoices Report</router-link>
+                                <router-link class="collapse-item" to="/payment-report">Payments Report</router-link>
+                                <router-link class="collapse-item" to="/jobcard-report">Jobcards Report</router-link>
+                                <router-link class="collapse-item" to="/salary-report">Salaries Report</router-link>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="nav-item">
                         <router-link class="nav-link" to="/system-settings">
                             <i class="fas fa-cogs"></i>
                             <span>System Settings</span>

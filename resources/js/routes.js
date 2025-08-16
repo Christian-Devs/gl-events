@@ -1,3 +1,5 @@
+import { compact } from 'lodash';
+
 let login = require('./components/auth/LoginView.vue').default;
 let register = require('./components/auth/RegisterView.vue').default;
 let forget = require('./components/auth/ForgetView.vue').default;
@@ -29,6 +31,13 @@ let salaries = require('./components/salaries/AllSalaries.vue').default;
 let editsalary = require('./components/salaries/EditSalary.vue').default;
 
 let payments = require('./components/payments/AllPayments.vue').default;
+
+//rpoerting components
+let quotesreport = require('./components/reports/QuotesReport.vue').default;
+let invoicesreport = require('./components/reports/InvoicesReport.vue').default;
+let paymentsreport = require('./components/reports/PaymentsReport.vue').default;
+let jobcardsreport = require('./components/reports/JobcardReport.vue').default;
+let salariessreport = require('./components/reports/SalariesReport.vue').default;
 
 let systemsettings = require('./components/auth/SystemSettings.vue').default;
 
@@ -70,6 +79,14 @@ export const routes = [
     { path: '/edit-salary/:id', component: editsalary, name: 'edit-salary' },
 
     { path: '/payments', name: 'payments', component: payments },
+
+    //reports
+    { path: '/quote-report', name: 'quote-report', component: quotesreport },
+    { path: '/invoice-report', name: 'invoice-report', component: invoicesreport },
+    { path: '/payment-report', name: 'payment-report', component: paymentsreport },
+    { path: '/jobcard-report', name: 'jobcard-report', component: jobcardsreport },
+    { path: '/salary-report', name: 'salary-report', component: salariessreport },
+
 
     { path: '/system-settings', component: systemsettings, name: 'system-settings' }
 ];

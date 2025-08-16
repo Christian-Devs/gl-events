@@ -4439,6 +4439,301 @@ function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e 
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/reports/InvoicesReport.vue?vue&type=script&lang=js":
+/*!********************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/reports/InvoicesReport.vue?vue&type=script&lang=js ***!
+  \********************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ({
+  data: function data() {
+    return {
+      emailAddress: '',
+      summary: {},
+      monthly: []
+    };
+  },
+  created: function created() {
+    var _this = this;
+    axios.get('/api/reports/invoices').then(function (res) {
+      _this.summary = res.data.summary;
+      _this.monthly = res.data.monthly;
+    });
+  },
+  methods: {
+    downloadReport: function downloadReport() {
+      window.open('/api/reports/invoices/download', '_blank');
+    },
+    openEmailModal: function openEmailModal() {
+      this.emailAddress = '';
+      $('#emailModal').modal('show');
+    },
+    sendEmail: function sendEmail() {
+      if (!this.emailAddress) return;
+      axios.post('/api/reports/invoices/email', {
+        email: this.emailAddress
+      }).then(function () {
+        $('#emailModal').modal('hide');
+        Swal.fire('Success', 'Report emailed successfully', 'success');
+      })["catch"](function () {
+        Swal.fire('Error', 'Failed to send report email', 'error');
+      });
+    }
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/reports/JobcardReport.vue?vue&type=script&lang=js":
+/*!*******************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/reports/JobcardReport.vue?vue&type=script&lang=js ***!
+  \*******************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
+function _slicedToArray(r, e) { return _arrayWithHoles(r) || _iterableToArrayLimit(r, e) || _unsupportedIterableToArray(r, e) || _nonIterableRest(); }
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+function _unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) return _arrayLikeToArray(r, a); var t = {}.toString.call(r).slice(8, -1); return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray(r, a) : void 0; } }
+function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length); for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e]; return n; }
+function _iterableToArrayLimit(r, l) { var t = null == r ? null : "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"]; if (null != t) { var e, n, i, u, a = [], f = !0, o = !1; try { if (i = (t = t.call(r)).next, 0 === l) { if (Object(t) !== t) return; f = !1; } else for (; !(f = (e = i.call(t)).done) && (a.push(e.value), a.length !== l); f = !0); } catch (r) { o = !0, n = r; } finally { try { if (!f && null != t["return"] && (u = t["return"](), Object(u) !== u)) return; } finally { if (o) throw n; } } return a; } }
+function _arrayWithHoles(r) { if (Array.isArray(r)) return r; }
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  data: function data() {
+    return {
+      summary: {},
+      monthly: []
+    };
+  },
+  created: function created() {
+    var _this = this;
+    axios__WEBPACK_IMPORTED_MODULE_0___default.a.get('/api/reports/jobcards').then(function (res) {
+      _this.summary = res.data.summary;
+      _this.monthly = res.data.monthly;
+    });
+  },
+  methods: {
+    formatMonth: function formatMonth(monthStr) {
+      var _monthStr$split = monthStr.split("-"),
+        _monthStr$split2 = _slicedToArray(_monthStr$split, 2),
+        year = _monthStr$split2[0],
+        month = _monthStr$split2[1];
+      var date = new Date(year, month - 1);
+      return date.toLocaleString('default', {
+        month: 'long',
+        year: 'numeric'
+      });
+    },
+    downloadReport: function downloadReport() {
+      window.open('/api/reports/invoices/download', '_blank');
+    },
+    openEmailModal: function openEmailModal() {
+      this.emailAddress = '';
+      $('#emailModal').modal('show');
+    },
+    sendEmail: function sendEmail() {
+      if (!this.emailAddress) return;
+      axios__WEBPACK_IMPORTED_MODULE_0___default.a.post('/api/reports/invoices/email', {
+        email: this.emailAddress
+      }).then(function () {
+        $('#emailModal').modal('hide');
+        Swal.fire('Success', 'Report emailed successfully', 'success');
+      })["catch"](function () {
+        Swal.fire('Error', 'Failed to send report email', 'error');
+      });
+    }
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/reports/PaymentsReport.vue?vue&type=script&lang=js":
+/*!********************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/reports/PaymentsReport.vue?vue&type=script&lang=js ***!
+  \********************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ({
+  data: function data() {
+    return {
+      summary: {},
+      monthly: []
+    };
+  },
+  created: function created() {
+    var _this = this;
+    axios.get('/api/reports/payments').then(function (res) {
+      _this.summary = res.data.summary;
+      _this.monthly = res.data.monthly;
+    });
+  },
+  methods: {
+    downloadReport: function downloadReport() {
+      window.open('/api/reports/invoices/download', '_blank');
+    },
+    openEmailModal: function openEmailModal() {
+      this.emailAddress = '';
+      $('#emailModal').modal('show');
+    },
+    sendEmail: function sendEmail() {
+      if (!this.emailAddress) return;
+      axios.post('/api/reports/invoices/email', {
+        email: this.emailAddress
+      }).then(function () {
+        $('#emailModal').modal('hide');
+        Swal.fire('Success', 'Report emailed successfully', 'success');
+      })["catch"](function () {
+        Swal.fire('Error', 'Failed to send report email', 'error');
+      });
+    }
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/reports/QuotesReport.vue?vue&type=script&lang=js":
+/*!******************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/reports/QuotesReport.vue?vue&type=script&lang=js ***!
+  \******************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ({
+  data: function data() {
+    return {
+      emailAddress: '',
+      report: {
+        summary: {
+          total_quotes: 0,
+          total_value: 0,
+          pending: 0,
+          approved: 0,
+          rejected: 0
+        },
+        monthly: []
+      }
+    };
+  },
+  computed: {
+    summaryDisplay: function summaryDisplay() {
+      return {
+        'Total Quotes': this.report.summary.total_quotes,
+        'Total Value': this.report.summary.total_value,
+        'Pending': this.report.summary.pending,
+        'Approved': this.report.summary.approved,
+        'Rejected': this.report.summary.rejected
+      };
+    }
+  },
+  created: function created() {
+    var _this = this;
+    axios.get('/api/reports/quotes').then(function (res) {
+      _this.report = res.data;
+    });
+  },
+  methods: {
+    downloadReport: function downloadReport() {
+      window.open('/api/reports/quotes/download', '_blank');
+    },
+    openEmailModal: function openEmailModal() {
+      this.emailAddress = '';
+      $('#emailModal').modal('show');
+    },
+    sendEmail: function sendEmail() {
+      if (!this.emailAddress) return;
+      axios.post('/api/reports/quotes/email', {
+        email: this.emailAddress
+      }).then(function () {
+        $('#emailModal').modal('hide');
+        Swal.fire('Success', 'Report emailed successfully', 'success');
+      })["catch"](function () {
+        Swal.fire('Error', 'Failed to send report email', 'error');
+      });
+    }
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/reports/SalariesReport.vue?vue&type=script&lang=js":
+/*!********************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/reports/SalariesReport.vue?vue&type=script&lang=js ***!
+  \********************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
+function _slicedToArray(r, e) { return _arrayWithHoles(r) || _iterableToArrayLimit(r, e) || _unsupportedIterableToArray(r, e) || _nonIterableRest(); }
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+function _unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) return _arrayLikeToArray(r, a); var t = {}.toString.call(r).slice(8, -1); return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray(r, a) : void 0; } }
+function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length); for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e]; return n; }
+function _iterableToArrayLimit(r, l) { var t = null == r ? null : "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"]; if (null != t) { var e, n, i, u, a = [], f = !0, o = !1; try { if (i = (t = t.call(r)).next, 0 === l) { if (Object(t) !== t) return; f = !1; } else for (; !(f = (e = i.call(t)).done) && (a.push(e.value), a.length !== l); f = !0); } catch (r) { o = !0, n = r; } finally { try { if (!f && null != t["return"] && (u = t["return"](), Object(u) !== u)) return; } finally { if (o) throw n; } } return a; } }
+function _arrayWithHoles(r) { if (Array.isArray(r)) return r; }
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  data: function data() {
+    return {
+      summary: {},
+      monthly: []
+    };
+  },
+  created: function created() {
+    var _this = this;
+    axios__WEBPACK_IMPORTED_MODULE_0___default.a.get('/api/reports/salaries').then(function (res) {
+      _this.summary = res.data.summary;
+      _this.monthly = res.data.monthly;
+    });
+  },
+  methods: {
+    formatMonth: function formatMonth(monthStr) {
+      var _monthStr$split = monthStr.split("-"),
+        _monthStr$split2 = _slicedToArray(_monthStr$split, 2),
+        year = _monthStr$split2[0],
+        month = _monthStr$split2[1];
+      var date = new Date(year, month - 1);
+      return date.toLocaleString('default', {
+        month: 'long',
+        year: 'numeric'
+      });
+    },
+    downloadReport: function downloadReport() {
+      window.open('/api/reports/invoices/download', '_blank');
+    },
+    openEmailModal: function openEmailModal() {
+      this.emailAddress = '';
+      $('#emailModal').modal('show');
+    },
+    sendEmail: function sendEmail() {
+      if (!this.emailAddress) return;
+      axios__WEBPACK_IMPORTED_MODULE_0___default.a.post('/api/reports/invoices/email', {
+        email: this.emailAddress
+      }).then(function () {
+        $('#emailModal').modal('hide');
+        Swal.fire('Success', 'Report emailed successfully', 'success');
+      })["catch"](function () {
+        Swal.fire('Error', 'Failed to send report email', 'error');
+      });
+    }
+  }
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/salaries/AllSalaries.vue?vue&type=script&lang=js":
 /*!******************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/salaries/AllSalaries.vue?vue&type=script&lang=js ***!
@@ -8999,6 +9294,807 @@ var render = function render() {
   }, [_vm._v("Update Quote")])], 2)]);
 };
 var staticRenderFns = [];
+render._withStripped = true;
+
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/reports/InvoicesReport.vue?vue&type=template&id=b9d02596":
+/*!******************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib/loaders/templateLoader.js??ref--6!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/reports/InvoicesReport.vue?vue&type=template&id=b9d02596 ***!
+  \******************************************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function render() {
+  var _vm = this,
+    _c = _vm._self._c;
+  return _c("div", {
+    staticClass: "container-fluid"
+  }, [_c("div", {
+    staticClass: "row mb-3"
+  }, [_c("div", {
+    staticClass: "col"
+  }, [_c("div", {
+    staticClass: "d-flex justify-content-end mb-3"
+  }, [_c("button", {
+    staticClass: "btn btn-outline-primary btn-sm mr-2",
+    on: {
+      click: _vm.downloadReport
+    }
+  }, [_vm._v("\n                    Download PDF\n                ")]), _vm._v(" "), _c("button", {
+    staticClass: "btn btn-outline-secondary btn-sm",
+    on: {
+      click: _vm.openEmailModal
+    }
+  }, [_vm._v("\n                    Email Report\n                ")])]), _vm._v(" "), _c("h2", {
+    staticClass: "h4"
+  }, [_vm._v("Invoices Report")])])]), _vm._v(" "), _c("div", {
+    staticClass: "row mb-4"
+  }, _vm._l(_vm.summary, function (value, label) {
+    return _c("div", {
+      key: label,
+      staticClass: "col-md-3"
+    }, [_c("div", {
+      staticClass: "card shadow-sm text-center mt-2"
+    }, [_c("div", {
+      staticClass: "card-body"
+    }, [_c("h5", {
+      staticClass: "card-title text-capitalize"
+    }, [_vm._v(_vm._s(label.replace("_", " ")))]), _vm._v(" "), _c("p", {
+      staticClass: "card-text h4"
+    }, [_vm._v("\n                        " + _vm._s(label === "total_amount" ? "R " + parseFloat(value).toFixed(2) : value) + "\n                    ")])])])]);
+  }), 0), _vm._v(" "), _c("div", {
+    staticClass: "card shadow-sm"
+  }, [_vm._m(0), _vm._v(" "), _c("div", {
+    staticClass: "card-body p-0"
+  }, [_c("table", {
+    staticClass: "table table-striped mb-0"
+  }, [_vm._m(1), _vm._v(" "), _c("tbody", _vm._l(_vm.monthly, function (month) {
+    return _c("tr", {
+      key: month.month
+    }, [_c("td", [_vm._v(_vm._s(month.month))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(month.count))]), _vm._v(" "), _c("td", [_vm._v("R " + _vm._s(parseFloat(month.total).toFixed(2)))])]);
+  }), 0)])])]), _vm._v(" "), _c("div", {
+    staticClass: "modal fade",
+    attrs: {
+      id: "emailModal",
+      tabindex: "-1",
+      role: "dialog",
+      "aria-labelledby": "emailModalLabel",
+      "aria-hidden": "true"
+    }
+  }, [_c("div", {
+    staticClass: "modal-dialog modal-sm",
+    attrs: {
+      role: "document"
+    }
+  }, [_c("div", {
+    staticClass: "modal-content"
+  }, [_vm._m(2), _vm._v(" "), _c("div", {
+    staticClass: "modal-body"
+  }, [_c("input", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.emailAddress,
+      expression: "emailAddress"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      type: "email",
+      placeholder: "Enter email address"
+    },
+    domProps: {
+      value: _vm.emailAddress
+    },
+    on: {
+      input: function input($event) {
+        if ($event.target.composing) return;
+        _vm.emailAddress = $event.target.value;
+      }
+    }
+  })]), _vm._v(" "), _c("div", {
+    staticClass: "modal-footer"
+  }, [_c("button", {
+    staticClass: "btn btn-sm btn-secondary",
+    attrs: {
+      type: "button",
+      "data-dismiss": "modal"
+    }
+  }, [_vm._v("Cancel")]), _vm._v(" "), _c("button", {
+    staticClass: "btn btn-sm btn-primary",
+    attrs: {
+      type: "button"
+    },
+    on: {
+      click: _vm.sendEmail
+    }
+  }, [_vm._v("Send")])])])])])]);
+};
+var staticRenderFns = [function () {
+  var _vm = this,
+    _c = _vm._self._c;
+  return _c("div", {
+    staticClass: "card-header"
+  }, [_c("h5", [_vm._v("Monthly Breakdown (Last 12 Months)")])]);
+}, function () {
+  var _vm = this,
+    _c = _vm._self._c;
+  return _c("thead", {
+    staticClass: "thead-light"
+  }, [_c("tr", [_c("th", [_vm._v("Month")]), _vm._v(" "), _c("th", [_vm._v("Invoices")]), _vm._v(" "), _c("th", [_vm._v("Total Value")])])]);
+}, function () {
+  var _vm = this,
+    _c = _vm._self._c;
+  return _c("div", {
+    staticClass: "modal-header"
+  }, [_c("h5", {
+    staticClass: "modal-title",
+    attrs: {
+      id: "emailModalLabel"
+    }
+  }, [_vm._v("Email Report")]), _vm._v(" "), _c("button", {
+    staticClass: "close",
+    attrs: {
+      type: "button",
+      "data-dismiss": "modal",
+      "aria-label": "Close"
+    }
+  }, [_c("span", {
+    attrs: {
+      "aria-hidden": "true"
+    }
+  }, [_vm._v("×")])])]);
+}];
+render._withStripped = true;
+
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/reports/JobcardReport.vue?vue&type=template&id=026c4db6":
+/*!*****************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib/loaders/templateLoader.js??ref--6!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/reports/JobcardReport.vue?vue&type=template&id=026c4db6 ***!
+  \*****************************************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function render() {
+  var _vm = this,
+    _c = _vm._self._c;
+  return _c("div", {
+    staticClass: "container py-4"
+  }, [_c("div", {
+    staticClass: "row mb-3"
+  }, [_c("div", {
+    staticClass: "col"
+  }, [_c("div", {
+    staticClass: "d-flex justify-content-end mb-3"
+  }, [_c("button", {
+    staticClass: "btn btn-outline-primary btn-sm mr-2",
+    on: {
+      click: _vm.downloadReport
+    }
+  }, [_vm._v("\n                    Download PDF\n                ")]), _vm._v(" "), _c("button", {
+    staticClass: "btn btn-outline-secondary btn-sm",
+    on: {
+      click: _vm.openEmailModal
+    }
+  }, [_vm._v("\n                    Email Report\n                ")])]), _vm._v(" "), _c("h2", {
+    staticClass: "mb-4"
+  }, [_vm._v("Jobcards Report")])])]), _vm._v(" "), _c("div", {
+    staticClass: "row mb-4"
+  }, [_c("div", {
+    staticClass: "col-md-3"
+  }, [_c("div", {
+    staticClass: "card shadow-sm text-center p-3"
+  }, [_c("h5", [_vm._v("Total Jobcards")]), _vm._v(" "), _c("p", {
+    staticClass: "h4"
+  }, [_vm._v(_vm._s(_vm.summary.total_jobcards))])])]), _vm._v(" "), _c("div", {
+    staticClass: "col-md-3"
+  }, [_c("div", {
+    staticClass: "card shadow-sm text-center p-3"
+  }, [_c("h5", [_vm._v("Open")]), _vm._v(" "), _c("p", {
+    staticClass: "h4 text-warning"
+  }, [_vm._v(_vm._s(_vm.summary.open))])])]), _vm._v(" "), _c("div", {
+    staticClass: "col-md-3"
+  }, [_c("div", {
+    staticClass: "card shadow-sm text-center p-3"
+  }, [_c("h5", [_vm._v("In Progress")]), _vm._v(" "), _c("p", {
+    staticClass: "h4 text-info"
+  }, [_vm._v(_vm._s(_vm.summary.in_progress))])])]), _vm._v(" "), _c("div", {
+    staticClass: "col-md-3"
+  }, [_c("div", {
+    staticClass: "card shadow-sm text-center p-3"
+  }, [_c("h5", [_vm._v("Completed")]), _vm._v(" "), _c("p", {
+    staticClass: "h4 text-success"
+  }, [_vm._v(_vm._s(_vm.summary.completed))])])])]), _vm._v(" "), _c("div", {
+    staticClass: "card shadow-sm"
+  }, [_vm._m(0), _vm._v(" "), _c("div", {
+    staticClass: "card-body"
+  }, [_c("table", {
+    staticClass: "table table-bordered"
+  }, [_vm._m(1), _vm._v(" "), _c("tbody", _vm._l(_vm.monthly, function (month) {
+    return _c("tr", {
+      key: month.month
+    }, [_c("td", [_vm._v(_vm._s(_vm.formatMonth(month.month)))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(month.count))])]);
+  }), 0)])])]), _vm._v(" "), _c("div", {
+    staticClass: "modal fade",
+    attrs: {
+      id: "emailModal",
+      tabindex: "-1",
+      role: "dialog",
+      "aria-labelledby": "emailModalLabel",
+      "aria-hidden": "true"
+    }
+  }, [_c("div", {
+    staticClass: "modal-dialog modal-sm",
+    attrs: {
+      role: "document"
+    }
+  }, [_c("div", {
+    staticClass: "modal-content"
+  }, [_vm._m(2), _vm._v(" "), _c("div", {
+    staticClass: "modal-body"
+  }, [_c("input", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.emailAddress,
+      expression: "emailAddress"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      type: "email",
+      placeholder: "Enter email address"
+    },
+    domProps: {
+      value: _vm.emailAddress
+    },
+    on: {
+      input: function input($event) {
+        if ($event.target.composing) return;
+        _vm.emailAddress = $event.target.value;
+      }
+    }
+  })]), _vm._v(" "), _c("div", {
+    staticClass: "modal-footer"
+  }, [_c("button", {
+    staticClass: "btn btn-sm btn-secondary",
+    attrs: {
+      type: "button",
+      "data-dismiss": "modal"
+    }
+  }, [_vm._v("Cancel")]), _vm._v(" "), _c("button", {
+    staticClass: "btn btn-sm btn-primary",
+    attrs: {
+      type: "button"
+    },
+    on: {
+      click: _vm.sendEmail
+    }
+  }, [_vm._v("Send")])])])])])]);
+};
+var staticRenderFns = [function () {
+  var _vm = this,
+    _c = _vm._self._c;
+  return _c("div", {
+    staticClass: "card-header"
+  }, [_c("h5", {
+    staticClass: "mb-0"
+  }, [_vm._v("Monthly Jobcard Activity (Last 12 Months)")])]);
+}, function () {
+  var _vm = this,
+    _c = _vm._self._c;
+  return _c("thead", [_c("tr", [_c("th", [_vm._v("Month")]), _vm._v(" "), _c("th", [_vm._v("Jobcards Created")])])]);
+}, function () {
+  var _vm = this,
+    _c = _vm._self._c;
+  return _c("div", {
+    staticClass: "modal-header"
+  }, [_c("h5", {
+    staticClass: "modal-title",
+    attrs: {
+      id: "emailModalLabel"
+    }
+  }, [_vm._v("Email Report")]), _vm._v(" "), _c("button", {
+    staticClass: "close",
+    attrs: {
+      type: "button",
+      "data-dismiss": "modal",
+      "aria-label": "Close"
+    }
+  }, [_c("span", {
+    attrs: {
+      "aria-hidden": "true"
+    }
+  }, [_vm._v("×")])])]);
+}];
+render._withStripped = true;
+
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/reports/PaymentsReport.vue?vue&type=template&id=07066cbc":
+/*!******************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib/loaders/templateLoader.js??ref--6!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/reports/PaymentsReport.vue?vue&type=template&id=07066cbc ***!
+  \******************************************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function render() {
+  var _vm = this,
+    _c = _vm._self._c;
+  return _c("div", [_c("div", {
+    staticClass: "row mb-3"
+  }, [_c("div", {
+    staticClass: "col"
+  }, [_c("div", {
+    staticClass: "d-flex justify-content-end mb-3"
+  }, [_c("button", {
+    staticClass: "btn btn-outline-primary btn-sm mr-2",
+    on: {
+      click: _vm.downloadReport
+    }
+  }, [_vm._v("\n                    Download PDF\n                ")]), _vm._v(" "), _c("button", {
+    staticClass: "btn btn-outline-secondary btn-sm",
+    on: {
+      click: _vm.openEmailModal
+    }
+  }, [_vm._v("\n                    Email Report\n                ")])]), _vm._v(" "), _c("h3", {
+    staticClass: "mb-4"
+  }, [_vm._v("Payments Report")])])]), _vm._v(" "), _c("div", {
+    staticClass: "row mb-4"
+  }, _vm._l(_vm.summary, function (value, label) {
+    return _c("div", {
+      key: label,
+      staticClass: "col-md-3"
+    }, [_c("div", {
+      staticClass: "card shadow-sm text-center"
+    }, [_c("div", {
+      staticClass: "card-body"
+    }, [_c("h5", {
+      staticClass: "card-title text-capitalize"
+    }, [_vm._v(_vm._s(label.replace("_", " ")))]), _vm._v(" "), _c("p", {
+      staticClass: "card-text h4"
+    }, [_vm._v("\n                        " + _vm._s(label.includes("amount") ? "R " + parseFloat(value).toFixed(2) : value) + "\n                    ")])])])]);
+  }), 0), _vm._v(" "), _c("div", {
+    staticClass: "card shadow-sm"
+  }, [_vm._m(0), _vm._v(" "), _c("div", {
+    staticClass: "card-body p-0"
+  }, [_c("table", {
+    staticClass: "table table-striped mb-0"
+  }, [_vm._m(1), _vm._v(" "), _c("tbody", _vm._l(_vm.monthly, function (month) {
+    return _c("tr", {
+      key: month.month
+    }, [_c("td", [_vm._v(_vm._s(month.month))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(month.count))]), _vm._v(" "), _c("td", [_vm._v("R " + _vm._s(parseFloat(month.total).toFixed(2)))])]);
+  }), 0)])])]), _vm._v(" "), _c("div", {
+    staticClass: "modal fade",
+    attrs: {
+      id: "emailModal",
+      tabindex: "-1",
+      role: "dialog",
+      "aria-labelledby": "emailModalLabel",
+      "aria-hidden": "true"
+    }
+  }, [_c("div", {
+    staticClass: "modal-dialog modal-sm",
+    attrs: {
+      role: "document"
+    }
+  }, [_c("div", {
+    staticClass: "modal-content"
+  }, [_vm._m(2), _vm._v(" "), _c("div", {
+    staticClass: "modal-body"
+  }, [_c("input", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.emailAddress,
+      expression: "emailAddress"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      type: "email",
+      placeholder: "Enter email address"
+    },
+    domProps: {
+      value: _vm.emailAddress
+    },
+    on: {
+      input: function input($event) {
+        if ($event.target.composing) return;
+        _vm.emailAddress = $event.target.value;
+      }
+    }
+  })]), _vm._v(" "), _c("div", {
+    staticClass: "modal-footer"
+  }, [_c("button", {
+    staticClass: "btn btn-sm btn-secondary",
+    attrs: {
+      type: "button",
+      "data-dismiss": "modal"
+    }
+  }, [_vm._v("Cancel")]), _vm._v(" "), _c("button", {
+    staticClass: "btn btn-sm btn-primary",
+    attrs: {
+      type: "button"
+    },
+    on: {
+      click: _vm.sendEmail
+    }
+  }, [_vm._v("Send")])])])])])]);
+};
+var staticRenderFns = [function () {
+  var _vm = this,
+    _c = _vm._self._c;
+  return _c("div", {
+    staticClass: "card-header"
+  }, [_c("h5", [_vm._v("Monthly Breakdown (Last 12 Months)")])]);
+}, function () {
+  var _vm = this,
+    _c = _vm._self._c;
+  return _c("thead", {
+    staticClass: "thead-light"
+  }, [_c("tr", [_c("th", [_vm._v("Month")]), _vm._v(" "), _c("th", [_vm._v("Payments")]), _vm._v(" "), _c("th", [_vm._v("Total Paid")])])]);
+}, function () {
+  var _vm = this,
+    _c = _vm._self._c;
+  return _c("div", {
+    staticClass: "modal-header"
+  }, [_c("h5", {
+    staticClass: "modal-title",
+    attrs: {
+      id: "emailModalLabel"
+    }
+  }, [_vm._v("Email Report")]), _vm._v(" "), _c("button", {
+    staticClass: "close",
+    attrs: {
+      type: "button",
+      "data-dismiss": "modal",
+      "aria-label": "Close"
+    }
+  }, [_c("span", {
+    attrs: {
+      "aria-hidden": "true"
+    }
+  }, [_vm._v("×")])])]);
+}];
+render._withStripped = true;
+
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/reports/QuotesReport.vue?vue&type=template&id=f6a69174":
+/*!****************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib/loaders/templateLoader.js??ref--6!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/reports/QuotesReport.vue?vue&type=template&id=f6a69174 ***!
+  \****************************************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function render() {
+  var _vm = this,
+    _c = _vm._self._c;
+  return _c("div", [_c("div", {
+    staticClass: "container-fluid"
+  }, [_c("div", {
+    staticClass: "row mb-3"
+  }, [_c("div", {
+    staticClass: "col"
+  }, [_c("div", {
+    staticClass: "d-flex justify-content-end mb-3"
+  }, [_c("button", {
+    staticClass: "btn btn-outline-primary btn-sm mr-2",
+    on: {
+      click: _vm.downloadReport
+    }
+  }, [_vm._v("\n                        Download PDF\n                    ")]), _vm._v(" "), _c("button", {
+    staticClass: "btn btn-outline-secondary btn-sm",
+    on: {
+      click: _vm.openEmailModal
+    }
+  }, [_vm._v("\n                        Email Report\n                    ")])]), _vm._v(" "), _c("h2", {
+    staticClass: "h4"
+  }, [_vm._v("Quotes Report")])])]), _vm._v(" "), _c("div", {
+    staticClass: "row"
+  }, _vm._l(_vm.summaryDisplay, function (value, key) {
+    return _c("div", {
+      key: key,
+      staticClass: "col-md-3 mb-3"
+    }, [_c("div", {
+      staticClass: "card shadow-sm"
+    }, [_c("div", {
+      staticClass: "card-body text-center"
+    }, [_c("h6", {
+      staticClass: "card-title text-muted text-uppercase"
+    }, [_vm._v(_vm._s(key))]), _vm._v(" "), _c("h4", {
+      staticClass: "font-weight-bold"
+    }, [_vm._v("\n                            " + _vm._s(key === "Total Value" ? "R " + Number(value).toFixed(2) : value) + "\n                        ")])])])]);
+  }), 0), _vm._v(" "), _c("div", {
+    staticClass: "card shadow-sm mt-4"
+  }, [_vm._m(0), _vm._v(" "), _c("div", {
+    staticClass: "card-body p-0"
+  }, [_c("table", {
+    staticClass: "table table-bordered mb-0"
+  }, [_vm._m(1), _vm._v(" "), _c("tbody", [_vm._l(_vm.report.monthly, function (month) {
+    return _c("tr", {
+      key: month.month
+    }, [_c("td", [_vm._v(_vm._s(month.month))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(month.count))]), _vm._v(" "), _c("td", [_vm._v("R " + _vm._s(Number(month.total).toFixed(2)))])]);
+  }), _vm._v(" "), !_vm.report.monthly.length ? _c("tr", [_c("td", {
+    staticClass: "text-center text-muted",
+    attrs: {
+      colspan: "3"
+    }
+  }, [_vm._v("No data available")])]) : _vm._e()], 2)])])])]), _vm._v(" "), _c("div", {
+    staticClass: "modal fade",
+    attrs: {
+      id: "emailModal",
+      tabindex: "-1",
+      role: "dialog",
+      "aria-labelledby": "emailModalLabel",
+      "aria-hidden": "true"
+    }
+  }, [_c("div", {
+    staticClass: "modal-dialog modal-sm",
+    attrs: {
+      role: "document"
+    }
+  }, [_c("div", {
+    staticClass: "modal-content"
+  }, [_vm._m(2), _vm._v(" "), _c("div", {
+    staticClass: "modal-body"
+  }, [_c("input", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.emailAddress,
+      expression: "emailAddress"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      type: "email",
+      placeholder: "Enter email address"
+    },
+    domProps: {
+      value: _vm.emailAddress
+    },
+    on: {
+      input: function input($event) {
+        if ($event.target.composing) return;
+        _vm.emailAddress = $event.target.value;
+      }
+    }
+  })]), _vm._v(" "), _c("div", {
+    staticClass: "modal-footer"
+  }, [_c("button", {
+    staticClass: "btn btn-sm btn-secondary",
+    attrs: {
+      type: "button",
+      "data-dismiss": "modal"
+    }
+  }, [_vm._v("Cancel")]), _vm._v(" "), _c("button", {
+    staticClass: "btn btn-sm btn-primary",
+    attrs: {
+      type: "button"
+    },
+    on: {
+      click: _vm.sendEmail
+    }
+  }, [_vm._v("Send")])])])])])]);
+};
+var staticRenderFns = [function () {
+  var _vm = this,
+    _c = _vm._self._c;
+  return _c("div", {
+    staticClass: "card-header"
+  }, [_c("h5", {
+    staticClass: "mb-0"
+  }, [_vm._v("Monthly Overview (Last 12 Months)")])]);
+}, function () {
+  var _vm = this,
+    _c = _vm._self._c;
+  return _c("thead", {
+    staticClass: "thead-light"
+  }, [_c("tr", [_c("th", [_vm._v("Month")]), _vm._v(" "), _c("th", [_vm._v("Number of Quotes")]), _vm._v(" "), _c("th", [_vm._v("Total Value")])])]);
+}, function () {
+  var _vm = this,
+    _c = _vm._self._c;
+  return _c("div", {
+    staticClass: "modal-header"
+  }, [_c("h5", {
+    staticClass: "modal-title",
+    attrs: {
+      id: "emailModalLabel"
+    }
+  }, [_vm._v("Email Report")]), _vm._v(" "), _c("button", {
+    staticClass: "close",
+    attrs: {
+      type: "button",
+      "data-dismiss": "modal",
+      "aria-label": "Close"
+    }
+  }, [_c("span", {
+    attrs: {
+      "aria-hidden": "true"
+    }
+  }, [_vm._v("×")])])]);
+}];
+render._withStripped = true;
+
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/reports/SalariesReport.vue?vue&type=template&id=06563fb7":
+/*!******************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib/loaders/templateLoader.js??ref--6!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/reports/SalariesReport.vue?vue&type=template&id=06563fb7 ***!
+  \******************************************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function render() {
+  var _vm = this,
+    _c = _vm._self._c;
+  return _c("div", {
+    staticClass: "container py-4"
+  }, [_c("div", {
+    staticClass: "row mb-3"
+  }, [_c("div", {
+    staticClass: "col"
+  }, [_c("div", {
+    staticClass: "d-flex justify-content-end mb-3"
+  }, [_c("button", {
+    staticClass: "btn btn-outline-primary btn-sm mr-2",
+    on: {
+      click: _vm.downloadReport
+    }
+  }, [_vm._v("\n                    Download PDF\n                ")]), _vm._v(" "), _c("button", {
+    staticClass: "btn btn-outline-secondary btn-sm",
+    on: {
+      click: _vm.openEmailModal
+    }
+  }, [_vm._v("\n                    Email Report\n                ")])]), _vm._v(" "), _c("h2", {
+    staticClass: "mb-4"
+  }, [_vm._v("Employee Salary Report")])])]), _vm._v(" "), _c("div", {
+    staticClass: "row mb-4"
+  }, [_c("div", {
+    staticClass: "col-md-3"
+  }, [_c("div", {
+    staticClass: "card shadow-sm text-center p-3"
+  }, [_c("h5", [_vm._v("Total Salaries Paid")]), _vm._v(" "), _c("p", {
+    staticClass: "h5 text-success"
+  }, [_vm._v("R " + _vm._s(Number(_vm.summary.total_paid || 0).toFixed(2)))])])]), _vm._v(" "), _c("div", {
+    staticClass: "col-md-3"
+  }, [_c("div", {
+    staticClass: "card shadow-sm text-center p-3"
+  }, [_c("h5", [_vm._v("Pending Salaries")]), _vm._v(" "), _c("p", {
+    staticClass: "h5 text-warning"
+  }, [_vm._v("R " + _vm._s(Number(_vm.summary.total_pending || 0).toFixed(2)))])])]), _vm._v(" "), _c("div", {
+    staticClass: "col-md-3"
+  }, [_c("div", {
+    staticClass: "card shadow-sm text-center p-3"
+  }, [_c("h5", [_vm._v("Total Records")]), _vm._v(" "), _c("p", {
+    staticClass: "h5"
+  }, [_vm._v(_vm._s(Number(_vm.summary.total_records || 0)))])])])]), _vm._v(" "), _c("div", {
+    staticClass: "card shadow-sm"
+  }, [_vm._m(0), _vm._v(" "), _c("div", {
+    staticClass: "card-body"
+  }, [_c("table", {
+    staticClass: "table table-bordered"
+  }, [_vm._m(1), _vm._v(" "), _c("tbody", _vm._l(_vm.monthly, function (month) {
+    return _c("tr", {
+      key: month.month
+    }, [_c("td", [_vm._v(_vm._s(_vm.formatMonth(month.month)))]), _vm._v(" "), _c("td", [_vm._v("R " + _vm._s(parseFloat(month.total).toFixed(2)))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(month.count))])]);
+  }), 0)])])]), _vm._v(" "), _c("div", {
+    staticClass: "modal fade",
+    attrs: {
+      id: "emailModal",
+      tabindex: "-1",
+      role: "dialog",
+      "aria-labelledby": "emailModalLabel",
+      "aria-hidden": "true"
+    }
+  }, [_c("div", {
+    staticClass: "modal-dialog modal-sm",
+    attrs: {
+      role: "document"
+    }
+  }, [_c("div", {
+    staticClass: "modal-content"
+  }, [_vm._m(2), _vm._v(" "), _c("div", {
+    staticClass: "modal-body"
+  }, [_c("input", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.emailAddress,
+      expression: "emailAddress"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      type: "email",
+      placeholder: "Enter email address"
+    },
+    domProps: {
+      value: _vm.emailAddress
+    },
+    on: {
+      input: function input($event) {
+        if ($event.target.composing) return;
+        _vm.emailAddress = $event.target.value;
+      }
+    }
+  })]), _vm._v(" "), _c("div", {
+    staticClass: "modal-footer"
+  }, [_c("button", {
+    staticClass: "btn btn-sm btn-secondary",
+    attrs: {
+      type: "button",
+      "data-dismiss": "modal"
+    }
+  }, [_vm._v("Cancel")]), _vm._v(" "), _c("button", {
+    staticClass: "btn btn-sm btn-primary",
+    attrs: {
+      type: "button"
+    },
+    on: {
+      click: _vm.sendEmail
+    }
+  }, [_vm._v("Send")])])])])])]);
+};
+var staticRenderFns = [function () {
+  var _vm = this,
+    _c = _vm._self._c;
+  return _c("div", {
+    staticClass: "card-header"
+  }, [_c("h5", {
+    staticClass: "mb-0"
+  }, [_vm._v("Monthly Payroll Summary (Last 12 Months)")])]);
+}, function () {
+  var _vm = this,
+    _c = _vm._self._c;
+  return _c("thead", [_c("tr", [_c("th", [_vm._v("Month")]), _vm._v(" "), _c("th", [_vm._v("Net Salary Total")]), _vm._v(" "), _c("th", [_vm._v("Records")])])]);
+}, function () {
+  var _vm = this,
+    _c = _vm._self._c;
+  return _c("div", {
+    staticClass: "modal-header"
+  }, [_c("h5", {
+    staticClass: "modal-title",
+    attrs: {
+      id: "emailModalLabel"
+    }
+  }, [_vm._v("Email Report")]), _vm._v(" "), _c("button", {
+    staticClass: "close",
+    attrs: {
+      type: "button",
+      "data-dismiss": "modal",
+      "aria-label": "Close"
+    }
+  }, [_c("span", {
+    attrs: {
+      "aria-hidden": "true"
+    }
+  }, [_vm._v("×")])])]);
+}];
 render._withStripped = true;
 
 
@@ -94682,16 +95778,23 @@ module.exports = function(module) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js");
-/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var vue_router__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vue-router */ "./node_modules/vue-router/dist/vue-router.esm.js");
-/* harmony import */ var _routes__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./routes */ "./resources/js/routes.js");
-/* harmony import */ var _helpers_User__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./helpers/User */ "./resources/js/helpers/User.js");
-/* harmony import */ var sweetalert2__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! sweetalert2 */ "./node_modules/sweetalert2/dist/sweetalert2.all.js");
-/* harmony import */ var sweetalert2__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(sweetalert2__WEBPACK_IMPORTED_MODULE_4__);
-/* harmony import */ var _helpers_Notification__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./helpers/Notification */ "./resources/js/helpers/Notification.js");
-/* harmony import */ var _canvasjs_vue_charts__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @canvasjs/vue-charts */ "./node_modules/@canvasjs/vue-charts/dist/vue-charts.js");
-/* harmony import */ var v_tooltip__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! v-tooltip */ "./node_modules/v-tooltip/dist/v-tooltip.esm.js");
+/* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js");
+/* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(jquery__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var bootstrap__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! bootstrap */ "./node_modules/bootstrap/dist/js/bootstrap.js");
+/* harmony import */ var bootstrap__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(bootstrap__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js");
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(vue__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var vue_router__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! vue-router */ "./node_modules/vue-router/dist/vue-router.esm.js");
+/* harmony import */ var _routes__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./routes */ "./resources/js/routes.js");
+/* harmony import */ var _helpers_User__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./helpers/User */ "./resources/js/helpers/User.js");
+/* harmony import */ var sweetalert2__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! sweetalert2 */ "./node_modules/sweetalert2/dist/sweetalert2.all.js");
+/* harmony import */ var sweetalert2__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(sweetalert2__WEBPACK_IMPORTED_MODULE_6__);
+/* harmony import */ var _helpers_Notification__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./helpers/Notification */ "./resources/js/helpers/Notification.js");
+/* harmony import */ var _canvasjs_vue_charts__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @canvasjs/vue-charts */ "./node_modules/@canvasjs/vue-charts/dist/vue-charts.js");
+/* harmony import */ var v_tooltip__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! v-tooltip */ "./node_modules/v-tooltip/dist/v-tooltip.esm.js");
+
+window.$ = window.jQuery = jquery__WEBPACK_IMPORTED_MODULE_0___default.a;
+
 __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 
 
@@ -94701,30 +95804,30 @@ __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 
 
 
-window.User = _helpers_User__WEBPACK_IMPORTED_MODULE_3__["default"];
-window.Swal = sweetalert2__WEBPACK_IMPORTED_MODULE_4___default.a;
-window.Notification = _helpers_Notification__WEBPACK_IMPORTED_MODULE_5__["default"];
-vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]);
-vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(_canvasjs_vue_charts__WEBPACK_IMPORTED_MODULE_6__["default"]);
-vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(__webpack_require__(/*! vue-moment */ "./node_modules/vue-moment/dist/vue-moment.js"));
-vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(v_tooltip__WEBPACK_IMPORTED_MODULE_7__["default"]);
-var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
-  routes: _routes__WEBPACK_IMPORTED_MODULE_2__["routes"],
+window.User = _helpers_User__WEBPACK_IMPORTED_MODULE_5__["default"];
+window.Swal = sweetalert2__WEBPACK_IMPORTED_MODULE_6___default.a;
+window.Notification = _helpers_Notification__WEBPACK_IMPORTED_MODULE_7__["default"];
+vue__WEBPACK_IMPORTED_MODULE_2___default.a.use(vue_router__WEBPACK_IMPORTED_MODULE_3__["default"]);
+vue__WEBPACK_IMPORTED_MODULE_2___default.a.use(_canvasjs_vue_charts__WEBPACK_IMPORTED_MODULE_8__["default"]);
+vue__WEBPACK_IMPORTED_MODULE_2___default.a.use(__webpack_require__(/*! vue-moment */ "./node_modules/vue-moment/dist/vue-moment.js"));
+vue__WEBPACK_IMPORTED_MODULE_2___default.a.use(v_tooltip__WEBPACK_IMPORTED_MODULE_9__["default"]);
+var router = new vue_router__WEBPACK_IMPORTED_MODULE_3__["default"]({
+  routes: _routes__WEBPACK_IMPORTED_MODULE_4__["routes"],
   mode: "history"
 });
-var Toast = sweetalert2__WEBPACK_IMPORTED_MODULE_4___default.a.mixin({
+var Toast = sweetalert2__WEBPACK_IMPORTED_MODULE_6___default.a.mixin({
   toast: true,
   position: "top-end",
   showConfirmButton: false,
   timer: 3000,
   timerProgressBar: true,
   didOpen: function didOpen(toast) {
-    toast.onmouseenter = sweetalert2__WEBPACK_IMPORTED_MODULE_4___default.a.stopTimer;
-    toast.onmouseleave = sweetalert2__WEBPACK_IMPORTED_MODULE_4___default.a.resumeTimer;
+    toast.onmouseenter = sweetalert2__WEBPACK_IMPORTED_MODULE_6___default.a.stopTimer;
+    toast.onmouseleave = sweetalert2__WEBPACK_IMPORTED_MODULE_6___default.a.resumeTimer;
   }
 });
 window.Toast = Toast;
-var app = new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
+var app = new vue__WEBPACK_IMPORTED_MODULE_2___default.a({
   router: router
 }).$mount("#app");
 
@@ -96217,6 +97320,351 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/components/reports/InvoicesReport.vue":
+/*!************************************************************!*\
+  !*** ./resources/js/components/reports/InvoicesReport.vue ***!
+  \************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _InvoicesReport_vue_vue_type_template_id_b9d02596__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./InvoicesReport.vue?vue&type=template&id=b9d02596 */ "./resources/js/components/reports/InvoicesReport.vue?vue&type=template&id=b9d02596");
+/* harmony import */ var _InvoicesReport_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./InvoicesReport.vue?vue&type=script&lang=js */ "./resources/js/components/reports/InvoicesReport.vue?vue&type=script&lang=js");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _InvoicesReport_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__["default"],
+  _InvoicesReport_vue_vue_type_template_id_b9d02596__WEBPACK_IMPORTED_MODULE_0__["render"],
+  _InvoicesReport_vue_vue_type_template_id_b9d02596__WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/reports/InvoicesReport.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/reports/InvoicesReport.vue?vue&type=script&lang=js":
+/*!************************************************************************************!*\
+  !*** ./resources/js/components/reports/InvoicesReport.vue?vue&type=script&lang=js ***!
+  \************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_InvoicesReport_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./InvoicesReport.vue?vue&type=script&lang=js */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/reports/InvoicesReport.vue?vue&type=script&lang=js");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_InvoicesReport_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/reports/InvoicesReport.vue?vue&type=template&id=b9d02596":
+/*!******************************************************************************************!*\
+  !*** ./resources/js/components/reports/InvoicesReport.vue?vue&type=template&id=b9d02596 ***!
+  \******************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ref_6_node_modules_vue_loader_lib_index_js_vue_loader_options_InvoicesReport_vue_vue_type_template_id_b9d02596__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??ref--6!../../../../node_modules/vue-loader/lib??vue-loader-options!./InvoicesReport.vue?vue&type=template&id=b9d02596 */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/reports/InvoicesReport.vue?vue&type=template&id=b9d02596");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ref_6_node_modules_vue_loader_lib_index_js_vue_loader_options_InvoicesReport_vue_vue_type_template_id_b9d02596__WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ref_6_node_modules_vue_loader_lib_index_js_vue_loader_options_InvoicesReport_vue_vue_type_template_id_b9d02596__WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/components/reports/JobcardReport.vue":
+/*!***********************************************************!*\
+  !*** ./resources/js/components/reports/JobcardReport.vue ***!
+  \***********************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _JobcardReport_vue_vue_type_template_id_026c4db6__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./JobcardReport.vue?vue&type=template&id=026c4db6 */ "./resources/js/components/reports/JobcardReport.vue?vue&type=template&id=026c4db6");
+/* harmony import */ var _JobcardReport_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./JobcardReport.vue?vue&type=script&lang=js */ "./resources/js/components/reports/JobcardReport.vue?vue&type=script&lang=js");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _JobcardReport_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__["default"],
+  _JobcardReport_vue_vue_type_template_id_026c4db6__WEBPACK_IMPORTED_MODULE_0__["render"],
+  _JobcardReport_vue_vue_type_template_id_026c4db6__WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/reports/JobcardReport.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/reports/JobcardReport.vue?vue&type=script&lang=js":
+/*!***********************************************************************************!*\
+  !*** ./resources/js/components/reports/JobcardReport.vue?vue&type=script&lang=js ***!
+  \***********************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_JobcardReport_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./JobcardReport.vue?vue&type=script&lang=js */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/reports/JobcardReport.vue?vue&type=script&lang=js");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_JobcardReport_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/reports/JobcardReport.vue?vue&type=template&id=026c4db6":
+/*!*****************************************************************************************!*\
+  !*** ./resources/js/components/reports/JobcardReport.vue?vue&type=template&id=026c4db6 ***!
+  \*****************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ref_6_node_modules_vue_loader_lib_index_js_vue_loader_options_JobcardReport_vue_vue_type_template_id_026c4db6__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??ref--6!../../../../node_modules/vue-loader/lib??vue-loader-options!./JobcardReport.vue?vue&type=template&id=026c4db6 */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/reports/JobcardReport.vue?vue&type=template&id=026c4db6");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ref_6_node_modules_vue_loader_lib_index_js_vue_loader_options_JobcardReport_vue_vue_type_template_id_026c4db6__WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ref_6_node_modules_vue_loader_lib_index_js_vue_loader_options_JobcardReport_vue_vue_type_template_id_026c4db6__WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/components/reports/PaymentsReport.vue":
+/*!************************************************************!*\
+  !*** ./resources/js/components/reports/PaymentsReport.vue ***!
+  \************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _PaymentsReport_vue_vue_type_template_id_07066cbc__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./PaymentsReport.vue?vue&type=template&id=07066cbc */ "./resources/js/components/reports/PaymentsReport.vue?vue&type=template&id=07066cbc");
+/* harmony import */ var _PaymentsReport_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./PaymentsReport.vue?vue&type=script&lang=js */ "./resources/js/components/reports/PaymentsReport.vue?vue&type=script&lang=js");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _PaymentsReport_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__["default"],
+  _PaymentsReport_vue_vue_type_template_id_07066cbc__WEBPACK_IMPORTED_MODULE_0__["render"],
+  _PaymentsReport_vue_vue_type_template_id_07066cbc__WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/reports/PaymentsReport.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/reports/PaymentsReport.vue?vue&type=script&lang=js":
+/*!************************************************************************************!*\
+  !*** ./resources/js/components/reports/PaymentsReport.vue?vue&type=script&lang=js ***!
+  \************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_PaymentsReport_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./PaymentsReport.vue?vue&type=script&lang=js */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/reports/PaymentsReport.vue?vue&type=script&lang=js");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_PaymentsReport_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/reports/PaymentsReport.vue?vue&type=template&id=07066cbc":
+/*!******************************************************************************************!*\
+  !*** ./resources/js/components/reports/PaymentsReport.vue?vue&type=template&id=07066cbc ***!
+  \******************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ref_6_node_modules_vue_loader_lib_index_js_vue_loader_options_PaymentsReport_vue_vue_type_template_id_07066cbc__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??ref--6!../../../../node_modules/vue-loader/lib??vue-loader-options!./PaymentsReport.vue?vue&type=template&id=07066cbc */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/reports/PaymentsReport.vue?vue&type=template&id=07066cbc");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ref_6_node_modules_vue_loader_lib_index_js_vue_loader_options_PaymentsReport_vue_vue_type_template_id_07066cbc__WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ref_6_node_modules_vue_loader_lib_index_js_vue_loader_options_PaymentsReport_vue_vue_type_template_id_07066cbc__WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/components/reports/QuotesReport.vue":
+/*!**********************************************************!*\
+  !*** ./resources/js/components/reports/QuotesReport.vue ***!
+  \**********************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _QuotesReport_vue_vue_type_template_id_f6a69174__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./QuotesReport.vue?vue&type=template&id=f6a69174 */ "./resources/js/components/reports/QuotesReport.vue?vue&type=template&id=f6a69174");
+/* harmony import */ var _QuotesReport_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./QuotesReport.vue?vue&type=script&lang=js */ "./resources/js/components/reports/QuotesReport.vue?vue&type=script&lang=js");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _QuotesReport_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__["default"],
+  _QuotesReport_vue_vue_type_template_id_f6a69174__WEBPACK_IMPORTED_MODULE_0__["render"],
+  _QuotesReport_vue_vue_type_template_id_f6a69174__WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/reports/QuotesReport.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/reports/QuotesReport.vue?vue&type=script&lang=js":
+/*!**********************************************************************************!*\
+  !*** ./resources/js/components/reports/QuotesReport.vue?vue&type=script&lang=js ***!
+  \**********************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_QuotesReport_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./QuotesReport.vue?vue&type=script&lang=js */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/reports/QuotesReport.vue?vue&type=script&lang=js");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_QuotesReport_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/reports/QuotesReport.vue?vue&type=template&id=f6a69174":
+/*!****************************************************************************************!*\
+  !*** ./resources/js/components/reports/QuotesReport.vue?vue&type=template&id=f6a69174 ***!
+  \****************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ref_6_node_modules_vue_loader_lib_index_js_vue_loader_options_QuotesReport_vue_vue_type_template_id_f6a69174__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??ref--6!../../../../node_modules/vue-loader/lib??vue-loader-options!./QuotesReport.vue?vue&type=template&id=f6a69174 */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/reports/QuotesReport.vue?vue&type=template&id=f6a69174");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ref_6_node_modules_vue_loader_lib_index_js_vue_loader_options_QuotesReport_vue_vue_type_template_id_f6a69174__WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ref_6_node_modules_vue_loader_lib_index_js_vue_loader_options_QuotesReport_vue_vue_type_template_id_f6a69174__WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/components/reports/SalariesReport.vue":
+/*!************************************************************!*\
+  !*** ./resources/js/components/reports/SalariesReport.vue ***!
+  \************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _SalariesReport_vue_vue_type_template_id_06563fb7__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./SalariesReport.vue?vue&type=template&id=06563fb7 */ "./resources/js/components/reports/SalariesReport.vue?vue&type=template&id=06563fb7");
+/* harmony import */ var _SalariesReport_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./SalariesReport.vue?vue&type=script&lang=js */ "./resources/js/components/reports/SalariesReport.vue?vue&type=script&lang=js");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _SalariesReport_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__["default"],
+  _SalariesReport_vue_vue_type_template_id_06563fb7__WEBPACK_IMPORTED_MODULE_0__["render"],
+  _SalariesReport_vue_vue_type_template_id_06563fb7__WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/reports/SalariesReport.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/reports/SalariesReport.vue?vue&type=script&lang=js":
+/*!************************************************************************************!*\
+  !*** ./resources/js/components/reports/SalariesReport.vue?vue&type=script&lang=js ***!
+  \************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_SalariesReport_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./SalariesReport.vue?vue&type=script&lang=js */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/reports/SalariesReport.vue?vue&type=script&lang=js");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_SalariesReport_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/reports/SalariesReport.vue?vue&type=template&id=06563fb7":
+/*!******************************************************************************************!*\
+  !*** ./resources/js/components/reports/SalariesReport.vue?vue&type=template&id=06563fb7 ***!
+  \******************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ref_6_node_modules_vue_loader_lib_index_js_vue_loader_options_SalariesReport_vue_vue_type_template_id_06563fb7__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??ref--6!../../../../node_modules/vue-loader/lib??vue-loader-options!./SalariesReport.vue?vue&type=template&id=06563fb7 */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/reports/SalariesReport.vue?vue&type=template&id=06563fb7");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ref_6_node_modules_vue_loader_lib_index_js_vue_loader_options_SalariesReport_vue_vue_type_template_id_06563fb7__WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ref_6_node_modules_vue_loader_lib_index_js_vue_loader_options_SalariesReport_vue_vue_type_template_id_06563fb7__WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
 /***/ "./resources/js/components/salaries/AllSalaries.vue":
 /*!**********************************************************!*\
   !*** ./resources/js/components/salaries/AllSalaries.vue ***!
@@ -96905,6 +98353,9 @@ var User = /*#__PURE__*/function () {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "routes", function() { return routes; });
+/* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! lodash */ "./node_modules/lodash/lodash.js");
+/* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(lodash__WEBPACK_IMPORTED_MODULE_0__);
+
 var login = __webpack_require__(/*! ./components/auth/LoginView.vue */ "./resources/js/components/auth/LoginView.vue")["default"];
 var register = __webpack_require__(/*! ./components/auth/RegisterView.vue */ "./resources/js/components/auth/RegisterView.vue")["default"];
 var forget = __webpack_require__(/*! ./components/auth/ForgetView.vue */ "./resources/js/components/auth/ForgetView.vue")["default"];
@@ -96929,6 +98380,13 @@ var storesalary = __webpack_require__(/*! ./components/salaries/CreateSalary.vue
 var salaries = __webpack_require__(/*! ./components/salaries/AllSalaries.vue */ "./resources/js/components/salaries/AllSalaries.vue")["default"];
 var editsalary = __webpack_require__(/*! ./components/salaries/EditSalary.vue */ "./resources/js/components/salaries/EditSalary.vue")["default"];
 var payments = __webpack_require__(/*! ./components/payments/AllPayments.vue */ "./resources/js/components/payments/AllPayments.vue")["default"];
+
+//rpoerting components
+var quotesreport = __webpack_require__(/*! ./components/reports/QuotesReport.vue */ "./resources/js/components/reports/QuotesReport.vue")["default"];
+var invoicesreport = __webpack_require__(/*! ./components/reports/InvoicesReport.vue */ "./resources/js/components/reports/InvoicesReport.vue")["default"];
+var paymentsreport = __webpack_require__(/*! ./components/reports/PaymentsReport.vue */ "./resources/js/components/reports/PaymentsReport.vue")["default"];
+var jobcardsreport = __webpack_require__(/*! ./components/reports/JobcardReport.vue */ "./resources/js/components/reports/JobcardReport.vue")["default"];
+var salariessreport = __webpack_require__(/*! ./components/reports/SalariesReport.vue */ "./resources/js/components/reports/SalariesReport.vue")["default"];
 var systemsettings = __webpack_require__(/*! ./components/auth/SystemSettings.vue */ "./resources/js/components/auth/SystemSettings.vue")["default"];
 var routes = [{
   path: '/',
@@ -97034,6 +98492,28 @@ var routes = [{
   path: '/payments',
   name: 'payments',
   component: payments
+},
+//reports
+{
+  path: '/quote-report',
+  name: 'quote-report',
+  component: quotesreport
+}, {
+  path: '/invoice-report',
+  name: 'invoice-report',
+  component: invoicesreport
+}, {
+  path: '/payment-report',
+  name: 'payment-report',
+  component: paymentsreport
+}, {
+  path: '/jobcard-report',
+  name: 'jobcard-report',
+  component: jobcardsreport
+}, {
+  path: '/salary-report',
+  name: 'salary-report',
+  component: salariessreport
 }, {
   path: '/system-settings',
   component: systemsettings,

@@ -1,3 +1,8 @@
+import $ from 'jquery';
+window.$ = window.jQuery = $;
+
+import 'bootstrap';
+
 require("./bootstrap");
 
 import Vue from "vue";

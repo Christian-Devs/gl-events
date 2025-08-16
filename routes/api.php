@@ -32,6 +32,17 @@ Route::apiResource('/payments', 'Api\PaymentController');
 Route::apiResource('/salaries', 'Api\SalaryController');
 
 
+//Reporting Routes
+Route::get('/reports/quotes', 'Api\ReportController@quotesReport');
+Route::get('/reports/invoices', 'Api\ReportController@invoicesReport');
+Route::get('/reports/payments', 'Api\ReportController@paymentsReport');
+Route::get('/reports/jobcards', 'Api\ReportController@jobcardsReport');
+Route::get('/reports/salaries', 'Api\ReportController@salariesReport');
+Route::get('/reports/{type}/download', 'Api\ReportController@downloadReportPdf');
+Route::post('/reports/{type}/email', 'Api\ReportController@emailReport');
+
+
+
 
 //custom routes
 Route::get('/invoices/{id}/download', [InvoiceController::class, 'downloadPdf']);
