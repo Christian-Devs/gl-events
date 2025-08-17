@@ -30,4 +30,9 @@ return [
         'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
     ],
 
+    'simplepay' => [
+        'base' => env('SIMPLEPAY_API_BASE', 'https://api.payroll.simplepay.cloud/v1'),
+        'key' => env('SIMPLEPAY_API_KEY'),
+    ],
+
 ];
