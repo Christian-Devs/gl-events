@@ -10,6 +10,7 @@ use App\User;
 class Employee extends Model
 {
     protected $fillable = [
+        // old
         'name',
         'email',
         'phone',
@@ -18,7 +19,36 @@ class Employee extends Model
         'photo',
         'role_id',
         'user_id',
+        // new
+        'first_name',
+        'last_name',
+        'id_number',
+        'birthdate',
+        'start_date',
+        'pay_frequency',
+        'payment_method',
+        'status',
+        'simplepay_employee_id',
     ];
+
+    protected $casts = [
+        'birthdate' => 'date',
+        'start_date' => 'date',
+    ];
+
+    // Backward-compat accessors (optional): make nid/name/joining_date reflect new fields
+    public function getNidAttribute($v)
+    {
+        return $v ?: $this->attributes['id_number'] ?? null;
+    }
+    public function getNameAttribute($v)
+    {
+        return $v ?: trim(($this->attributes['first_name'] ?? '') . ' ' . ($this->attributes['last_name'] ?? ''));
+    }
+    public function getJoiningDateAttribute($v)
+    {
+        return $v ?: $this->attributes['start_date'] ?? null;
+    }
 
     public function role()
     {

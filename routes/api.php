@@ -1,6 +1,8 @@
 <?php
 use App\Http\Controllers\Api\InvoiceController;
 use App\Role;
+use App\Http\Controllers\Payroll\EmployeeSyncController;
+use App\Http\Controllers\Payroll\PayslipController;
 
 Route::group([
 
@@ -48,3 +50,6 @@ Route::post('/reports/{type}/email', 'Api\ReportController@emailReport');
 Route::get('/invoices/{id}/download', [InvoiceController::class, 'downloadPdf']);
 Route::post('/invoices/{id}/send', [InvoiceController::class, 'sendInvoiceEmail']);
 Route::post('/invoices/{id}/generate-payment', [InvoiceController::class, 'generatePayment']);
+Route::post('/payroll/simplepay/employee/sync', [EmployeeSyncController::class, 'syncOne']);
+Route::get('/payroll/payslip', [PayslipController::class, 'show']);           // ?employee_id=&client_id=
+Route::get('/payroll/payslip/{id}/pdf', [PayslipController::class, 'pdf']);   // {id} = payslip_id
