@@ -29,13 +29,13 @@
               </thead>
               <tbody>
                 <tr v-for="employee in filtersearch" :key="employee.id">
-                  <td>{{ employee.name }}</td>
+                  <td>{{ employee.first_name }} {{ employee.last_name }}</td>
                   <td>{{ employee.phone }}</td>
                   <td>{{ employee.email }}</td>
                   <td>{{ employee.joining_date }}</td>
-                  <td><img :src="employee.photo" id="em_photo"></td>
                   <td>
-                    <router-link :to="{name: 'edit-employee', params:{id:employee.id}}" class="btn btn-sm btn-primary">Edit</router-link>
+                    <router-link :to="{ name: 'edit-employee', params: { id: employee.id } }"
+                      class="btn btn-sm btn-primary">Edit</router-link>
                     <a @click="deleteEmployee(employee.id)" class="btn btn-sm btn-danger text-white">Delete</a>
                   </td>
                 </tr>
@@ -91,13 +91,13 @@ export default {
         confirmButtonText: "Yes, delete it!"
       }).then((result) => {
         if (result.value) {
-          axios.delete('/api/employee/'+ id)
-        .then(() => {
-          this.employees = this.employees.filter( employee => {
-            return employee.id!== id;
-          })
-        })
-        .catch(() => {this.$router.push({name: 'employees'})})
+          axios.delete('/api/employee/' + id)
+            .then(() => {
+              this.employees = this.employees.filter(employee => {
+                return employee.id !== id;
+              })
+            })
+            .catch(() => { this.$router.push({ name: 'employees' }) })
           Swal.fire({
             title: "Deleted!",
             text: "Your file has been deleted.",

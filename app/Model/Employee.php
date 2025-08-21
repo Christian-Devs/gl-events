@@ -6,22 +6,17 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\App;
 use App\Role; // Ensure you import the Role model
 use App\User;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Employee extends Model
 {
+    use SoftDeletes;
+
     protected $fillable = [
-        // old
-        'name',
-        'email',
-        'phone',
-        'nid',
-        'joining_date',
-        'photo',
-        'role_id',
-        'user_id',
-        // new
         'first_name',
         'last_name',
+        'email',
+        'phone',
         'id_number',
         'birthdate',
         'start_date',
@@ -29,25 +24,20 @@ class Employee extends Model
         'payment_method',
         'status',
         'simplepay_employee_id',
+        'external_reference',
+        'role_id',
+        'user_id',
     ];
 
     protected $casts = [
-        'birthdate' => 'date',
+        'birthdate'  => 'date',
         'start_date' => 'date',
     ];
 
-    // Backward-compat accessors (optional): make nid/name/joining_date reflect new fields
-    public function getNidAttribute($v)
+    // Helpers
+    public function getFullNameAttribute(): string
     {
-        return $v ?: $this->attributes['id_number'] ?? null;
-    }
-    public function getNameAttribute($v)
-    {
-        return $v ?: trim(($this->attributes['first_name'] ?? '') . ' ' . ($this->attributes['last_name'] ?? ''));
-    }
-    public function getJoiningDateAttribute($v)
-    {
-        return $v ?: $this->attributes['start_date'] ?? null;
+        return trim($this->first_name . ' ' . $this->last_name);
     }
 
     public function role()

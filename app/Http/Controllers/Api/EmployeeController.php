@@ -7,10 +7,11 @@ use App\Model\Employee;
 use App\User;
 use App\Role;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
-use Intervention\Image\ImageManagerStatic as Image;
-use Illuminate\Support\Facades\DB as DB;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Validation\Rule;
+use Illuminate\Support\Str;
 
 class EmployeeController extends Controller
 {
@@ -19,10 +20,25 @@ class EmployeeController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $employee = Employee::all();
-        return response()->json($employee);
+        $perPage = (int) ($request->input('per_page', 15));
+
+        $employees = Employee::query()
+            ->with(['role:id,name', 'user:id,name,email,role_id'])
+            ->when($request->filled('search'), function ($q) use ($request) {
+                $s = $request->input('search');
+                $q->where(function ($qq) use ($s) {
+                    $qq->where('name', 'like', "%{$s}%")
+                        ->orWhere('email', 'like', "%{$s}%")
+                        ->orWhere('phone', 'like', "%{$s}%");
+                });
+            })
+            ->when($request->filled('role_id'), fn($q) => $q->where('role_id', $request->integer('role_id')))
+            ->orderByDesc('id')
+            ->paginate($perPage);
+
+        return response()->json($employees);
     }
 
     /**
@@ -35,65 +51,62 @@ class EmployeeController extends Controller
     {
         try {
             $validated = $request->validate([
-                'name' => 'required|max:255',
-                'email' => 'required|email|unique:users,email',
-                'phone' => 'required|unique:employees',
-                'joining_date' => 'required|date',
-                'nid' => 'nullable|string',
-                'role_id' => 'required|exists:roles,id',
+                'first_name'      => ['required', 'string', 'max:255'],
+                'last_name'       => ['required', 'string', 'max:255'],
+                'email'           => [
+                    'required',
+                    'email',
+                    'max:255',
+                    // if linking to a user_id, allow that user's email; else must be unique
+                    Rule::unique('users', 'email')->ignore($request->integer('user_id'))
+                ],
+                'phone'           => ['required', 'string', 'max:50', 'unique:employees,phone'],
+                'id_number'       => ['nullable', 'string', 'max:255'], // maps to nid
+                'birthdate'       => ['nullable', 'date'],
+                'start_date'      => ['required', 'date'],             // maps to joining_date
+                'pay_frequency'   => ['required', Rule::in(['monthly', 'fortnightly', 'weekly'])],
+                'payment_method'  => ['required', Rule::in(['bank', 'cash'])],
+                'status'          => ['required', Rule::in(['active', 'terminated'])],
+                'role_id'         => ['required', Rule::exists('roles', 'id')],
+                'user_id'         => ['nullable', Rule::exists('users', 'id')],
             ]);
 
-            // Create the User
-            $user = User::create([
-                'name' => $validated['name'],
-                'email' => $validated['email'],
-                'password' => Hash::make('defaultPass'),
-                'role_id' => $validated['role_id'],
-            ]);
+            $fullName = trim($validated['first_name'] . ' ' . $validated['last_name']);
 
-            // Handle image if provided
-            $imagePath = null;
-            if ($request->photo) {
-                $position = strpos($request->photo, ';');
-                $sub = substr($request->photo, 0, $position);
-                $ext = explode('/', $sub)[1];
-                $name = time() . '.' . $ext;
-                $img = Image::make($request->photo)->resize(240, 200);
-                $upload_path = 'backend/employee/';
-                $imagePath = $upload_path . $name;
-                $img->save($imagePath);
-            }
+            return DB::transaction(function () use ($validated, $request, $fullName) {
 
-            // Create the Employee
-            $employee = Employee::create([
-                'name' => $validated['name'],
-                'email' => $validated['email'],
-                'phone' => $validated['phone'],
-                'nid' => $request->nid,
-                'joining_date' => $validated['joining_date'],
-                'photo' => $imagePath,
-                'role_id' => $validated['role_id'],
-                'user_id' => $user->id,
-            ]);
+                $user = User::create([
+                    'name'     => $fullName,
+                    'email'    => $validated['email'],
+                    'password' => Hash::make('defaultPass'),
+                    'role_id'  => $validated['role_id'],
+                ]);
 
-            return response()->json([
-                'message' => 'Employee created successfully',
-                'employee' => $employee,
-            ], 201);
+                $employee = Employee::create([
+                    'first_name'    => $validated['first_name'],
+                    'last_name'     => $validated['last_name'],
+                    'email'         => $validated['email'],
+                    'phone'         => $validated['phone'],
+                    'id_number'     => $validated['id_number'] ?? null,  // id_number -> nid
+                    'birthdate'     => $validated['birthdate'] ?? null,
+                    'joining_date'  => $validated['start_date'],         // start_date -> joining_date
+                    'pay_frequency' => $validated['pay_frequency'],
+                    'payment_method' => $validated['payment_method'],
+                    'status'        => $validated['status'],
+                    'role_id'       => $validated['role_id'],
+                    'user_id'       => $user->id,
+                ]);
+
+                return response()->json([
+                    'message'  => 'Employee created successfully',
+                    'employee' => $employee->load(['role:id,name', 'user:id,name,email,role_id']),
+                ], 201);
+            });
         } catch (\Illuminate\Validation\ValidationException $ve) {
-            return response()->json([
-                'message' => 'Validation failed',
-                'errors' => $ve->errors()
-            ], 422);
-        } catch (\Exception $e) {
-            Log::error('Employee/User Creation Failed', [
-                'message' => $e->getMessage(),
-                'trace' => $e->getTraceAsString()
-            ]);
-
-            return response()->json([
-                'message' => 'Server error. Could not create employee.',
-            ], 500);
+            return response()->json(['message' => 'Validation failed', 'errors' => $ve->errors()], 422);
+        } catch (\Throwable $e) {
+            Log::error('Employee/User Creation Failed', ['message' => $e->getMessage()]);
+            return response()->json(['message' => 'Server error. Could not create employee.'], 500);
         }
     }
 
@@ -105,7 +118,7 @@ class EmployeeController extends Controller
      */
     public function show($id)
     {
-        $employee = DB::table('employees')->where('id', $id)->first();
+        $employee = Employee::with(['role:id,name', 'user:id,name,email,role_id'])->findOrFail($id);
         return response()->json($employee);
     }
 
@@ -118,36 +131,78 @@ class EmployeeController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $data = array();
-        $data['name'] = $request->name;
-        $data['email'] = $request->email;
-        $data['phone'] = $request->phone;
-        $data['nid'] = $request->nid;
-        $data['joining_date'] = $request->joining_date;
-        $image = $request->newphoto;
+        try {
+            $employee = Employee::with('user')->findOrFail($id);
 
-        if ($image) {
-            $position = strpos($image, ';');
-            $sub = substr($image, 0, $position);
-            $ext = explode('/', $sub)[1];
+            $validated = $request->validate([
+                'first_name'      => ['required', 'string', 'max:255'],
+                'last_name'       => ['required', 'string', 'max:255'],
+                'email'           => [
+                    'required',
+                    'email',
+                    'max:255',
+                    Rule::unique('users', 'email')->ignore($employee->user_id)
+                ],
+                'phone'           => [
+                    'required',
+                    'string',
+                    'max:50',
+                    Rule::unique('employees', 'phone')->ignore($employee->id)
+                ],
+                'id_number'       => ['nullable', 'string', 'max:255'],
+                'birthdate'       => ['nullable', 'date'],
+                'start_date'      => ['required', 'date'],
+                'pay_frequency'   => ['required', Rule::in(['monthly', 'fortnightly', 'weekly'])],
+                'payment_method'  => ['required', Rule::in(['bank', 'cash'])],
+                'status'          => ['required', Rule::in(['active', 'terminated'])],
+                'role_id'         => ['required', Rule::exists('roles', 'id')],
+            ]);
 
-            $name = time() . '.' . $ext;
-            $img = Image::make($image)->resize(240, 200);
-            $upload_path = 'backend/employee/';
-            $image_url = $upload_path . $name;
-            $success = $img->save($image_url);
+            $fullName = trim($validated['first_name'] . ' ' . $validated['last_name']);
 
-            if ($success) {
-                $data['photo'] = $image_url;
-                $img = DB::table('employees')->where('id', $id)->first();
-                $image_path = $img->photo;
-                $done = unlink($image_path);
-                $user = DB::table('employees')->where('id', $id)->update($data);
-            }
-        } else {
-            $oldphoto = $request->photo;
-            $data['photo'] = $oldphoto;
-            $user = DB::table('employees')->where('id', $id)->update($data);
+            return DB::transaction(function () use ($validated, $employee, $fullName) {
+                // Sync user record (if present)
+                if ($employee->user) {
+                    $employee->user->update([
+                        'name'    => $fullName,
+                        'email'   => $validated['email'],
+                        'role_id' => $validated['role_id'],
+                    ]);
+                } else {
+                    // Edge case: employee had no user; create one
+                    $user = User::create([
+                        'name'     => $fullName,
+                        'email'    => $validated['email'],
+                        'password' => Hash::make('defaultPass'),
+                        'role_id'  => $validated['role_id'],
+                    ]);
+                    $employee->user_id = $user->id;
+                }
+
+                $employee->fill([
+                    'first_name'    => $validated['first_name'],
+                    'last_name'     => $validated['last_name'],
+                    'email'         => $validated['email'],
+                    'phone'         => $validated['phone'],
+                    'id_number'     => $validated['id_number'] ?? null,
+                    'birthdate'     => $validated['birthdate'] ?? null,
+                    'joining_date'  => $validated['start_date'],
+                    'pay_frequency' => $validated['pay_frequency'],
+                    'payment_method' => $validated['payment_method'],
+                    'status'        => $validated['status'],
+                    'role_id'       => $validated['role_id'],
+                ])->save();
+
+                return response()->json([
+                    'message'  => 'Employee updated successfully',
+                    'employee' => $employee->load(['role:id,name', 'user:id,name,email,role_id']),
+                ]);
+            });
+        } catch (\Illuminate\Validation\ValidationException $ve) {
+            return response()->json(['message' => 'Validation failed', 'errors' => $ve->errors()], 422);
+        } catch (\Throwable $e) {
+            Log::error('Employee Update Failed', ['message' => $e->getMessage()]);
+            return response()->json(['message' => 'Server error. Could not update employee.'], 500);
         }
     }
 
@@ -159,13 +214,13 @@ class EmployeeController extends Controller
      */
     public function destroy($id)
     {
-        $employee = DB::table('employees')->where('id', $id)->first();
-        $photo = $employee->photo;
-        if ($photo) {
-            unlink($photo);
-            DB::table('employees')->where('id', $id)->delete();
-        } else {
-            DB::table('employees')->where('id', $id)->delete();
+        try {
+            $employee = Employee::findOrFail($id);
+            $employee->delete(); // will soft-delete if trait is used
+            return response()->json(['message' => 'Employee deleted successfully']);
+        } catch (\Throwable $e) {
+            Log::error('Employee Delete Failed', ['message' => $e->getMessage()]);
+            return response()->json(['message' => 'Server error. Could not delete employee.'], 500);
         }
     }
 }
