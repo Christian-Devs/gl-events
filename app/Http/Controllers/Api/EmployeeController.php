@@ -12,6 +12,8 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Str;
+use Illuminate\Validation\ValidationException;
+use Throwable;
 
 class EmployeeController extends Controller
 {
@@ -51,24 +53,26 @@ class EmployeeController extends Controller
     {
         try {
             $validated = $request->validate([
-                'first_name'      => ['required', 'string', 'max:255'],
-                'last_name'       => ['required', 'string', 'max:255'],
-                'email'           => [
+                'first_name'            => ['required', 'string', 'max:255'],
+                'last_name'             => ['required', 'string', 'max:255'],
+                'email'                 => [
                     'required',
                     'email',
                     'max:255',
-                    // if linking to a user_id, allow that user's email; else must be unique
-                    Rule::unique('users', 'email')->ignore($request->integer('user_id'))
+                    Rule::unique('employees', 'email'),
+                    Rule::unique('users', 'email')->ignore($request->integer('user_id')),
                 ],
-                'phone'           => ['required', 'string', 'max:50', 'unique:employees,phone'],
-                'id_number'       => ['nullable', 'string', 'max:255'], // maps to nid
-                'birthdate'       => ['nullable', 'date'],
-                'start_date'      => ['required', 'date'],             // maps to joining_date
-                'pay_frequency'   => ['required', Rule::in(['monthly', 'fortnightly', 'weekly'])],
-                'payment_method'  => ['required', Rule::in(['bank', 'cash'])],
-                'status'          => ['required', Rule::in(['active', 'terminated'])],
-                'role_id'         => ['required', Rule::exists('roles', 'id')],
-                'user_id'         => ['nullable', Rule::exists('users', 'id')],
+                'phone'                 => ['required', 'string', 'max:50', Rule::unique('employees', 'phone')],
+                'id_number'             => ['nullable', 'string', 'max:255'],
+                'birthdate'             => ['nullable', 'date'],
+                'start_date'            => ['required', 'date'],
+                'pay_frequency'         => ['required', Rule::in(['monthly', 'fortnightly', 'weekly'])],
+                'payment_method'        => ['required', Rule::in(['bank', 'cash'])],
+                'status'                => ['required', Rule::in(['active', 'terminated'])],
+                'simplepay_employee_id' => ['nullable', 'string', 'max:255'],
+                'external_reference'    => ['nullable', 'string', 'max:255'],
+                'role_id'               => ['required', Rule::exists('roles', 'id')],
+                'user_id'               => ['nullable', Rule::exists('users', 'id')],
             ]);
 
             $fullName = trim($validated['first_name'] . ' ' . $validated['last_name']);
@@ -83,18 +87,20 @@ class EmployeeController extends Controller
                 ]);
 
                 $employee = Employee::create([
-                    'first_name'    => $validated['first_name'],
-                    'last_name'     => $validated['last_name'],
-                    'email'         => $validated['email'],
-                    'phone'         => $validated['phone'],
-                    'id_number'     => $validated['id_number'] ?? null,  // id_number -> nid
-                    'birthdate'     => $validated['birthdate'] ?? null,
-                    'joining_date'  => $validated['start_date'],         // start_date -> joining_date
-                    'pay_frequency' => $validated['pay_frequency'],
-                    'payment_method' => $validated['payment_method'],
-                    'status'        => $validated['status'],
-                    'role_id'       => $validated['role_id'],
-                    'user_id'       => $user->id,
+                    'first_name'            => $validated['first_name'],
+                    'last_name'             => $validated['last_name'],
+                    'email'                 => $validated['email'],
+                    'phone'                 => $validated['phone'],
+                    'id_number'             => $validated['id_number'] ?? null,
+                    'birthdate'             => $validated['birthdate'] ?? null,
+                    'start_date'            => $validated['start_date'], // <-- matches your DB
+                    'pay_frequency'         => $validated['pay_frequency'],
+                    'payment_method'        => $validated['payment_method'],
+                    'status'                => $validated['status'],
+                    'simplepay_employee_id' => $validated['simplepay_employee_id'] ?? null,
+                    'external_reference'    => $validated['external_reference'] ?? null,
+                    'role_id'               => $validated['role_id'],
+                    'user_id'               => $user->id,
                 ]);
 
                 return response()->json([
@@ -135,27 +141,31 @@ class EmployeeController extends Controller
             $employee = Employee::with('user')->findOrFail($id);
 
             $validated = $request->validate([
-                'first_name'      => ['required', 'string', 'max:255'],
-                'last_name'       => ['required', 'string', 'max:255'],
-                'email'           => [
+                'first_name'            => ['required', 'string', 'max:255'],
+                'last_name'             => ['required', 'string', 'max:255'],
+                'email'                 => [
                     'required',
                     'email',
                     'max:255',
-                    Rule::unique('users', 'email')->ignore($employee->user_id)
+                    Rule::unique('employees', 'email')->ignore($employee->id),
+                    Rule::unique('users', 'email')->ignore($employee->user_id),
                 ],
-                'phone'           => [
+                'phone'                 => [
                     'required',
                     'string',
                     'max:50',
-                    Rule::unique('employees', 'phone')->ignore($employee->id)
+                    Rule::unique('employees', 'phone')->ignore($employee->id),
                 ],
-                'id_number'       => ['nullable', 'string', 'max:255'],
-                'birthdate'       => ['nullable', 'date'],
-                'start_date'      => ['required', 'date'],
-                'pay_frequency'   => ['required', Rule::in(['monthly', 'fortnightly', 'weekly'])],
-                'payment_method'  => ['required', Rule::in(['bank', 'cash'])],
-                'status'          => ['required', Rule::in(['active', 'terminated'])],
-                'role_id'         => ['required', Rule::exists('roles', 'id')],
+                'id_number'             => ['nullable', 'string', 'max:255'],
+                'birthdate'             => ['nullable', 'date'],
+                'start_date'            => ['required', 'date'],
+                'pay_frequency'         => ['required', Rule::in(['monthly', 'fortnightly', 'weekly'])],
+                'payment_method'        => ['required', Rule::in(['bank', 'cash'])],
+                'status'                => ['required', Rule::in(['active', 'terminated'])],
+                'simplepay_employee_id' => ['nullable', 'string', 'max:255'],
+                'external_reference'    => ['nullable', 'string', 'max:255'],
+                'role_id'               => ['required', Rule::exists('roles', 'id')],
+                'user_id'               => ['nullable', Rule::exists('users', 'id')], // allow relink
             ]);
 
             $fullName = trim($validated['first_name'] . ' ' . $validated['last_name']);
@@ -180,17 +190,19 @@ class EmployeeController extends Controller
                 }
 
                 $employee->fill([
-                    'first_name'    => $validated['first_name'],
-                    'last_name'     => $validated['last_name'],
-                    'email'         => $validated['email'],
-                    'phone'         => $validated['phone'],
-                    'id_number'     => $validated['id_number'] ?? null,
-                    'birthdate'     => $validated['birthdate'] ?? null,
-                    'joining_date'  => $validated['start_date'],
-                    'pay_frequency' => $validated['pay_frequency'],
-                    'payment_method' => $validated['payment_method'],
-                    'status'        => $validated['status'],
-                    'role_id'       => $validated['role_id'],
+                    'first_name'            => $validated['first_name'],
+                    'last_name'             => $validated['last_name'],
+                    'email'                 => $validated['email'],
+                    'phone'                 => $validated['phone'],
+                    'id_number'             => $validated['id_number'] ?? null,
+                    'birthdate'             => $validated['birthdate'] ?? null,
+                    'start_date'            => $validated['start_date'], // <-- matches your DB
+                    'pay_frequency'         => $validated['pay_frequency'],
+                    'payment_method'        => $validated['payment_method'],
+                    'status'                => $validated['status'],
+                    'simplepay_employee_id' => $validated['simplepay_employee_id'] ?? null,
+                    'external_reference'    => $validated['external_reference'] ?? null,
+                    'role_id'               => $validated['role_id'],
                 ])->save();
 
                 return response()->json([
@@ -198,9 +210,9 @@ class EmployeeController extends Controller
                     'employee' => $employee->load(['role:id,name', 'user:id,name,email,role_id']),
                 ]);
             });
-        } catch (\Illuminate\Validation\ValidationException $ve) {
+        } catch (ValidationException $ve) {
             return response()->json(['message' => 'Validation failed', 'errors' => $ve->errors()], 422);
-        } catch (\Throwable $e) {
+        } catch (Throwable $e) {
             Log::error('Employee Update Failed', ['message' => $e->getMessage()]);
             return response()->json(['message' => 'Server error. Could not update employee.'], 500);
         }

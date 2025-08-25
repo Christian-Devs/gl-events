@@ -1,8 +1,10 @@
 <?php
+
 use App\Http\Controllers\Api\InvoiceController;
 use App\Role;
 use App\Http\Controllers\Payroll\EmployeeSyncController;
 use App\Http\Controllers\Payroll\PayslipController;
+use Illuminate\Support\Facades\Route;
 
 Route::group([
 
@@ -16,8 +18,6 @@ Route::group([
     Route::post('logout', 'AuthController@logout');
     Route::post('refresh', 'AuthController@refresh');
     Route::post('me', 'AuthController@me');
-
-
 });
 
 Route::get('/roles', function () {
