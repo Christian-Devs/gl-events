@@ -53,65 +53,54 @@
 
 <script type="text/javascript">
 export default {
-  created() {
-    if (!User.loggedIn()) {
-      this.$router.push({ name: '/' })
-    }
-  },
   data() {
     return {
-      employees: [],
-      search: ''
+      employees: [],   // always start as array
+      loading: false,
+      search: '',
     }
   },
-
+  created() {
+    this.fetchEmployees()
+  },
   computed: {
-    filtersearch() {
-      return this.employees.filter(employee => {
-        return employee.name.toLowerCase().match(this.search.toLowerCase()) || employee.phone.match(this.search) || employee.email.toLowerCase().match(this.search.toLowerCase())
+    // In case something odd slips through, keep this defensive
+    safeEmployees() {
+      return Array.isArray(this.employees) ? this.employees : []
+    },
+    filteredEmployees() {
+      const list = this.safeEmployees
+      const s = (this.search || '').toLowerCase()
+      if (!s) return list
+      return list.filter(e => {
+        const name = `${e.first_name || ''} ${e.last_name || ''}`.toLowerCase()
+        return (
+          name.includes(s) ||
+          (e.email || '').toLowerCase().includes(s) ||
+          (e.phone || '').toLowerCase().includes(s)
+        )
       })
     }
   },
-
   methods: {
-    allEmployees() {
-      axios.get('/api/employee/')
-        .then(({ data }) => (this.employees = data))
-        .catch()
+    async fetchEmployees() {
+      this.loading = true
+      try {
+        const { data } = await axios.get('/api/employee', {
+          params: { per_page: 50, search: this.search }
+        })
+        // normalize: if paginator -> use data.data, else if array -> use it, else []
+        this.employees = Array.isArray(data?.data) ? data.data : (Array.isArray(data) ? data : [])
+      } catch (e) {
+        this.employees = [] // stay safe
+        console.error(e)
+      } finally {
+        this.loading = false
+      }
     },
-
-    deleteEmployee(id) {
-      Swal.fire({
-        title: "Are you sure?",
-        text: "You won't be able to revert this!",
-        icon: "warning",
-        showCancelButton: true,
-        confirmButtonColor: "#3085d6",
-        cancelButtonColor: "#d33",
-        confirmButtonText: "Yes, delete it!"
-      }).then((result) => {
-        if (result.value) {
-          axios.delete('/api/employee/' + id)
-            .then(() => {
-              this.employees = this.employees.filter(employee => {
-                return employee.id !== id;
-              })
-            })
-            .catch(() => { this.$router.push({ name: 'employees' }) })
-          Swal.fire({
-            title: "Deleted!",
-            text: "Your file has been deleted.",
-            icon: "success"
-          });
-        }
-      });
-    }
-  },
-
-  created() {
-    this.allEmployees()
   }
 }
+
 </script>
 
 
