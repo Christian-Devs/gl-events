@@ -31,17 +31,17 @@ class EmployeeSyncController extends Controller
         $payload = EmployeeMapper::toSimplePay($employee);
 
         // SimplePay "create" usually requires these
-        $required = ['first_name', 'last_name', 'id_number', 'birthdate', 'appointment_date', 'payment_method', 'wave', 'email', 'mobile'];
+        $required = ['wave_id', 'first_name', 'last_name', 'birthdate', 'appointment_date', 'identification_type', 'id_number', 'payment_method'];
         $missing = [];
-        foreach ($required as $req) {
-            if (!array_key_exists($req, $payload) || $payload[$req] === null || $payload[$req] === '') {
-                $missing[] = $req;
+        foreach ($required as $key) {
+            if (!array_key_exists($key, $payload) || $payload[$key] === null || $payload[$key] === '') {
+                $missing[] = $key;
             }
         }
         if ($missing) {
             return response()->json([
-                'ok'     => false,
-                'error'  => 'Missing required fields for SimplePay employee create',
+                'ok' => false,
+                'error' => 'Missing required fields for SimplePay employee create',
                 'fields' => $missing,
             ], 422);
         }

@@ -31,8 +31,13 @@ return [
     ],
 
     'simplepay' => [
-        'base' => env('SIMPLEPAY_API_BASE', 'https://api.payroll.simplepay.cloud/v1'),
-        'key' => env('SIMPLEPAY_API_KEY'),
+        'base'       => env('SIMPLEPAY_BASE'),
+        'key'        => env('SIMPLEPAY_KEY'),
+        'client_id'  => env('SIMPLEPAY_CLIENT_ID'),
+        'wave_ids'  => [
+            'monthly'     => env('SIMPLEPAY_WAVE_ID_MONTHLY'),
+            'weekly'      => env('SIMPLEPAY_WAVE_ID_WEEKLY'),
+        ],
     ],
 
 ];

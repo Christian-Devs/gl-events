@@ -31,7 +31,9 @@ class EmployeeController extends Controller
             ->when($request->filled('search'), function ($q) use ($request) {
                 $s = $request->input('search');
                 $q->where(function ($qq) use ($s) {
-                    $qq->where('name', 'like', "%{$s}%")
+                    $qq->where('first_name', 'like', "%{$s}%")
+                        ->orWhere('last_name', 'like', "%{$s}%")
+                        ->orWhereRaw("CONCAT(first_name, ' ', last_name) like ?", ["%{$s}%"])
                         ->orWhere('email', 'like', "%{$s}%")
                         ->orWhere('phone', 'like', "%{$s}%");
                 });
@@ -51,28 +53,39 @@ class EmployeeController extends Controller
      */
     public function store(Request $request)
     {
+        //dd($request->all());
         try {
             $validated = $request->validate([
                 'first_name'            => ['required', 'string', 'max:255'],
                 'last_name'             => ['required', 'string', 'max:255'],
-                'email'                 => [
+                'email' => [
                     'required',
                     'email',
                     'max:255',
                     Rule::unique('employees', 'email'),
-                    Rule::unique('users', 'email')->ignore($request->integer('user_id')),
+                    Rule::unique('users', 'email'),
                 ],
                 'phone'                 => ['required', 'string', 'max:50', Rule::unique('employees', 'phone')],
                 'id_number'             => ['nullable', 'string', 'max:255'],
                 'birthdate'             => ['nullable', 'date'],
                 'start_date'            => ['required', 'date'],
                 'pay_frequency'         => ['required', Rule::in(['monthly', 'fortnightly', 'weekly'])],
-                'payment_method'        => ['required', Rule::in(['bank', 'cash'])],
+
+                // IMPORTANT: use SimplePay tokens (cash|cheque|eft_manual)
+                'payment_method'        => ['required', Rule::in(['cash', 'cheque', 'eft_manual'])],
+
                 'status'                => ['required', Rule::in(['active', 'terminated'])],
                 'simplepay_employee_id' => ['nullable', 'string', 'max:255'],
                 'external_reference'    => ['nullable', 'string', 'max:255'],
                 'role_id'               => ['required', Rule::exists('roles', 'id')],
-                'user_id'               => ['nullable', Rule::exists('users', 'id')],
+
+                // Bank fields (required only if eft_manual)
+                'bank_id'                 => ['nullable', 'integer', 'required_if:payment_method,eft_manual'],
+                'bank_account_number'     => ['nullable', 'string', 'min:4', 'required_if:payment_method,eft_manual'],
+                'bank_branch_code'        => ['nullable', 'string', 'size:6', 'required_if:payment_method,eft_manual'],
+                'bank_account_type'       => ['nullable', 'string', 'in:1,2,3,4,6'],
+                'bank_holder_relationship' => ['nullable', 'string', 'in:1,2,3'],
+                'bank_holder_name'        => ['nullable', 'string', 'max:255'],
             ]);
 
             $fullName = trim($validated['first_name'] . ' ' . $validated['last_name']);
@@ -101,6 +114,12 @@ class EmployeeController extends Controller
                     'external_reference'    => $validated['external_reference'] ?? null,
                     'role_id'               => $validated['role_id'],
                     'user_id'               => $user->id,
+                    'bank_id'                 => $validated['bank_id'] ?? null,
+                    'bank_account_type'       => $validated['bank_account_type'] ?? null,
+                    'bank_account_number'     => $validated['bank_account_number'] ?? null,
+                    'bank_branch_code'        => $validated['bank_branch_code'] ?? null,
+                    'bank_holder_relationship' => $validated['bank_holder_relationship'] ?? null,
+                    'bank_holder_name'        => $validated['bank_holder_name'] ?? null,
                 ]);
 
                 return response()->json([
@@ -160,12 +179,19 @@ class EmployeeController extends Controller
                 'birthdate'             => ['nullable', 'date'],
                 'start_date'            => ['required', 'date'],
                 'pay_frequency'         => ['required', Rule::in(['monthly', 'fortnightly', 'weekly'])],
-                'payment_method'        => ['required', Rule::in(['bank', 'cash'])],
+                'payment_method'        => ['required', Rule::in(['cash', 'cheque', 'eft_manual'])],
                 'status'                => ['required', Rule::in(['active', 'terminated'])],
                 'simplepay_employee_id' => ['nullable', 'string', 'max:255'],
                 'external_reference'    => ['nullable', 'string', 'max:255'],
                 'role_id'               => ['required', Rule::exists('roles', 'id')],
                 'user_id'               => ['nullable', Rule::exists('users', 'id')], // allow relink
+                'payment_method'          => ['required', Rule::in(['cash', 'cheque', 'eft_manual'])],
+                'bank_id'                 => ['nullable', 'integer', 'required_if:payment_method,eft_manual'],
+                'bank_account_number'     => ['nullable', 'string', 'min:4', 'required_if:payment_method,eft_manual'],
+                'bank_branch_code'        => ['nullable', 'string', 'size:6', 'required_if:payment_method,eft_manual'],
+                'bank_account_type'       => ['nullable', 'string', 'in:1,2,3,4,6'],
+                'bank_holder_relationship' => ['nullable', 'string', 'in:1,2,3'],
+                'bank_holder_name'        => ['nullable', 'string', 'max:255'],
             ]);
 
             $fullName = trim($validated['first_name'] . ' ' . $validated['last_name']);
@@ -203,6 +229,12 @@ class EmployeeController extends Controller
                     'simplepay_employee_id' => $validated['simplepay_employee_id'] ?? null,
                     'external_reference'    => $validated['external_reference'] ?? null,
                     'role_id'               => $validated['role_id'],
+                    'bank_id'                 => $validated['bank_id'] ?? null,
+                    'bank_account_type'       => $validated['bank_account_type'] ?? null,
+                    'bank_account_number'     => $validated['bank_account_number'] ?? null,
+                    'bank_branch_code'        => $validated['bank_branch_code'] ?? null,
+                    'bank_holder_relationship' => $validated['bank_holder_relationship'] ?? null,
+                    'bank_holder_name'        => $validated['bank_holder_name'] ?? null,
                 ])->save();
 
                 return response()->json([

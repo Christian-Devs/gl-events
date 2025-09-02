@@ -4,6 +4,7 @@ namespace App\Services;
 
 use GuzzleHttp\Client;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Log;
 
 class SimplePayClient
 {
@@ -13,12 +14,16 @@ class SimplePayClient
 
     public function __construct()
     {
+        Log::info('SimplePay cfg', [
+            'base' => $this->base,
+            'key_len' => strlen((string) $this->key),
+        ]);
         $this->base = rtrim(config('services.simplepay.base'), '/');
         $this->key = config('services.simplepay.key');
         $this->http = new Client([
             'base_uri' => $this->base . '/',
             'headers' => [
-                'Authorization' => $this->key,   // SimplePay expects just the key here
+                'Authorization' => $this->key,
                 'Accept' => 'application/json',
             ],
             'timeout' => 20,
@@ -75,6 +80,11 @@ class SimplePayClient
         return $this->get("payment_runs/{$paymentRunId}/payslips");
     }
 
+    public function listWaves(int $clientId): array
+    {
+        return $this->get("clients/{$clientId}/waves");
+    }
+
     public function getPayslip(int $payslipId): array
     {
         return $this->get("payslips/{$payslipId}");
@@ -82,12 +92,15 @@ class SimplePayClient
 
     public function createEmployee(int $clientId, array $payload): array
     {
+        // SimplePay requires the "employee" wrapper here
         return $this->post("clients/{$clientId}/employees", ['json' => ['employee' => $payload]]);
     }
+
     public function updateEmployee(int $employeeId, array $payload): array
     {
         return $this->patch("employees/{$employeeId}", ['json' => ['employee' => $payload]]);
     }
+
     public function getPayslipPdf(int $payslipId): string
     {
         return $this->request('GET', "payslips/{$payslipId}.pdf", ['headers' => ['Accept' => 'application/pdf']]);
@@ -122,6 +135,11 @@ class SimplePayClient
 
     public function getPrimaryClientId(): int
     {
+        $configured = (int) config('services.simplepay.client_id');
+        if ($configured) {
+            return $configured; // skip /clients entirely
+        }
+
         return Cache::remember('simplepay:primary_client_id', 300, function () {
             $clients = $this->listClients();
             return (int) data_get($clients, '0.client.id');
@@ -137,5 +155,4 @@ class SimplePayClient
             return false;
         }
     }
-
 }

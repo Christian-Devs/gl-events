@@ -27,6 +27,12 @@ class Employee extends Model
         'external_reference',
         'role_id',
         'user_id',
+        'bank_id',
+        'bank_account_type',
+        'bank_account_number',
+        'bank_branch_code',
+        'bank_holder_relationship',
+        'bank_holder_name',
     ];
 
     protected $casts = [

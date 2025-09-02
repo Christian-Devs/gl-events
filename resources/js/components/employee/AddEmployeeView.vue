@@ -67,7 +67,6 @@
                           <select class="form-control" v-model="form.pay_frequency">
                             <option disabled value="">Pay frequency</option>
                             <option value="monthly">Monthly</option>
-                            <option value="fortnightly">Fortnightly</option>
                             <option value="weekly">Weekly</option>
                           </select>
                           <small class="text-danger" v-if="errors.pay_frequency">{{ errors.pay_frequency[0] }}</small>
@@ -75,8 +74,9 @@
                         <div class="col-md-4">
                           <select class="form-control" v-model="form.payment_method">
                             <option disabled value="">Payment method</option>
-                            <option value="bank">Bank</option>
                             <option value="cash">Cash</option>
+                            <option value="cheque">Cheque</option>
+                            <option value="eft_manual">EFT (manual)</option>
                           </select>
                           <small class="text-danger" v-if="errors.payment_method">{{ errors.payment_method[0] }}</small>
                         </div>
@@ -89,7 +89,56 @@
                           <small class="text-danger" v-if="errors.status">{{ errors.status[0] }}</small>
                         </div>
                       </div>
+                      <div v-if="form.payment_method === 'eft_manual'" class="col-md-12 mt-3">
+                        <div class="form-row">
+                          <div class="col-md-3">
+                            <label>Bank ID <span class="text-danger">*</span></label>
+                            <input type="number" class="form-control" placeholder="Bank ID"
+                              v-model.number="form.bank_id" />
+                            <small class="text-danger" v-if="errors.bank_id">{{ errors.bank_id[0] }}</small>
+                          </div>
+                          <div class="col-md-3">
+                            <input type="text" class="form-control" placeholder="Account number"
+                              v-model="form.bank_account_number" />
+                            <small class="text-danger" v-if="errors.bank_account_number">{{
+                              errors.bank_account_number[0]
+                            }}</small>
+                          </div>
+                          <div class="col-md-3">
+                            <input type="text" class="form-control" placeholder="Branch code (6 digits)"
+                              v-model="form.bank_branch_code" maxlength="6"
+                              @input="form.bank_branch_code = form.bank_branch_code.replace(/[^0-9]/g, '').slice(0, 6)" />
+                            <small class="text-danger" v-if="errors.bank_branch_code">{{ errors.bank_branch_code[0]
+                            }}</small>
+                          </div>
+                          <div class="col-md-3">
+                            <select class="form-control" v-model="form.bank_account_type">
+                              <option value="">Account type (optional)</option>
+                              <option value="1">Current (Cheque)</option>
+                              <option value="2">Savings</option>
+                              <option value="3">Transmission</option>
+                              <option value="4">Bond</option>
+                              <option value="6">Subscription Share</option>
+                            </select>
+                          </div>
+                        </div>
+                        <div class="form-row mt-2">
+                          <div class="col-md-3">
+                            <select class="form-control" v-model="form.bank_holder_relationship">
+                              <option value="">Owner (optional)</option>
+                              <option value="1">Employee</option>
+                              <option value="2">Joint</option>
+                              <option value="3">Third party</option>
+                            </select>
+                          </div>
+                          <div class="col-md-9">
+                            <input type="text" class="form-control" placeholder="Third-party holder name (if 3)"
+                              v-model="form.bank_holder_name" />
+                          </div>
+                        </div>
+                      </div>
                     </div>
+
 
                     <div class="form-group">
                       <div class="form-row">
@@ -138,11 +187,20 @@ export default {
         birthdate: '',
         start_date: '',
         pay_frequency: 'monthly',
-        payment_method: 'bank',
+        payment_method: 'cash',              // change to 'eft_manual' if you want to force bank capture
         status: 'active',
         role_id: '',
-        user_id: ''
-      }
+        user_id: '',
+
+        // bank fields (required if payment_method === 'eft_manual')
+        bank_id: null,
+        bank_account_number: '',
+        bank_branch_code: '',
+        bank_account_type: '',
+        bank_holder_relationship: '',
+        bank_holder_name: '',
+      },
+      submitting: false,
     }
   },
 
@@ -153,7 +211,7 @@ export default {
     }
     axios.get('/api/roles')
       .then(res => { this.roles = res.data })
-      .catch(() => { /* ignore for now */ })
+      .catch(() => { })
   },
 
   methods: {
@@ -167,9 +225,9 @@ export default {
 
     async employeeInsert() {
       this.errors = {}
+      this.submitting = true
       try {
-        // Change to '/api/employee' if that’s your existing endpoint
-        await axios.post('/api/employees', this.form)
+        await axios.post('/api/employee', this.form)
         Notification.success('Employee added')
         this.$router.push({ name: 'employees' })
       } catch (error) {
@@ -179,6 +237,8 @@ export default {
           Notification.error('An unexpected error occurred')
           console.error(error)
         }
+      } finally {
+        this.submitting = false
       }
     }
   }
