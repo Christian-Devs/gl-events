@@ -53,3 +53,4 @@ Route::post('/invoices/{id}/generate-payment', [InvoiceController::class, 'gener
 Route::post('/payroll/simplepay/employee/sync', [EmployeeSyncController::class, 'syncOne']);
 Route::get('/payroll/payslip', [PayslipController::class, 'show']);           // ?employee_id=&client_id=
 Route::get('/payroll/payslip/{id}/pdf', [PayslipController::class, 'pdf']);   // {id} = payslip_id
+Route::get('/dashboard/summary', 'Api\DashboardController@summary');

@@ -12,10 +12,11 @@
                             <div class="col-lg-12">
                                 <div class="login-form p-4">
                                     <div class="text-center">
-                                        <h1 class="h4 text-gray-900 mb-4">Employee Update</h1>
+                                        <h1 class="h4 text-gray-900 mb-4">Edit Employee</h1>
                                     </div>
 
                                     <form class="user" @submit.prevent="employeeUpdate">
+                                        <!-- Names -->
                                         <div class="form-group">
                                             <div class="form-row">
                                                 <div class="col-md-6">
@@ -33,6 +34,7 @@
                                             </div>
                                         </div>
 
+                                        <!-- Contact -->
                                         <div class="form-group">
                                             <div class="form-row">
                                                 <div class="col-md-6">
@@ -50,21 +52,22 @@
                                             </div>
                                         </div>
 
+                                        <!-- Identity + dates -->
                                         <div class="form-group">
                                             <div class="form-row">
-                                                <div class="col-md-4">
+                                                <div class="col-md-6">
                                                     <input type="text" class="form-control"
                                                         placeholder="ID / Passport number" v-model="form.id_number" />
                                                     <small class="text-danger" v-if="errors.id_number">{{
                                                         errors.id_number[0] }}</small>
                                                 </div>
-                                                <div class="col-md-4">
+                                                <div class="col-md-3">
                                                     <input type="date" class="form-control" placeholder="Birthdate"
                                                         v-model="form.birthdate" />
                                                     <small class="text-danger" v-if="errors.birthdate">{{
                                                         errors.birthdate[0] }}</small>
                                                 </div>
-                                                <div class="col-md-4">
+                                                <div class="col-md-3">
                                                     <input type="date" class="form-control" placeholder="Start date"
                                                         v-model="form.start_date" />
                                                     <small class="text-danger" v-if="errors.start_date">{{
@@ -73,6 +76,7 @@
                                             </div>
                                         </div>
 
+                                        <!-- Payroll + status -->
                                         <div class="form-group">
                                             <div class="form-row">
                                                 <div class="col-md-4">
@@ -88,8 +92,9 @@
                                                 <div class="col-md-4">
                                                     <select class="form-control" v-model="form.payment_method">
                                                         <option disabled value="">Payment method</option>
-                                                        <option value="bank">Bank</option>
                                                         <option value="cash">Cash</option>
+                                                        <option value="cheque">Cheque</option>
+                                                        <option value="eft_manual">EFT (manual)</option>
                                                     </select>
                                                     <small class="text-danger" v-if="errors.payment_method">{{
                                                         errors.payment_method[0] }}</small>
@@ -104,8 +109,63 @@
                                                     }}</small>
                                                 </div>
                                             </div>
+
+                                            <!-- Bank (conditional) -->
+                                            <div v-if="form.payment_method === 'eft_manual'" class="col-md-12 mt-3">
+                                                <div class="form-row">
+                                                    <div class="col-md-3">
+                                                        <label>Bank ID <span class="text-danger">*</span></label>
+                                                        <input type="number" class="form-control" placeholder="Bank ID"
+                                                            v-model.number="form.bank_id" />
+                                                        <small class="text-danger" v-if="errors.bank_id">{{
+                                                            errors.bank_id[0] }}</small>
+                                                    </div>
+                                                    <div class="col-md-3">
+                                                        <input type="text" class="form-control"
+                                                            placeholder="Account number"
+                                                            v-model="form.bank_account_number" />
+                                                        <small class="text-danger" v-if="errors.bank_account_number">{{
+                                                            errors.bank_account_number[0] }}</small>
+                                                    </div>
+                                                    <div class="col-md-3">
+                                                        <input type="text" class="form-control"
+                                                            placeholder="Branch code (6 digits)"
+                                                            v-model="form.bank_branch_code" maxlength="6"
+                                                            @input="form.bank_branch_code = (form.bank_branch_code || '').replace(/[^0-9]/g, '').slice(0, 6)" />
+                                                        <small class="text-danger" v-if="errors.bank_branch_code">{{
+                                                            errors.bank_branch_code[0] }}</small>
+                                                    </div>
+                                                    <div class="col-md-3">
+                                                        <select class="form-control" v-model="form.bank_account_type">
+                                                            <option value="">Account type (optional)</option>
+                                                            <option value="1">Current (Cheque)</option>
+                                                            <option value="2">Savings</option>
+                                                            <option value="3">Transmission</option>
+                                                            <option value="4">Bond</option>
+                                                            <option value="6">Subscription Share</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="form-row mt-2">
+                                                    <div class="col-md-3">
+                                                        <select class="form-control"
+                                                            v-model="form.bank_holder_relationship">
+                                                            <option value="">Owner (optional)</option>
+                                                            <option value="1">Employee</option>
+                                                            <option value="2">Joint</option>
+                                                            <option value="3">Third party</option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="col-md-9">
+                                                        <input type="text" class="form-control"
+                                                            placeholder="Third-party holder name (if 3)"
+                                                            v-model="form.bank_holder_name" />
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
 
+                                        <!-- Role -->
                                         <div class="form-group">
                                             <div class="form-row">
                                                 <div class="col-md-6">
@@ -122,8 +182,10 @@
                                         </div>
 
                                         <div class="form-group">
-                                            <button type="submit" class="btn btn-primary btn-block">Update
-                                                Employee</button>
+                                            <button type="submit" class="btn btn-primary btn-block"
+                                                :disabled="submitting">
+                                                {{ submitting ? 'Saving…' : 'Update Employee' }}
+                                            </button>
                                         </div>
                                     </form>
 
@@ -147,7 +209,7 @@ export default {
             roles: [],
             errors: {},
             errorText: '',
-            fullName: '',
+            submitting: false,
             form: {
                 first_name: '',
                 last_name: '',
@@ -156,11 +218,19 @@ export default {
                 id_number: '',
                 birthdate: '',
                 start_date: '',
-                pay_frequency: '',
-                payment_method: '',
-                status: '',
+                pay_frequency: 'monthly',
+                payment_method: 'cash',
+                status: 'active',
                 role_id: '',
-                user_id: ''
+                user_id: '',
+
+                // bank fields
+                bank_id: null,
+                bank_account_number: '',
+                bank_branch_code: '',
+                bank_account_type: '',
+                bank_holder_relationship: '',
+                bank_holder_name: '',
             }
         }
     },
@@ -173,7 +243,6 @@ export default {
         const id = this.$route.params.id
 
         try {
-            // Load roles for the select
             const rolesRes = await axios.get('/api/roles')
             this.roles = rolesRes.data || []
         } catch (e) {
@@ -181,55 +250,55 @@ export default {
         }
 
         try {
-            // Load employee
-            const { data } = await axios.get(`/api/employees/${id}`) // change to /api/employee/ if needed
-            // Normalize payload into our form
+            const { data } = await axios.get(`/api/employee/${id}`)
+            // Normalize dates and hydrate bank fields safely
+            const toDate = v => (v ? String(v).slice(0, 10) : '')
             this.form = {
                 first_name: data.first_name || '',
                 last_name: data.last_name || '',
                 email: data.email || '',
                 phone: data.phone || '',
                 id_number: data.id_number || '',
-                birthdate: (data.birthdate || '').slice(0, 10),
-                start_date: (data.start_date || '').slice(0, 10),
+                birthdate: toDate(data.birthdate),
+                start_date: toDate(data.start_date || data.joining_date),
                 pay_frequency: data.pay_frequency || 'monthly',
-                payment_method: data.payment_method || 'bank',
+                payment_method: data.payment_method || 'cash',
                 status: data.status || 'active',
                 role_id: data.role_id || '',
-                user_id: data.user_id || ''
+                user_id: data.user_id || '',
+
+                bank_id: data.bank_id ?? null,
+                bank_account_number: data.bank_account_number || '',
+                bank_branch_code: data.bank_branch_code || '',
+                bank_account_type: data.bank_account_type || '',
+                bank_holder_relationship: data.bank_holder_relationship || '',
+                bank_holder_name: data.bank_holder_name || '',
             }
-            this.fullName = `${this.form.first_name} ${this.form.last_name}`.trim()
         } catch (e) {
             this.errorText = 'Failed to load employee'
-            // optional logging
             console.error(e)
         }
     },
 
     methods: {
-        splitFullName() {
-            const n = (this.fullName || '').trim().replace(/\s+/g, ' ')
-            if (!n) return
-            const parts = n.split(' ')
-            if (!this.form.first_name) this.form.first_name = parts[0]
-            if (!this.form.last_name) this.form.last_name = parts.length > 1 ? parts.slice(1).join(' ') : parts[0]
-        },
-
         async employeeUpdate() {
             this.errors = {}
             this.errorText = ''
+            this.submitting = true
             const id = this.$route.params.id
             try {
-                await axios.patch(`/api/employees/${id}`, this.form) // change to /api/employee/ if needed
+                await axios.patch(`/api/employee/${id}`, this.form)
                 Notification.success('Employee updated')
                 this.$router.push({ name: 'employees' })
             } catch (error) {
                 if (error?.response?.data?.errors) {
                     this.errors = error.response.data.errors
                 } else {
-                    this.errorText = 'An unexpected error occurred'
+                    this.errorText = error?.response?.data?.message || 'An unexpected error occurred'
                     console.error(error)
                 }
+            } finally {
+                this.submitting = false
             }
         }
     }

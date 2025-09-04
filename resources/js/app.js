@@ -11,7 +11,7 @@ import { routes } from "./routes";
 import User from "./helpers/User";
 import Swal from "sweetalert2";
 import Notification from "./helpers/Notification";
-import CanvasJSChart from "@canvasjs/vue-charts";
+import CanvasJS from '@canvasjs/vue-charts'
 import VTooltip from 'v-tooltip'
 
 // Make sure devtools can see Vue (Vue 2)
@@ -19,15 +19,13 @@ Vue.config.productionTip = false;
 Vue.config.devtools = true;
 window.Vue = Vue;
 
-// Quick sanity log
-console.log('✅ app.js loaded', new Date().toISOString());
 
 window.User = User;
 window.Swal = Swal;
 window.Notification = Notification;
 
 Vue.use(VueRouter);
-Vue.use(CanvasJSChart);
+Vue.use(CanvasJS);
 Vue.use(require('vue-moment'));
 Vue.use(VTooltip);
 

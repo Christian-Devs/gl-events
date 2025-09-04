@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Model\Employee;
 use App\User;
 use App\Role;
+use App\Services\Payroll\EmployeeMapper;
+use App\Services\SimplePayClient;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
@@ -154,7 +156,7 @@ class EmployeeController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $id, SimplePayClient $sp)
     {
         try {
             $employee = Employee::with('user')->findOrFail($id);
@@ -169,12 +171,7 @@ class EmployeeController extends Controller
                     Rule::unique('employees', 'email')->ignore($employee->id),
                     Rule::unique('users', 'email')->ignore($employee->user_id),
                 ],
-                'phone'                 => [
-                    'required',
-                    'string',
-                    'max:50',
-                    Rule::unique('employees', 'phone')->ignore($employee->id),
-                ],
+                'phone'                 => ['required', 'string', 'max:50', Rule::unique('employees', 'phone')->ignore($employee->id)],
                 'id_number'             => ['nullable', 'string', 'max:255'],
                 'birthdate'             => ['nullable', 'date'],
                 'start_date'            => ['required', 'date'],
@@ -184,20 +181,21 @@ class EmployeeController extends Controller
                 'simplepay_employee_id' => ['nullable', 'string', 'max:255'],
                 'external_reference'    => ['nullable', 'string', 'max:255'],
                 'role_id'               => ['required', Rule::exists('roles', 'id')],
-                'user_id'               => ['nullable', Rule::exists('users', 'id')], // allow relink
-                'payment_method'          => ['required', Rule::in(['cash', 'cheque', 'eft_manual'])],
-                'bank_id'                 => ['nullable', 'integer', 'required_if:payment_method,eft_manual'],
-                'bank_account_number'     => ['nullable', 'string', 'min:4', 'required_if:payment_method,eft_manual'],
-                'bank_branch_code'        => ['nullable', 'string', 'size:6', 'required_if:payment_method,eft_manual'],
-                'bank_account_type'       => ['nullable', 'string', 'in:1,2,3,4,6'],
+                'user_id'               => ['nullable', Rule::exists('users', 'id')],
+
+                // bank fields if eft_manual
+                'bank_id'                  => ['nullable', 'integer', 'required_if:payment_method,eft_manual'],
+                'bank_account_number'      => ['nullable', 'string', 'min:4', 'required_if:payment_method,eft_manual'],
+                'bank_branch_code'         => ['nullable', 'string', 'size:6', 'required_if:payment_method,eft_manual'],
+                'bank_account_type'        => ['nullable', 'string', 'in:1,2,3,4,6'],
                 'bank_holder_relationship' => ['nullable', 'string', 'in:1,2,3'],
-                'bank_holder_name'        => ['nullable', 'string', 'max:255'],
+                'bank_holder_name'         => ['nullable', 'string', 'max:255'],
             ]);
 
             $fullName = trim($validated['first_name'] . ' ' . $validated['last_name']);
 
-            return DB::transaction(function () use ($validated, $employee, $fullName) {
-                // Sync user record (if present)
+            // 1) Save locally (no external API inside the DB transaction)
+            DB::transaction(function () use ($validated, $employee, $fullName) {
                 if ($employee->user) {
                     $employee->user->update([
                         'name'    => $fullName,
@@ -205,7 +203,6 @@ class EmployeeController extends Controller
                         'role_id' => $validated['role_id'],
                     ]);
                 } else {
-                    // Edge case: employee had no user; create one
                     $user = User::create([
                         'name'     => $fullName,
                         'email'    => $validated['email'],
@@ -222,29 +219,63 @@ class EmployeeController extends Controller
                     'phone'                 => $validated['phone'],
                     'id_number'             => $validated['id_number'] ?? null,
                     'birthdate'             => $validated['birthdate'] ?? null,
-                    'start_date'            => $validated['start_date'], // <-- matches your DB
+                    'start_date'            => $validated['start_date'],
                     'pay_frequency'         => $validated['pay_frequency'],
                     'payment_method'        => $validated['payment_method'],
                     'status'                => $validated['status'],
-                    'simplepay_employee_id' => $validated['simplepay_employee_id'] ?? null,
-                    'external_reference'    => $validated['external_reference'] ?? null,
+                    'simplepay_employee_id' => $validated['simplepay_employee_id'] ?? $employee->simplepay_employee_id,
+                    'external_reference'    => $validated['external_reference'] ?? $employee->external_reference,
                     'role_id'               => $validated['role_id'],
-                    'bank_id'                 => $validated['bank_id'] ?? null,
-                    'bank_account_type'       => $validated['bank_account_type'] ?? null,
-                    'bank_account_number'     => $validated['bank_account_number'] ?? null,
-                    'bank_branch_code'        => $validated['bank_branch_code'] ?? null,
-                    'bank_holder_relationship' => $validated['bank_holder_relationship'] ?? null,
-                    'bank_holder_name'        => $validated['bank_holder_name'] ?? null,
-                ])->save();
 
-                return response()->json([
-                    'message'  => 'Employee updated successfully',
-                    'employee' => $employee->load(['role:id,name', 'user:id,name,email,role_id']),
-                ]);
+                    'bank_id'                  => $validated['bank_id'] ?? null,
+                    'bank_account_type'        => $validated['bank_account_type'] ?? null,
+                    'bank_account_number'      => $validated['bank_account_number'] ?? null,
+                    'bank_branch_code'         => $validated['bank_branch_code'] ?? null,
+                    'bank_holder_relationship' => $validated['bank_holder_relationship'] ?? null,
+                    'bank_holder_name'         => $validated['bank_holder_name'] ?? null,
+                ])->save();
             });
+
+            // 2) After local commit, try to sync to SimplePay
+            $employee->refresh(); // get latest values
+            $simplepay = ['synced' => false];
+
+            try {
+                $payload = EmployeeMapper::toSimplePay($employee);
+
+                if ($employee->simplepay_employee_id) {
+                    // update on SimplePay
+                    $resp = $sp->updateEmployee((int) $employee->simplepay_employee_id, $payload);
+                    $simplepay = ['synced' => true, 'action' => 'update', 'response' => $resp];
+                } else {
+                    // create on SimplePay
+                    $clientId = (int) $sp->getPrimaryClientId();
+                    $resp = $sp->createEmployee($clientId, $payload);
+
+                    $spId = (int) (data_get($resp, 'employee.id') ?: data_get($resp, 'id'));
+                    if ($spId) {
+                        $employee->simplepay_employee_id = $spId;
+                        $employee->save();
+                    }
+                    $simplepay = ['synced' => (bool) $spId, 'action' => 'create', 'response' => $resp];
+                }
+            } catch (\Throwable $se) {
+                Log::warning('SimplePay auto-sync failed', [
+                    'employee_id' => $employee->id,
+                    'message'     => $se->getMessage(),
+                ]);
+                $simplepay = ['synced' => false, 'error' => $se->getMessage()];
+                // We don't fail the whole update—local save already succeeded.
+            }
+
+            return response()->json([
+                'message'   => 'Employee updated successfully',
+                'employee'  => $employee->load(['role:id,name', 'user:id,name,email,role_id']),
+                'simplepay' => $simplepay,
+            ]);
         } catch (ValidationException $ve) {
             return response()->json(['message' => 'Validation failed', 'errors' => $ve->errors()], 422);
-        } catch (Throwable $e) {
+        } catch (\Throwable $e) {
             Log::error('Employee Update Failed', ['message' => $e->getMessage()]);
             return response()->json(['message' => 'Server error. Could not update employee.'], 500);
         }
