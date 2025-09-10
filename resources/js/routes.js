@@ -5,6 +5,7 @@ let register = require('./components/auth/RegisterView.vue').default;
 let forget = require('./components/auth/ForgetView.vue').default;
 let home = require('./components/HomeView.vue').default;
 let logout = require('./components/auth/LogoutView.vue').default;
+let profile = require('./components/ProfileView.vue').default;
 
 let storeemployee = require('./components/employee/AddEmployeeView.vue').default;
 let employee = require('./components/employee/AllEmployeesView.vue').default;
@@ -47,6 +48,7 @@ export const routes = [
     { path: '/forgotPassword', component: forget, name: 'forgotPassword' },
     { path: '/logout', component: logout, name: 'logout' },
     { path: '/home', component: home, name: 'home' },
+    { path: '/profile', component: profile, name: 'profile' },
 
     { path: '/employees', component: employee, name: 'employees' },
     { path: '/add-employee', component: storeemployee, name: 'add-employee' },

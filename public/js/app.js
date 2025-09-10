@@ -3275,6 +3275,367 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/ProfileView.vue?vue&type=script&lang=js":
+/*!*********************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/ProfileView.vue?vue&type=script&lang=js ***!
+  \*********************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _helpers_Notification_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../helpers/Notification.js */ "./resources/js/helpers/Notification.js");
+function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
+function _regeneratorRuntime() { "use strict"; /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/facebook/regenerator/blob/main/LICENSE */ _regeneratorRuntime = function _regeneratorRuntime() { return e; }; var t, e = {}, r = Object.prototype, n = r.hasOwnProperty, o = Object.defineProperty || function (t, e, r) { t[e] = r.value; }, i = "function" == typeof Symbol ? Symbol : {}, a = i.iterator || "@@iterator", c = i.asyncIterator || "@@asyncIterator", u = i.toStringTag || "@@toStringTag"; function define(t, e, r) { return Object.defineProperty(t, e, { value: r, enumerable: !0, configurable: !0, writable: !0 }), t[e]; } try { define({}, ""); } catch (t) { define = function define(t, e, r) { return t[e] = r; }; } function wrap(t, e, r, n) { var i = e && e.prototype instanceof Generator ? e : Generator, a = Object.create(i.prototype), c = new Context(n || []); return o(a, "_invoke", { value: makeInvokeMethod(t, r, c) }), a; } function tryCatch(t, e, r) { try { return { type: "normal", arg: t.call(e, r) }; } catch (t) { return { type: "throw", arg: t }; } } e.wrap = wrap; var h = "suspendedStart", l = "suspendedYield", f = "executing", s = "completed", y = {}; function Generator() {} function GeneratorFunction() {} function GeneratorFunctionPrototype() {} var p = {}; define(p, a, function () { return this; }); var d = Object.getPrototypeOf, v = d && d(d(values([]))); v && v !== r && n.call(v, a) && (p = v); var g = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(p); function defineIteratorMethods(t) { ["next", "throw", "return"].forEach(function (e) { define(t, e, function (t) { return this._invoke(e, t); }); }); } function AsyncIterator(t, e) { function invoke(r, o, i, a) { var c = tryCatch(t[r], t, o); if ("throw" !== c.type) { var u = c.arg, h = u.value; return h && "object" == _typeof(h) && n.call(h, "__await") ? e.resolve(h.__await).then(function (t) { invoke("next", t, i, a); }, function (t) { invoke("throw", t, i, a); }) : e.resolve(h).then(function (t) { u.value = t, i(u); }, function (t) { return invoke("throw", t, i, a); }); } a(c.arg); } var r; o(this, "_invoke", { value: function value(t, n) { function callInvokeWithMethodAndArg() { return new e(function (e, r) { invoke(t, n, e, r); }); } return r = r ? r.then(callInvokeWithMethodAndArg, callInvokeWithMethodAndArg) : callInvokeWithMethodAndArg(); } }); } function makeInvokeMethod(e, r, n) { var o = h; return function (i, a) { if (o === f) throw Error("Generator is already running"); if (o === s) { if ("throw" === i) throw a; return { value: t, done: !0 }; } for (n.method = i, n.arg = a;;) { var c = n.delegate; if (c) { var u = maybeInvokeDelegate(c, n); if (u) { if (u === y) continue; return u; } } if ("next" === n.method) n.sent = n._sent = n.arg;else if ("throw" === n.method) { if (o === h) throw o = s, n.arg; n.dispatchException(n.arg); } else "return" === n.method && n.abrupt("return", n.arg); o = f; var p = tryCatch(e, r, n); if ("normal" === p.type) { if (o = n.done ? s : l, p.arg === y) continue; return { value: p.arg, done: n.done }; } "throw" === p.type && (o = s, n.method = "throw", n.arg = p.arg); } }; } function maybeInvokeDelegate(e, r) { var n = r.method, o = e.iterator[n]; if (o === t) return r.delegate = null, "throw" === n && e.iterator["return"] && (r.method = "return", r.arg = t, maybeInvokeDelegate(e, r), "throw" === r.method) || "return" !== n && (r.method = "throw", r.arg = new TypeError("The iterator does not provide a '" + n + "' method")), y; var i = tryCatch(o, e.iterator, r.arg); if ("throw" === i.type) return r.method = "throw", r.arg = i.arg, r.delegate = null, y; var a = i.arg; return a ? a.done ? (r[e.resultName] = a.value, r.next = e.nextLoc, "return" !== r.method && (r.method = "next", r.arg = t), r.delegate = null, y) : a : (r.method = "throw", r.arg = new TypeError("iterator result is not an object"), r.delegate = null, y); } function pushTryEntry(t) { var e = { tryLoc: t[0] }; 1 in t && (e.catchLoc = t[1]), 2 in t && (e.finallyLoc = t[2], e.afterLoc = t[3]), this.tryEntries.push(e); } function resetTryEntry(t) { var e = t.completion || {}; e.type = "normal", delete e.arg, t.completion = e; } function Context(t) { this.tryEntries = [{ tryLoc: "root" }], t.forEach(pushTryEntry, this), this.reset(!0); } function values(e) { if (e || "" === e) { var r = e[a]; if (r) return r.call(e); if ("function" == typeof e.next) return e; if (!isNaN(e.length)) { var o = -1, i = function next() { for (; ++o < e.length;) if (n.call(e, o)) return next.value = e[o], next.done = !1, next; return next.value = t, next.done = !0, next; }; return i.next = i; } } throw new TypeError(_typeof(e) + " is not iterable"); } return GeneratorFunction.prototype = GeneratorFunctionPrototype, o(g, "constructor", { value: GeneratorFunctionPrototype, configurable: !0 }), o(GeneratorFunctionPrototype, "constructor", { value: GeneratorFunction, configurable: !0 }), GeneratorFunction.displayName = define(GeneratorFunctionPrototype, u, "GeneratorFunction"), e.isGeneratorFunction = function (t) { var e = "function" == typeof t && t.constructor; return !!e && (e === GeneratorFunction || "GeneratorFunction" === (e.displayName || e.name)); }, e.mark = function (t) { return Object.setPrototypeOf ? Object.setPrototypeOf(t, GeneratorFunctionPrototype) : (t.__proto__ = GeneratorFunctionPrototype, define(t, u, "GeneratorFunction")), t.prototype = Object.create(g), t; }, e.awrap = function (t) { return { __await: t }; }, defineIteratorMethods(AsyncIterator.prototype), define(AsyncIterator.prototype, c, function () { return this; }), e.AsyncIterator = AsyncIterator, e.async = function (t, r, n, o, i) { void 0 === i && (i = Promise); var a = new AsyncIterator(wrap(t, r, n, o), i); return e.isGeneratorFunction(r) ? a : a.next().then(function (t) { return t.done ? t.value : a.next(); }); }, defineIteratorMethods(g), define(g, u, "Generator"), define(g, a, function () { return this; }), define(g, "toString", function () { return "[object Generator]"; }), e.keys = function (t) { var e = Object(t), r = []; for (var n in e) r.push(n); return r.reverse(), function next() { for (; r.length;) { var t = r.pop(); if (t in e) return next.value = t, next.done = !1, next; } return next.done = !0, next; }; }, e.values = values, Context.prototype = { constructor: Context, reset: function reset(e) { if (this.prev = 0, this.next = 0, this.sent = this._sent = t, this.done = !1, this.delegate = null, this.method = "next", this.arg = t, this.tryEntries.forEach(resetTryEntry), !e) for (var r in this) "t" === r.charAt(0) && n.call(this, r) && !isNaN(+r.slice(1)) && (this[r] = t); }, stop: function stop() { this.done = !0; var t = this.tryEntries[0].completion; if ("throw" === t.type) throw t.arg; return this.rval; }, dispatchException: function dispatchException(e) { if (this.done) throw e; var r = this; function handle(n, o) { return a.type = "throw", a.arg = e, r.next = n, o && (r.method = "next", r.arg = t), !!o; } for (var o = this.tryEntries.length - 1; o >= 0; --o) { var i = this.tryEntries[o], a = i.completion; if ("root" === i.tryLoc) return handle("end"); if (i.tryLoc <= this.prev) { var c = n.call(i, "catchLoc"), u = n.call(i, "finallyLoc"); if (c && u) { if (this.prev < i.catchLoc) return handle(i.catchLoc, !0); if (this.prev < i.finallyLoc) return handle(i.finallyLoc); } else if (c) { if (this.prev < i.catchLoc) return handle(i.catchLoc, !0); } else { if (!u) throw Error("try statement without catch or finally"); if (this.prev < i.finallyLoc) return handle(i.finallyLoc); } } } }, abrupt: function abrupt(t, e) { for (var r = this.tryEntries.length - 1; r >= 0; --r) { var o = this.tryEntries[r]; if (o.tryLoc <= this.prev && n.call(o, "finallyLoc") && this.prev < o.finallyLoc) { var i = o; break; } } i && ("break" === t || "continue" === t) && i.tryLoc <= e && e <= i.finallyLoc && (i = null); var a = i ? i.completion : {}; return a.type = t, a.arg = e, i ? (this.method = "next", this.next = i.finallyLoc, y) : this.complete(a); }, complete: function complete(t, e) { if ("throw" === t.type) throw t.arg; return "break" === t.type || "continue" === t.type ? this.next = t.arg : "return" === t.type ? (this.rval = this.arg = t.arg, this.method = "return", this.next = "end") : "normal" === t.type && e && (this.next = e), y; }, finish: function finish(t) { for (var e = this.tryEntries.length - 1; e >= 0; --e) { var r = this.tryEntries[e]; if (r.finallyLoc === t) return this.complete(r.completion, r.afterLoc), resetTryEntry(r), y; } }, "catch": function _catch(t) { for (var e = this.tryEntries.length - 1; e >= 0; --e) { var r = this.tryEntries[e]; if (r.tryLoc === t) { var n = r.completion; if ("throw" === n.type) { var o = n.arg; resetTryEntry(r); } return o; } } throw Error("illegal catch attempt"); }, delegateYield: function delegateYield(e, r, n) { return this.delegate = { iterator: values(e), resultName: r, nextLoc: n }, "next" === this.method && (this.arg = t), y; } }, e; }
+function asyncGeneratorStep(n, t, e, r, o, a, c) { try { var i = n[a](c), u = i.value; } catch (n) { return void e(n); } i.done ? t(u) : Promise.resolve(u).then(r, o); }
+function _asyncToGenerator(n) { return function () { var t = this, e = arguments; return new Promise(function (r, o) { var a = n.apply(t, e); function _next(n) { asyncGeneratorStep(a, r, o, _next, _throw, "next", n); } function _throw(n) { asyncGeneratorStep(a, r, o, _next, _throw, "throw", n); } _next(void 0); }); }; }
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  data: function data() {
+    return {
+      activeTab: 'edit',
+      errors: {},
+      saving: false,
+      saveOk: false,
+      loading: false,
+      loadingPayslips: false,
+      employeeId: null,
+      form: {
+        first_name: '',
+        last_name: '',
+        email: '',
+        phone: '',
+        id_number: '',
+        birthdate: '',
+        start_date: '',
+        pay_frequency: 'monthly',
+        payment_method: 'cash',
+        status: 'active',
+        role_id: '',
+        bank_id: null,
+        bank_account_number: '',
+        bank_branch_code: '',
+        bank_account_type: '',
+        bank_holder_relationship: '',
+        bank_holder_name: ''
+      },
+      payslips: [],
+      // Leave
+      leaveTypes: [],
+      leaveForm: {
+        leave_type_id: '',
+        start_date: '',
+        end_date: '',
+        units: null,
+        reason: ''
+      },
+      leaveErrors: {},
+      submittingLeave: false,
+      leaveOk: false,
+      leaveRecent: []
+    };
+  },
+  computed: {
+    fullName: function fullName() {
+      return "".concat(this.form.first_name, " ").concat(this.form.last_name).trim();
+    }
+  },
+  created: function created() {
+    var _this = this;
+    return _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
+      var _yield$axios$get, data, emp, _e$response, _e$response2, _Notification$error;
+      return _regeneratorRuntime().wrap(function _callee$(_context) {
+        while (1) switch (_context.prev = _context.next) {
+          case 0:
+            if (User.loggedIn()) {
+              _context.next = 3;
+              break;
+            }
+            _this.$router.push({
+              name: '/'
+            });
+            return _context.abrupt("return");
+          case 3:
+            _this.loading = true;
+            _context.prev = 4;
+            _context.next = 7;
+            return axios.get('/api/employee/self');
+          case 7:
+            _yield$axios$get = _context.sent;
+            data = _yield$axios$get.data;
+            console.log('Employee /self data', data);
+            _this.employeeId = data.id;
+            emp = data; // 2) Populate the edit form directly from /self
+            _this.form = {
+              first_name: emp.first_name || '',
+              last_name: emp.last_name || '',
+              email: emp.email || '',
+              phone: emp.phone || '',
+              id_number: emp.id_number || '',
+              birthdate: (emp.birthdate || '').slice(0, 10),
+              start_date: (emp.start_date || '').slice(0, 10),
+              pay_frequency: emp.pay_frequency || 'monthly',
+              payment_method: emp.payment_method || 'cash',
+              status: emp.status || 'active',
+              role_id: emp.role_id || '',
+              bank_id: emp.bank_id || null,
+              bank_account_number: emp.bank_account_number || '',
+              bank_branch_code: emp.bank_branch_code || '',
+              bank_account_type: emp.bank_account_type || '',
+              bank_holder_relationship: emp.bank_holder_relationship || '',
+              bank_holder_name: emp.bank_holder_name || ''
+            };
+
+            // 3) Load the rest in parallel
+            _context.next = 15;
+            return Promise.all([_this.loadPayslips(), _this.loadLeaveMeta()]);
+          case 15:
+            _context.next = 27;
+            break;
+          case 17:
+            _context.prev = 17;
+            _context.t0 = _context["catch"](4);
+            if (!((_context.t0 === null || _context.t0 === void 0 || (_e$response = _context.t0.response) === null || _e$response === void 0 ? void 0 : _e$response.status) === 404)) {
+              _context.next = 22;
+              break;
+            }
+            _this.$router.push({
+              name: 'add-employee'
+            });
+            return _context.abrupt("return");
+          case 22:
+            if (!((_context.t0 === null || _context.t0 === void 0 || (_e$response2 = _context.t0.response) === null || _e$response2 === void 0 ? void 0 : _e$response2.status) === 401)) {
+              _context.next = 25;
+              break;
+            }
+            _this.$router.push({
+              name: '/'
+            });
+            return _context.abrupt("return");
+          case 25:
+            console.error(_context.t0);
+            _helpers_Notification_js__WEBPACK_IMPORTED_MODULE_0__["default"] === null || _helpers_Notification_js__WEBPACK_IMPORTED_MODULE_0__["default"] === void 0 || (_Notification$error = _helpers_Notification_js__WEBPACK_IMPORTED_MODULE_0__["default"].error) === null || _Notification$error === void 0 || _Notification$error.call(_helpers_Notification_js__WEBPACK_IMPORTED_MODULE_0__["default"], 'Failed to load profile');
+          case 27:
+            _context.prev = 27;
+            _this.loading = false;
+            return _context.finish(27);
+          case 30:
+          case "end":
+            return _context.stop();
+        }
+      }, _callee, null, [[4, 17, 27, 30]]);
+    }))();
+  },
+  methods: {
+    // ---------- Save ----------
+    saveProfile: function saveProfile() {
+      var _this2 = this;
+      return _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee2() {
+        var _err$response;
+        return _regeneratorRuntime().wrap(function _callee2$(_context2) {
+          while (1) switch (_context2.prev = _context2.next) {
+            case 0:
+              _this2.errors = {};
+              _this2.saving = true;
+              _this2.saveOk = false;
+              _context2.prev = 3;
+              _context2.next = 6;
+              return axios.patch("/api/employee/".concat(_this2.employeeId), _this2.form);
+            case 6:
+              _this2.saveOk = true;
+              _helpers_Notification_js__WEBPACK_IMPORTED_MODULE_0__["default"].success('Profile updated');
+              _context2.next = 14;
+              break;
+            case 10:
+              _context2.prev = 10;
+              _context2.t0 = _context2["catch"](3);
+              if (_context2.t0 !== null && _context2.t0 !== void 0 && (_err$response = _context2.t0.response) !== null && _err$response !== void 0 && (_err$response = _err$response.data) !== null && _err$response !== void 0 && _err$response.errors) _this2.errors = _context2.t0.response.data.errors;else _helpers_Notification_js__WEBPACK_IMPORTED_MODULE_0__["default"].error('Failed to save profile');
+              console.error(_context2.t0);
+            case 14:
+              _context2.prev = 14;
+              _this2.saving = false;
+              return _context2.finish(14);
+            case 17:
+            case "end":
+              return _context2.stop();
+          }
+        }, _callee2, null, [[3, 10, 14, 17]]);
+      }))();
+    },
+    // ---------- Payslips ----------
+    loadPayslips: function loadPayslips() {
+      var _this3 = this;
+      return _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee3() {
+        var _yield$axios$post, data, _e$response3;
+        return _regeneratorRuntime().wrap(function _callee3$(_context3) {
+          while (1) switch (_context3.prev = _context3.next) {
+            case 0:
+              if (_this3.employeeId) {
+                _context3.next = 2;
+                break;
+              }
+              return _context3.abrupt("return");
+            case 2:
+              _this3.loadingPayslips = true;
+              _this3.payslips = [];
+              _context3.prev = 4;
+              _context3.next = 7;
+              return axios.post('/api/payroll/payslip', {
+                employee_id: _this3.employeeId
+              });
+            case 7:
+              _yield$axios$post = _context3.sent;
+              data = _yield$axios$post.data;
+              if (data && data.ok) {
+                _this3.payslips = [{
+                  payslip_id: data.payslip_id,
+                  period: data.period,
+                  gross: data.gross,
+                  net: data.net
+                }];
+              }
+              // If you later add a list endpoint, switch to it here.
+              _context3.next = 15;
+              break;
+            case 12:
+              _context3.prev = 12;
+              _context3.t0 = _context3["catch"](4);
+              console.warn('Payslips load failed', (_context3.t0 === null || _context3.t0 === void 0 || (_e$response3 = _context3.t0.response) === null || _e$response3 === void 0 ? void 0 : _e$response3.data) || _context3.t0.message);
+            case 15:
+              _context3.prev = 15;
+              _this3.loadingPayslips = false;
+              return _context3.finish(15);
+            case 18:
+            case "end":
+              return _context3.stop();
+          }
+        }, _callee3, null, [[4, 12, 15, 18]]);
+      }))();
+    },
+    // ---------- Leave ----------
+    loadLeaveMeta: function loadLeaveMeta() {
+      var _this4 = this;
+      return _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee4() {
+        var _yield$axios$get2, data, _yield$axios$get3, _data;
+        return _regeneratorRuntime().wrap(function _callee4$(_context4) {
+          while (1) switch (_context4.prev = _context4.next) {
+            case 0:
+              _context4.prev = 0;
+              _context4.next = 3;
+              return axios.get('/api/payroll/leave-types');
+            case 3:
+              _yield$axios$get2 = _context4.sent;
+              data = _yield$axios$get2.data;
+              _this4.leaveTypes = Array.isArray(data) ? data : (data === null || data === void 0 ? void 0 : data.items) || [];
+              _context4.next = 11;
+              break;
+            case 8:
+              _context4.prev = 8;
+              _context4.t0 = _context4["catch"](0);
+              // fallback if API isn’t ready
+              _this4.leaveTypes = [{
+                id: 1,
+                name: 'Annual Leave'
+              }, {
+                id: 2,
+                name: 'Sick Leave'
+              }, {
+                id: 3,
+                name: 'Family Responsibility'
+              }];
+            case 11:
+              _context4.prev = 11;
+              _context4.next = 14;
+              return axios.get('/api/payroll/leave-applications', {
+                params: {
+                  employee_id: _this4.employeeId
+                }
+              });
+            case 14:
+              _yield$axios$get3 = _context4.sent;
+              _data = _yield$axios$get3.data;
+              _this4.leaveRecent = Array.isArray(_data) ? _data : (_data === null || _data === void 0 ? void 0 : _data.items) || [];
+              _context4.next = 21;
+              break;
+            case 19:
+              _context4.prev = 19;
+              _context4.t1 = _context4["catch"](11);
+            case 21:
+            case "end":
+              return _context4.stop();
+          }
+        }, _callee4, null, [[0, 8], [11, 19]]);
+      }))();
+    },
+    submitLeave: function submitLeave() {
+      var _this5 = this;
+      return _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee5() {
+        var payload, _err$response2;
+        return _regeneratorRuntime().wrap(function _callee5$(_context5) {
+          while (1) switch (_context5.prev = _context5.next) {
+            case 0:
+              if (_this5.employeeId) {
+                _context5.next = 2;
+                break;
+              }
+              return _context5.abrupt("return");
+            case 2:
+              _this5.submittingLeave = true;
+              _this5.leaveErrors = {};
+              _this5.leaveOk = false;
+              _context5.prev = 5;
+              payload = {
+                employee_id: _this5.employeeId,
+                leave_type_id: _this5.leaveForm.leave_type_id,
+                start_date: _this5.leaveForm.start_date,
+                end_date: _this5.leaveForm.end_date,
+                units: _this5.leaveForm.units,
+                reason: _this5.leaveForm.reason || null
+              };
+              _context5.next = 9;
+              return axios.post('/api/payroll/leave-applications', payload);
+            case 9:
+              _this5.leaveOk = true;
+              _helpers_Notification_js__WEBPACK_IMPORTED_MODULE_0__["default"].success('Leave application submitted');
+              _context5.next = 13;
+              return _this5.loadLeaveMeta();
+            case 13:
+              // reset (keep selected type)
+              _this5.leaveForm.start_date = '';
+              _this5.leaveForm.end_date = '';
+              _this5.leaveForm.units = null;
+              _this5.leaveForm.reason = '';
+              _context5.next = 23;
+              break;
+            case 19:
+              _context5.prev = 19;
+              _context5.t0 = _context5["catch"](5);
+              if (_context5.t0 !== null && _context5.t0 !== void 0 && (_err$response2 = _context5.t0.response) !== null && _err$response2 !== void 0 && (_err$response2 = _err$response2.data) !== null && _err$response2 !== void 0 && _err$response2.errors) _this5.leaveErrors = _context5.t0.response.data.errors;else _helpers_Notification_js__WEBPACK_IMPORTED_MODULE_0__["default"].error('Failed to submit leave');
+              console.error(_context5.t0);
+            case 23:
+              _context5.prev = 23;
+              _this5.submittingLeave = false;
+              return _context5.finish(23);
+            case 26:
+            case "end":
+              return _context5.stop();
+          }
+        }, _callee5, null, [[5, 19, 23, 26]]);
+      }))();
+    },
+    // ---------- Utils ----------
+    formatMoney: function formatMoney(n) {
+      var v = Number(n || 0);
+      return v.toLocaleString('en-ZA', {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2
+      });
+    }
+  }
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/auth/ForgetView.vue?vue&type=script&lang=js":
 /*!*************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/auth/ForgetView.vue?vue&type=script&lang=js ***!
@@ -5737,6 +6098,818 @@ var staticRenderFns = [function () {
   return _c("thead", {
     staticClass: "thead-light"
   }, [_c("tr", [_c("th", [_vm._v("#")]), _vm._v(" "), _c("th", [_vm._v("Client")]), _vm._v(" "), _c("th", [_vm._v("Due")]), _vm._v(" "), _c("th", [_vm._v("Amount Due")]), _vm._v(" "), _c("th", [_vm._v("Status")])])]);
+}];
+render._withStripped = true;
+
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/ProfileView.vue?vue&type=template&id=35df8fd3":
+/*!*******************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib/loaders/templateLoader.js??ref--6!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/ProfileView.vue?vue&type=template&id=35df8fd3 ***!
+  \*******************************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function render() {
+  var _vm = this,
+    _c = _vm._self._c;
+  return _c("div", [_c("div", {
+    staticClass: "d-sm-flex align-items-center justify-content-between mb-4"
+  }, [_c("h1", {
+    staticClass: "h3 mb-0 text-gray-800"
+  }, [_vm._v("Employee Profile")]), _vm._v(" "), _c("ol", {
+    staticClass: "breadcrumb"
+  }, [_c("li", {
+    staticClass: "breadcrumb-item"
+  }, [_c("router-link", {
+    attrs: {
+      to: "/employees"
+    }
+  }, [_vm._v("Employees")])], 1), _vm._v(" "), _c("li", {
+    staticClass: "breadcrumb-item active",
+    attrs: {
+      "aria-current": "page"
+    }
+  }, [_vm._v(_vm._s(_vm.fullName || "Profile"))])])]), _vm._v(" "), _c("ul", {
+    staticClass: "nav nav-tabs",
+    attrs: {
+      role: "tablist"
+    }
+  }, [_c("li", {
+    staticClass: "nav-item"
+  }, [_c("a", {
+    staticClass: "nav-link",
+    "class": {
+      active: _vm.activeTab === "edit"
+    },
+    attrs: {
+      href: "#"
+    },
+    on: {
+      click: function click($event) {
+        $event.preventDefault();
+        _vm.activeTab = "edit";
+      }
+    }
+  }, [_vm._v("Edit Profile")])]), _vm._v(" "), _c("li", {
+    staticClass: "nav-item"
+  }, [_c("a", {
+    staticClass: "nav-link",
+    "class": {
+      active: _vm.activeTab === "payslips"
+    },
+    attrs: {
+      href: "#"
+    },
+    on: {
+      click: function click($event) {
+        $event.preventDefault();
+        _vm.activeTab = "payslips";
+      }
+    }
+  }, [_vm._v("Payslips")])]), _vm._v(" "), _c("li", {
+    staticClass: "nav-item"
+  }, [_c("a", {
+    staticClass: "nav-link",
+    "class": {
+      active: _vm.activeTab === "leave"
+    },
+    attrs: {
+      href: "#"
+    },
+    on: {
+      click: function click($event) {
+        $event.preventDefault();
+        _vm.activeTab = "leave";
+      }
+    }
+  }, [_vm._v("Leave Applications")])])]), _vm._v(" "), _c("div", {
+    staticClass: "tab-content p-3 bg-white border border-top-0"
+  }, [_c("div", {
+    directives: [{
+      name: "show",
+      rawName: "v-show",
+      value: _vm.activeTab === "edit",
+      expression: "activeTab === 'edit'"
+    }]
+  }, [_c("div", {
+    staticClass: "card"
+  }, [_c("div", {
+    staticClass: "card-body"
+  }, [_c("form", {
+    on: {
+      submit: function submit($event) {
+        $event.preventDefault();
+        return _vm.saveProfile.apply(null, arguments);
+      }
+    }
+  }, [_c("div", {
+    staticClass: "form-row"
+  }, [_c("div", {
+    staticClass: "form-group col-md-6"
+  }, [_c("label", [_vm._v("First name")]), _vm._v(" "), _c("input", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.form.first_name,
+      expression: "form.first_name"
+    }],
+    staticClass: "form-control",
+    domProps: {
+      value: _vm.form.first_name
+    },
+    on: {
+      input: function input($event) {
+        if ($event.target.composing) return;
+        _vm.$set(_vm.form, "first_name", $event.target.value);
+      }
+    }
+  }), _vm._v(" "), _vm.errors.first_name ? _c("small", {
+    staticClass: "text-danger"
+  }, [_vm._v(_vm._s(_vm.errors.first_name[0]))]) : _vm._e()]), _vm._v(" "), _c("div", {
+    staticClass: "form-group col-md-6"
+  }, [_c("label", [_vm._v("Last name")]), _vm._v(" "), _c("input", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.form.last_name,
+      expression: "form.last_name"
+    }],
+    staticClass: "form-control",
+    domProps: {
+      value: _vm.form.last_name
+    },
+    on: {
+      input: function input($event) {
+        if ($event.target.composing) return;
+        _vm.$set(_vm.form, "last_name", $event.target.value);
+      }
+    }
+  }), _vm._v(" "), _vm.errors.last_name ? _c("small", {
+    staticClass: "text-danger"
+  }, [_vm._v(_vm._s(_vm.errors.last_name[0]))]) : _vm._e()])]), _vm._v(" "), _c("div", {
+    staticClass: "form-row"
+  }, [_c("div", {
+    staticClass: "form-group col-md-6"
+  }, [_c("label", [_vm._v("Email")]), _vm._v(" "), _c("input", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.form.email,
+      expression: "form.email"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      type: "email"
+    },
+    domProps: {
+      value: _vm.form.email
+    },
+    on: {
+      input: function input($event) {
+        if ($event.target.composing) return;
+        _vm.$set(_vm.form, "email", $event.target.value);
+      }
+    }
+  }), _vm._v(" "), _vm.errors.email ? _c("small", {
+    staticClass: "text-danger"
+  }, [_vm._v(_vm._s(_vm.errors.email[0]))]) : _vm._e()]), _vm._v(" "), _c("div", {
+    staticClass: "form-group col-md-6"
+  }, [_c("label", [_vm._v("Phone")]), _vm._v(" "), _c("input", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.form.phone,
+      expression: "form.phone"
+    }],
+    staticClass: "form-control",
+    domProps: {
+      value: _vm.form.phone
+    },
+    on: {
+      input: function input($event) {
+        if ($event.target.composing) return;
+        _vm.$set(_vm.form, "phone", $event.target.value);
+      }
+    }
+  }), _vm._v(" "), _vm.errors.phone ? _c("small", {
+    staticClass: "text-danger"
+  }, [_vm._v(_vm._s(_vm.errors.phone[0]))]) : _vm._e()])]), _vm._v(" "), _c("div", {
+    staticClass: "form-row"
+  }, [_c("div", {
+    staticClass: "form-group col-md-4"
+  }, [_c("label", [_vm._v("ID / Passport")]), _vm._v(" "), _c("input", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.form.id_number,
+      expression: "form.id_number"
+    }],
+    staticClass: "form-control",
+    domProps: {
+      value: _vm.form.id_number
+    },
+    on: {
+      input: function input($event) {
+        if ($event.target.composing) return;
+        _vm.$set(_vm.form, "id_number", $event.target.value);
+      }
+    }
+  }), _vm._v(" "), _vm.errors.id_number ? _c("small", {
+    staticClass: "text-danger"
+  }, [_vm._v(_vm._s(_vm.errors.id_number[0]))]) : _vm._e()]), _vm._v(" "), _c("div", {
+    staticClass: "form-group col-md-4"
+  }, [_c("label", [_vm._v("Birthdate")]), _vm._v(" "), _c("input", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.form.birthdate,
+      expression: "form.birthdate"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      type: "date"
+    },
+    domProps: {
+      value: _vm.form.birthdate
+    },
+    on: {
+      input: function input($event) {
+        if ($event.target.composing) return;
+        _vm.$set(_vm.form, "birthdate", $event.target.value);
+      }
+    }
+  }), _vm._v(" "), _vm.errors.birthdate ? _c("small", {
+    staticClass: "text-danger"
+  }, [_vm._v(_vm._s(_vm.errors.birthdate[0]))]) : _vm._e()]), _vm._v(" "), _c("div", {
+    staticClass: "form-group col-md-4"
+  }, [_c("label", [_vm._v("Start date")]), _vm._v(" "), _c("input", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.form.start_date,
+      expression: "form.start_date"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      type: "date"
+    },
+    domProps: {
+      value: _vm.form.start_date
+    },
+    on: {
+      input: function input($event) {
+        if ($event.target.composing) return;
+        _vm.$set(_vm.form, "start_date", $event.target.value);
+      }
+    }
+  }), _vm._v(" "), _vm.errors.start_date ? _c("small", {
+    staticClass: "text-danger"
+  }, [_vm._v(_vm._s(_vm.errors.start_date[0]))]) : _vm._e()])]), _vm._v(" "), _c("div", {
+    staticClass: "form-row"
+  }, [_c("div", {
+    staticClass: "form-group col-md-4"
+  }, [_c("label", [_vm._v("Pay frequency")]), _vm._v(" "), _c("select", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.form.pay_frequency,
+      expression: "form.pay_frequency"
+    }],
+    staticClass: "form-control",
+    on: {
+      change: function change($event) {
+        var $$selectedVal = Array.prototype.filter.call($event.target.options, function (o) {
+          return o.selected;
+        }).map(function (o) {
+          var val = "_value" in o ? o._value : o.value;
+          return val;
+        });
+        _vm.$set(_vm.form, "pay_frequency", $event.target.multiple ? $$selectedVal : $$selectedVal[0]);
+      }
+    }
+  }, [_c("option", {
+    attrs: {
+      value: "monthly"
+    }
+  }, [_vm._v("Monthly")]), _vm._v(" "), _c("option", {
+    attrs: {
+      value: "weekly"
+    }
+  }, [_vm._v("Weekly")]), _vm._v(" "), _c("option", {
+    attrs: {
+      value: "fortnightly"
+    }
+  }, [_vm._v("Fortnightly")])]), _vm._v(" "), _vm.errors.pay_frequency ? _c("small", {
+    staticClass: "text-danger"
+  }, [_vm._v(_vm._s(_vm.errors.pay_frequency[0]))]) : _vm._e()]), _vm._v(" "), _c("div", {
+    staticClass: "form-group col-md-4"
+  }, [_c("label", [_vm._v("Payment method")]), _vm._v(" "), _c("select", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.form.payment_method,
+      expression: "form.payment_method"
+    }],
+    staticClass: "form-control",
+    on: {
+      change: function change($event) {
+        var $$selectedVal = Array.prototype.filter.call($event.target.options, function (o) {
+          return o.selected;
+        }).map(function (o) {
+          var val = "_value" in o ? o._value : o.value;
+          return val;
+        });
+        _vm.$set(_vm.form, "payment_method", $event.target.multiple ? $$selectedVal : $$selectedVal[0]);
+      }
+    }
+  }, [_c("option", {
+    attrs: {
+      value: "cash"
+    }
+  }, [_vm._v("Cash")]), _vm._v(" "), _c("option", {
+    attrs: {
+      value: "cheque"
+    }
+  }, [_vm._v("Cheque")]), _vm._v(" "), _c("option", {
+    attrs: {
+      value: "eft_manual"
+    }
+  }, [_vm._v("EFT (manual)")])]), _vm._v(" "), _vm.errors.payment_method ? _c("small", {
+    staticClass: "text-danger"
+  }, [_vm._v(_vm._s(_vm.errors.payment_method[0]))]) : _vm._e()]), _vm._v(" "), _c("div", {
+    staticClass: "form-group col-md-4"
+  }, [_c("label", [_vm._v("Status")]), _vm._v(" "), _c("select", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.form.status,
+      expression: "form.status"
+    }],
+    staticClass: "form-control",
+    on: {
+      change: function change($event) {
+        var $$selectedVal = Array.prototype.filter.call($event.target.options, function (o) {
+          return o.selected;
+        }).map(function (o) {
+          var val = "_value" in o ? o._value : o.value;
+          return val;
+        });
+        _vm.$set(_vm.form, "status", $event.target.multiple ? $$selectedVal : $$selectedVal[0]);
+      }
+    }
+  }, [_c("option", {
+    attrs: {
+      value: "active"
+    }
+  }, [_vm._v("Active")]), _vm._v(" "), _c("option", {
+    attrs: {
+      value: "terminated"
+    }
+  }, [_vm._v("Terminated")])]), _vm._v(" "), _vm.errors.status ? _c("small", {
+    staticClass: "text-danger"
+  }, [_vm._v(_vm._s(_vm.errors.status[0]))]) : _vm._e()])]), _vm._v(" "), _vm.form.payment_method === "eft_manual" ? _c("div", [_c("div", {
+    staticClass: "form-row"
+  }, [_c("div", {
+    staticClass: "form-group col-md-3"
+  }, [_c("label", [_vm._v("Bank ID")]), _vm._v(" "), _c("input", {
+    directives: [{
+      name: "model",
+      rawName: "v-model.number",
+      value: _vm.form.bank_id,
+      expression: "form.bank_id",
+      modifiers: {
+        number: true
+      }
+    }],
+    staticClass: "form-control",
+    attrs: {
+      type: "number"
+    },
+    domProps: {
+      value: _vm.form.bank_id
+    },
+    on: {
+      input: function input($event) {
+        if ($event.target.composing) return;
+        _vm.$set(_vm.form, "bank_id", _vm._n($event.target.value));
+      },
+      blur: function blur($event) {
+        return _vm.$forceUpdate();
+      }
+    }
+  }), _vm._v(" "), _vm.errors.bank_id ? _c("small", {
+    staticClass: "text-danger"
+  }, [_vm._v(_vm._s(_vm.errors.bank_id[0]))]) : _vm._e()]), _vm._v(" "), _c("div", {
+    staticClass: "form-group col-md-3"
+  }, [_c("label", [_vm._v("Account number")]), _vm._v(" "), _c("input", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.form.bank_account_number,
+      expression: "form.bank_account_number"
+    }],
+    staticClass: "form-control",
+    domProps: {
+      value: _vm.form.bank_account_number
+    },
+    on: {
+      input: function input($event) {
+        if ($event.target.composing) return;
+        _vm.$set(_vm.form, "bank_account_number", $event.target.value);
+      }
+    }
+  }), _vm._v(" "), _vm.errors.bank_account_number ? _c("small", {
+    staticClass: "text-danger"
+  }, [_vm._v(_vm._s(_vm.errors.bank_account_number[0]))]) : _vm._e()]), _vm._v(" "), _c("div", {
+    staticClass: "form-group col-md-3"
+  }, [_c("label", [_vm._v("Branch code (6)")]), _vm._v(" "), _c("input", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.form.bank_branch_code,
+      expression: "form.bank_branch_code"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      maxlength: "6"
+    },
+    domProps: {
+      value: _vm.form.bank_branch_code
+    },
+    on: {
+      input: [function ($event) {
+        if ($event.target.composing) return;
+        _vm.$set(_vm.form, "bank_branch_code", $event.target.value);
+      }, function ($event) {
+        _vm.form.bank_branch_code = (_vm.form.bank_branch_code || "").replace(/[^0-9]/g, "").slice(0, 6);
+      }]
+    }
+  }), _vm._v(" "), _vm.errors.bank_branch_code ? _c("small", {
+    staticClass: "text-danger"
+  }, [_vm._v(_vm._s(_vm.errors.bank_branch_code[0]))]) : _vm._e()]), _vm._v(" "), _c("div", {
+    staticClass: "form-group col-md-3"
+  }, [_c("label", [_vm._v("Account type")]), _vm._v(" "), _c("select", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.form.bank_account_type,
+      expression: "form.bank_account_type"
+    }],
+    staticClass: "form-control",
+    on: {
+      change: function change($event) {
+        var $$selectedVal = Array.prototype.filter.call($event.target.options, function (o) {
+          return o.selected;
+        }).map(function (o) {
+          var val = "_value" in o ? o._value : o.value;
+          return val;
+        });
+        _vm.$set(_vm.form, "bank_account_type", $event.target.multiple ? $$selectedVal : $$selectedVal[0]);
+      }
+    }
+  }, [_c("option", {
+    attrs: {
+      value: ""
+    }
+  }, [_vm._v("—")]), _vm._v(" "), _c("option", {
+    attrs: {
+      value: "1"
+    }
+  }, [_vm._v("Current (Cheque)")]), _vm._v(" "), _c("option", {
+    attrs: {
+      value: "2"
+    }
+  }, [_vm._v("Savings")]), _vm._v(" "), _c("option", {
+    attrs: {
+      value: "3"
+    }
+  }, [_vm._v("Transmission")]), _vm._v(" "), _c("option", {
+    attrs: {
+      value: "4"
+    }
+  }, [_vm._v("Bond")]), _vm._v(" "), _c("option", {
+    attrs: {
+      value: "6"
+    }
+  }, [_vm._v("Subscription Share")])])])]), _vm._v(" "), _c("div", {
+    staticClass: "form-row"
+  }, [_c("div", {
+    staticClass: "form-group col-md-3"
+  }, [_c("label", [_vm._v("Owner")]), _vm._v(" "), _c("select", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.form.bank_holder_relationship,
+      expression: "form.bank_holder_relationship"
+    }],
+    staticClass: "form-control",
+    on: {
+      change: function change($event) {
+        var $$selectedVal = Array.prototype.filter.call($event.target.options, function (o) {
+          return o.selected;
+        }).map(function (o) {
+          var val = "_value" in o ? o._value : o.value;
+          return val;
+        });
+        _vm.$set(_vm.form, "bank_holder_relationship", $event.target.multiple ? $$selectedVal : $$selectedVal[0]);
+      }
+    }
+  }, [_c("option", {
+    attrs: {
+      value: ""
+    }
+  }, [_vm._v("—")]), _vm._v(" "), _c("option", {
+    attrs: {
+      value: "1"
+    }
+  }, [_vm._v("Employee")]), _vm._v(" "), _c("option", {
+    attrs: {
+      value: "2"
+    }
+  }, [_vm._v("Joint")]), _vm._v(" "), _c("option", {
+    attrs: {
+      value: "3"
+    }
+  }, [_vm._v("Third party")])])]), _vm._v(" "), _c("div", {
+    staticClass: "form-group col-md-9"
+  }, [_c("label", [_vm._v("Third-party holder name (if 3)")]), _vm._v(" "), _c("input", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.form.bank_holder_name,
+      expression: "form.bank_holder_name"
+    }],
+    staticClass: "form-control",
+    domProps: {
+      value: _vm.form.bank_holder_name
+    },
+    on: {
+      input: function input($event) {
+        if ($event.target.composing) return;
+        _vm.$set(_vm.form, "bank_holder_name", $event.target.value);
+      }
+    }
+  })])])]) : _vm._e(), _vm._v(" "), _c("div", {
+    staticClass: "d-flex align-items-center"
+  }, [_c("button", {
+    staticClass: "btn btn-primary",
+    attrs: {
+      disabled: _vm.saving
+    }
+  }, [_vm.saving ? _c("span", {
+    staticClass: "spinner-border spinner-border-sm mr-1"
+  }) : _vm._e(), _vm._v("\n                                Save\n                            ")]), _vm._v(" "), _vm.saveOk ? _c("span", {
+    staticClass: "text-success ml-3"
+  }, [_vm._v("Saved")]) : _vm._e()])])])])]), _vm._v(" "), _c("div", {
+    directives: [{
+      name: "show",
+      rawName: "v-show",
+      value: _vm.activeTab === "payslips",
+      expression: "activeTab === 'payslips'"
+    }]
+  }, [_c("div", {
+    staticClass: "card"
+  }, [_c("div", {
+    staticClass: "card-body"
+  }, [_c("div", {
+    staticClass: "d-flex justify-content-between align-items-center mb-2"
+  }, [_c("h5", {
+    staticClass: "mb-0"
+  }, [_vm._v("Payslips")]), _vm._v(" "), _c("button", {
+    staticClass: "btn btn-sm btn-outline-secondary",
+    attrs: {
+      disabled: _vm.loadingPayslips
+    },
+    on: {
+      click: _vm.loadPayslips
+    }
+  }, [_vm.loadingPayslips ? _c("span", {
+    staticClass: "spinner-border spinner-border-sm mr-1"
+  }) : _vm._e(), _vm._v("\n                            Refresh\n                        ")])]), _vm._v(" "), _vm.payslips.length ? _c("div", [_c("div", {
+    staticClass: "table-responsive"
+  }, [_c("table", {
+    staticClass: "table table-sm table-striped"
+  }, [_vm._m(0), _vm._v(" "), _c("tbody", _vm._l(_vm.payslips, function (ps) {
+    return _c("tr", {
+      key: ps.payslip_id
+    }, [_c("td", [_vm._v(_vm._s(ps.period))]), _vm._v(" "), _c("td", [_vm._v("R" + _vm._s(_vm.formatMoney(ps.gross)))]), _vm._v(" "), _c("td", [_vm._v("R" + _vm._s(_vm.formatMoney(ps.net)))]), _vm._v(" "), _c("td", {
+      staticClass: "text-right"
+    }, [_c("a", {
+      staticClass: "btn btn-sm btn-outline-primary",
+      attrs: {
+        href: "/api/payroll/payslip/".concat(ps.payslip_id, "/pdf"),
+        target: "_blank"
+      }
+    }, [_vm._v("\n                                                PDF\n                                            ")])])]);
+  }), 0)])])]) : _c("div", {
+    staticClass: "text-muted"
+  }, [_vm._v("\n                        No payslips found yet.\n                    ")])])])]), _vm._v(" "), _c("div", {
+    directives: [{
+      name: "show",
+      rawName: "v-show",
+      value: _vm.activeTab === "leave",
+      expression: "activeTab === 'leave'"
+    }]
+  }, [_c("div", {
+    staticClass: "card"
+  }, [_c("div", {
+    staticClass: "card-body"
+  }, [_c("h5", {
+    staticClass: "mb-3"
+  }, [_vm._v("Apply for Leave")]), _vm._v(" "), _c("form", {
+    on: {
+      submit: function submit($event) {
+        $event.preventDefault();
+        return _vm.submitLeave.apply(null, arguments);
+      }
+    }
+  }, [_c("div", {
+    staticClass: "form-row"
+  }, [_c("div", {
+    staticClass: "form-group col-md-4"
+  }, [_c("label", [_vm._v("Leave Type")]), _vm._v(" "), _c("select", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.leaveForm.leave_type_id,
+      expression: "leaveForm.leave_type_id"
+    }],
+    staticClass: "form-control",
+    on: {
+      change: function change($event) {
+        var $$selectedVal = Array.prototype.filter.call($event.target.options, function (o) {
+          return o.selected;
+        }).map(function (o) {
+          var val = "_value" in o ? o._value : o.value;
+          return val;
+        });
+        _vm.$set(_vm.leaveForm, "leave_type_id", $event.target.multiple ? $$selectedVal : $$selectedVal[0]);
+      }
+    }
+  }, [_c("option", {
+    attrs: {
+      value: "",
+      disabled: ""
+    }
+  }, [_vm._v("Choose type")]), _vm._v(" "), _vm._l(_vm.leaveTypes, function (lt) {
+    return _c("option", {
+      key: lt.id,
+      domProps: {
+        value: lt.id
+      }
+    }, [_vm._v(_vm._s(lt.name) + "\n                                    ")]);
+  })], 2), _vm._v(" "), _vm.leaveErrors.leave_type_id ? _c("small", {
+    staticClass: "text-danger"
+  }, [_vm._v(_vm._s(_vm.leaveErrors.leave_type_id[0]))]) : _vm._e()]), _vm._v(" "), _c("div", {
+    staticClass: "form-group col-md-4"
+  }, [_c("label", [_vm._v("Start Date")]), _vm._v(" "), _c("input", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.leaveForm.start_date,
+      expression: "leaveForm.start_date"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      type: "date"
+    },
+    domProps: {
+      value: _vm.leaveForm.start_date
+    },
+    on: {
+      input: function input($event) {
+        if ($event.target.composing) return;
+        _vm.$set(_vm.leaveForm, "start_date", $event.target.value);
+      }
+    }
+  }), _vm._v(" "), _vm.leaveErrors.start_date ? _c("small", {
+    staticClass: "text-danger"
+  }, [_vm._v(_vm._s(_vm.leaveErrors.start_date[0]))]) : _vm._e()]), _vm._v(" "), _c("div", {
+    staticClass: "form-group col-md-4"
+  }, [_c("label", [_vm._v("End Date")]), _vm._v(" "), _c("input", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.leaveForm.end_date,
+      expression: "leaveForm.end_date"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      type: "date"
+    },
+    domProps: {
+      value: _vm.leaveForm.end_date
+    },
+    on: {
+      input: function input($event) {
+        if ($event.target.composing) return;
+        _vm.$set(_vm.leaveForm, "end_date", $event.target.value);
+      }
+    }
+  }), _vm._v(" "), _vm.leaveErrors.end_date ? _c("small", {
+    staticClass: "text-danger"
+  }, [_vm._v(_vm._s(_vm.leaveErrors.end_date[0]))]) : _vm._e()])]), _vm._v(" "), _c("div", {
+    staticClass: "form-row"
+  }, [_c("div", {
+    staticClass: "form-group col-md-3"
+  }, [_c("label", [_vm._v("Units (days/hours)")]), _vm._v(" "), _c("input", {
+    directives: [{
+      name: "model",
+      rawName: "v-model.number",
+      value: _vm.leaveForm.units,
+      expression: "leaveForm.units",
+      modifiers: {
+        number: true
+      }
+    }],
+    staticClass: "form-control",
+    attrs: {
+      type: "number",
+      min: "0",
+      step: "0.5"
+    },
+    domProps: {
+      value: _vm.leaveForm.units
+    },
+    on: {
+      input: function input($event) {
+        if ($event.target.composing) return;
+        _vm.$set(_vm.leaveForm, "units", _vm._n($event.target.value));
+      },
+      blur: function blur($event) {
+        return _vm.$forceUpdate();
+      }
+    }
+  }), _vm._v(" "), _c("small", {
+    staticClass: "text-muted"
+  }, [_vm._v("Enter total units (e.g. days)")]), _vm._v(" "), _vm.leaveErrors.units ? _c("small", {
+    staticClass: "text-danger"
+  }, [_vm._v(_vm._s(_vm.leaveErrors.units[0]))]) : _vm._e()]), _vm._v(" "), _c("div", {
+    staticClass: "form-group col-md-9"
+  }, [_c("label", [_vm._v("Reason")]), _vm._v(" "), _c("input", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.leaveForm.reason,
+      expression: "leaveForm.reason"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      placeholder: "(optional)"
+    },
+    domProps: {
+      value: _vm.leaveForm.reason
+    },
+    on: {
+      input: function input($event) {
+        if ($event.target.composing) return;
+        _vm.$set(_vm.leaveForm, "reason", $event.target.value);
+      }
+    }
+  }), _vm._v(" "), _vm.leaveErrors.reason ? _c("small", {
+    staticClass: "text-danger"
+  }, [_vm._v(_vm._s(_vm.leaveErrors.reason[0]))]) : _vm._e()])]), _vm._v(" "), _c("div", {
+    staticClass: "d-flex align-items-center"
+  }, [_c("button", {
+    staticClass: "btn btn-primary",
+    attrs: {
+      disabled: _vm.submittingLeave
+    }
+  }, [_vm.submittingLeave ? _c("span", {
+    staticClass: "spinner-border spinner-border-sm mr-1"
+  }) : _vm._e(), _vm._v("\n                                Submit\n                            ")]), _vm._v(" "), _vm.leaveOk ? _c("span", {
+    staticClass: "text-success ml-3"
+  }, [_vm._v("Submitted")]) : _vm._e()])]), _vm._v(" "), _c("hr"), _vm._v(" "), _c("h6", {
+    staticClass: "mb-2"
+  }, [_vm._v("Recent Leave Applications")]), _vm._v(" "), _vm.leaveRecent.length ? _c("div", {
+    staticClass: "table-responsive"
+  }, [_c("table", {
+    staticClass: "table table-sm table-striped"
+  }, [_vm._m(1), _vm._v(" "), _c("tbody", _vm._l(_vm.leaveRecent, function (r) {
+    return _c("tr", {
+      key: r.id
+    }, [_c("td", [_vm._v(_vm._s(r.type_name || r.leave_type_name))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(r.start_date))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(r.end_date))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(r.units))]), _vm._v(" "), _c("td", [_c("span", {
+      staticClass: "badge",
+      "class": r.status === "approved" ? "badge-success" : r.status === "rejected" ? "badge-danger" : "badge-warning"
+    }, [_vm._v(_vm._s(r.status))])])]);
+  }), 0)])]) : _c("div", {
+    staticClass: "text-muted"
+  }, [_vm._v("No recent leave applications.")])])])])])]);
+};
+var staticRenderFns = [function () {
+  var _vm = this,
+    _c = _vm._self._c;
+  return _c("thead", [_c("tr", [_c("th", [_vm._v("Period")]), _vm._v(" "), _c("th", [_vm._v("Gross")]), _vm._v(" "), _c("th", [_vm._v("Net")]), _vm._v(" "), _c("th")])]);
+}, function () {
+  var _vm = this,
+    _c = _vm._self._c;
+  return _c("thead", [_c("tr", [_c("th", [_vm._v("Type")]), _vm._v(" "), _c("th", [_vm._v("Start")]), _vm._v(" "), _c("th", [_vm._v("End")]), _vm._v(" "), _c("th", [_vm._v("Units")]), _vm._v(" "), _c("th", [_vm._v("Status")])])]);
 }];
 render._withStripped = true;
 
@@ -82935,7 +84108,15 @@ try {
 
 window.axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
-
+var tok = localStorage.getItem('token');
+if (tok) {
+  window.axios.defaults.headers.common['Authorization'] = "Bearer ".concat(tok);
+}
+axios.interceptors.request.use(function (config) {
+  var t = localStorage.getItem('token');
+  if (t) config.headers.Authorization = "Bearer ".concat(t);
+  return config;
+});
 /**
  * Echo exposes an expressive API for subscribing to channels and listening
  * for events that are broadcast by Laravel. Echo and event broadcasting
@@ -83019,6 +84200,75 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ref_6_node_modules_vue_loader_lib_index_js_vue_loader_options_HomeView_vue_vue_type_template_id_d22b00e2__WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ref_6_node_modules_vue_loader_lib_index_js_vue_loader_options_HomeView_vue_vue_type_template_id_d22b00e2__WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/components/ProfileView.vue":
+/*!*************************************************!*\
+  !*** ./resources/js/components/ProfileView.vue ***!
+  \*************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _ProfileView_vue_vue_type_template_id_35df8fd3__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ProfileView.vue?vue&type=template&id=35df8fd3 */ "./resources/js/components/ProfileView.vue?vue&type=template&id=35df8fd3");
+/* harmony import */ var _ProfileView_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ProfileView.vue?vue&type=script&lang=js */ "./resources/js/components/ProfileView.vue?vue&type=script&lang=js");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _ProfileView_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__["default"],
+  _ProfileView_vue_vue_type_template_id_35df8fd3__WEBPACK_IMPORTED_MODULE_0__["render"],
+  _ProfileView_vue_vue_type_template_id_35df8fd3__WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/ProfileView.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/ProfileView.vue?vue&type=script&lang=js":
+/*!*************************************************************************!*\
+  !*** ./resources/js/components/ProfileView.vue?vue&type=script&lang=js ***!
+  \*************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ProfileView_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib??ref--4-0!../../../node_modules/vue-loader/lib??vue-loader-options!./ProfileView.vue?vue&type=script&lang=js */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/ProfileView.vue?vue&type=script&lang=js");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ProfileView_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/ProfileView.vue?vue&type=template&id=35df8fd3":
+/*!*******************************************************************************!*\
+  !*** ./resources/js/components/ProfileView.vue?vue&type=template&id=35df8fd3 ***!
+  \*******************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ref_6_node_modules_vue_loader_lib_index_js_vue_loader_options_ProfileView_vue_vue_type_template_id_35df8fd3__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib??ref--4-0!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??ref--6!../../../node_modules/vue-loader/lib??vue-loader-options!./ProfileView.vue?vue&type=template&id=35df8fd3 */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/ProfileView.vue?vue&type=template&id=35df8fd3");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ref_6_node_modules_vue_loader_lib_index_js_vue_loader_options_ProfileView_vue_vue_type_template_id_35df8fd3__WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ref_6_node_modules_vue_loader_lib_index_js_vue_loader_options_ProfileView_vue_vue_type_template_id_35df8fd3__WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 
@@ -85357,8 +86607,10 @@ var User = /*#__PURE__*/function () {
     value: function responseAfterLogin(res) {
       var access_token = res.data.access_token;
       var username = res.data.name;
+      var userId = res.data.user_id;
       if (_Token__WEBPACK_IMPORTED_MODULE_0__["default"].isValid(access_token)) {
-        _AppStorage__WEBPACK_IMPORTED_MODULE_1__["default"].store(access_token, username);
+        _AppStorage__WEBPACK_IMPORTED_MODULE_1__["default"].store(access_token, username, userId);
+        axios.defaults.headers.common['Authorization'] = "Bearer ".concat(access_token);
       }
     }
   }, {
@@ -85415,6 +86667,7 @@ var register = __webpack_require__(/*! ./components/auth/RegisterView.vue */ "./
 var forget = __webpack_require__(/*! ./components/auth/ForgetView.vue */ "./resources/js/components/auth/ForgetView.vue")["default"];
 var home = __webpack_require__(/*! ./components/HomeView.vue */ "./resources/js/components/HomeView.vue")["default"];
 var logout = __webpack_require__(/*! ./components/auth/LogoutView.vue */ "./resources/js/components/auth/LogoutView.vue")["default"];
+var profile = __webpack_require__(/*! ./components/ProfileView.vue */ "./resources/js/components/ProfileView.vue")["default"];
 var storeemployee = __webpack_require__(/*! ./components/employee/AddEmployeeView.vue */ "./resources/js/components/employee/AddEmployeeView.vue")["default"];
 var employee = __webpack_require__(/*! ./components/employee/AllEmployeesView.vue */ "./resources/js/components/employee/AllEmployeesView.vue")["default"];
 var editemployee = __webpack_require__(/*! ./components/employee/EditEmployeeView.vue */ "./resources/js/components/employee/EditEmployeeView.vue")["default"];
@@ -85462,6 +86715,10 @@ var routes = [{
   path: '/home',
   component: home,
   name: 'home'
+}, {
+  path: '/profile',
+  component: profile,
+  name: 'profile'
 }, {
   path: '/employees',
   component: employee,

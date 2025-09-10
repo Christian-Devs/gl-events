@@ -1,8 +1,10 @@
 <?php
 
+use App\Http\Controllers\Api\EmployeeController;
 use App\Http\Controllers\Api\InvoiceController;
 use App\Role;
 use App\Http\Controllers\Payroll\EmployeeSyncController;
+use App\Http\Controllers\Payroll\LeaveController;
 use App\Http\Controllers\Payroll\PayslipController;
 use Illuminate\Support\Facades\Route;
 
@@ -24,7 +26,15 @@ Route::get('/roles', function () {
     return Role::all();
 });
 
-Route::apiResource('/employee', 'Api\EmployeeController');
+
+Route::middleware(['api', 'auth:api'])->group(function () {
+    // must be BEFORE apiResource so "self" isn't treated as {employee}
+    Route::get('/employee/self', [EmployeeController::class, 'self'])->name('employee.self');
+
+    // constrain {employee} so it only matches numbers, not "self"
+    Route::apiResource('/employee', EmployeeController::class)
+        ->where(['employee' => '[0-9]+']);
+});
 Route::apiResource('/supplier', 'Api\SupplierController');
 Route::apiResource('/jobcard', 'Api\JobcardController');
 Route::apiResource('/settings', 'Api\SystemSettingController')->only(['index', 'update']);
@@ -50,7 +60,17 @@ Route::post('/reports/{type}/email', 'Api\ReportController@emailReport');
 Route::get('/invoices/{id}/download', [InvoiceController::class, 'downloadPdf']);
 Route::post('/invoices/{id}/send', [InvoiceController::class, 'sendInvoiceEmail']);
 Route::post('/invoices/{id}/generate-payment', [InvoiceController::class, 'generatePayment']);
-Route::post('/payroll/simplepay/employee/sync', [EmployeeSyncController::class, 'syncOne']);
-Route::get('/payroll/payslip', [PayslipController::class, 'show']);           // ?employee_id=&client_id=
-Route::get('/payroll/payslip/{id}/pdf', [PayslipController::class, 'pdf']);   // {id} = payslip_id
+Route::prefix('payroll')->group(function () {
+    // Leave
+    Route::get('/leave-types', [LeaveController::class, 'types']);
+    Route::get('/leave-applications', [LeaveController::class, 'index']);
+    Route::post('/leave-applications', [LeaveController::class, 'store']);
+
+    // Payslips list (optional; you already have show + pdf)
+    Route::get('/payslips', [PayslipController::class, 'list']);
+    Route::post('/simplepay/employee/sync', [EmployeeSyncController::class, 'syncOne']);
+    Route::get('/payslip', [PayslipController::class, 'show']);           // ?employee_id=&client_id=
+    Route::get('/payslip/{id}/pdf', [PayslipController::class, 'pdf']);   // {id} = payslip_id
+});
+
 Route::get('/dashboard/summary', 'Api\DashboardController@summary');

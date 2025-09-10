@@ -14,10 +14,6 @@ class SimplePayClient
 
     public function __construct()
     {
-        Log::info('SimplePay cfg', [
-            'base' => $this->base,
-            'key_len' => strlen((string) $this->key),
-        ]);
         $this->base = rtrim(config('services.simplepay.base'), '/');
         $this->key = config('services.simplepay.key');
         $this->http = new Client([
@@ -123,6 +119,26 @@ class SimplePayClient
         return null;
     }
 
+    public function listLeaveTypes(int $clientId): array
+    {
+        return $this->get("clients/{$clientId}/leave_types");
+    }
+
+    /** List leave applications for an employee */
+    public function listEmployeeLeave(int $employeeId): array
+    {
+        return $this->get("employees/{$employeeId}/leave_applications");
+    }
+
+    /** Create a leave application for an employee (SimplePay shape) */
+    public function createEmployeeLeave(int $employeeId, array $payload): array
+    {
+        // expects: ['leave_type_id','start_date','end_date','units','reason?']
+        return $this->post("employees/{$employeeId}/leave_applications", [
+            'json' => ['leave_application' => $payload],
+        ]);
+    }
+
     /** Shortcut: get full payslip JSON for an employee in the latest run */
     public function getLatestPayslipForEmployee(int $clientId, int $employeeId): ?array
     {
@@ -132,6 +148,36 @@ class SimplePayClient
         $psId = $this->findPayslipIdForEmployee($runId, $employeeId);
         return $psId ? $this->getPayslip($psId) : null;
     }
+
+    public function listRecentPayslipsForEmployee(int $clientId, int $employeeId, int $maxRuns = 6): array
+    {
+        $runs = $this->listPayRuns($clientId);
+        $out = [];
+        $count = 0;
+
+        foreach ($runs as $row) {
+            $runId = (int) data_get($row, 'payment_run.id');
+            if (!$runId) continue;
+
+            $psId = $this->findPayslipIdForEmployee($runId, $employeeId);
+            if ($psId) {
+                $full = $this->getPayslip($psId);
+                $out[] = [
+                    'payslip_id' => $psId,
+                    'period'     => (string) data_get($full, 'payslip.date'),
+                    'gross'      => (float) array_sum(array_map(function ($x) {
+                        return is_array($x) && isset($x[1]) ? (float)$x[1] : 0;
+                    }, (array) data_get($full, 'payslip.data.income', []))),
+                    'net'        => (float) data_get($full, 'payslip.data.grand_total.0.1'),
+                ];
+            }
+
+            if (++$count >= $maxRuns) break;
+        }
+
+        return $out;
+    }
+
 
     public function getPrimaryClientId(): int
     {

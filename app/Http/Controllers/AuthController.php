@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Model\Employee;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use DB;
+use Illuminate\Support\Facades\DB;
 
 class AuthController extends Controller
 {
@@ -16,7 +17,7 @@ class AuthController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('JWT', ['except' => ['login','register']]);
+        $this->middleware('JWT', ['except' => ['login', 'register']]);
     }
     //
 
@@ -46,9 +47,18 @@ class AuthController extends Controller
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function me()
+    public function me(Request $request)
     {
-        return response()->json(auth()->user());
+        $user = $request->user() ?: auth('api')->user();
+        if (!$user) return response()->json(['message' => 'Unauthenticated'], 401);
+
+        $employee = Employee::where('user_id', $user->id)->first();
+
+        return response()->json([
+            'user'     => ['id' => $user->id, 'name' => $user->name, 'email' => $user->email],
+            'id'       => optional($employee)->id,
+            'employee' => $employee,
+        ]);
     }
 
     /**
@@ -73,21 +83,22 @@ class AuthController extends Controller
         return $this->respondWithToken(auth()->refresh());
     }
 
-    public function register(Request $request){
+    public function register(Request $request)
+    {
         $validateData = $request->validate([
             'email' => 'required|unique:users|max:255',
             'name' => 'required',
             'password' => 'required|min:6|confirmed'
-     
-          ]);
-     
-          $data = array();
-          $data['name'] = $request->name;
-          $data['email'] = $request->email;
-          $data['password'] = Hash::make($request->password);
-          DB::table('users')->insert($data);
-     
-          return $this->login($request);
+
+        ]);
+
+        $data = array();
+        $data['name'] = $request->name;
+        $data['email'] = $request->email;
+        $data['password'] = Hash::make($request->password);
+        DB::table('users')->insert($data);
+
+        return $this->login($request);
     }
 
     /**

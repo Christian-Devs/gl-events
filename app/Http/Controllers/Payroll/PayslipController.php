@@ -122,6 +122,27 @@ class PayslipController extends Controller
         ]);
     }
 
+    public function list(Request $request, SimplePayClient $sp)
+    {
+        $data = $request->validate([
+            'employee_id' => ['required', 'integer', 'exists:employees,id'],
+            'client_id'   => ['nullable', 'integer'],
+            'max_runs'    => ['nullable', 'integer', 'min:1', 'max:12'],
+        ]);
+
+        $clientId   = $request->filled('client_id') ? (int) $data['client_id'] : (int) $sp->getPrimaryClientId();
+        $employeeId = (int) $data['employee_id'];
+        $maxRuns    = (int) ($data['max_runs'] ?? 6);
+
+        try {
+            $items = $sp->listRecentPayslipsForEmployee($clientId, $employeeId, $maxRuns);
+        } catch (\Throwable $e) {
+            return response()->json(['ok' => false, 'error' => 'Failed to list payslips', 'details' => $e->getMessage()], 422);
+        }
+
+        return response()->json($items);
+    }
+
     /**
      * Streams the official PDF payslip.
      * Route: GET /api/payroll/payslip/{id}/pdf

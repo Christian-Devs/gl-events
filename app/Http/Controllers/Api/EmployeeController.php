@@ -13,9 +13,10 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Validation\Rule;
-use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
 use Throwable;
+use Illuminate\Support\Facades\Auth;
+use Symfony\Component\HttpFoundation\Response;
 
 class EmployeeController extends Controller
 {
@@ -143,8 +144,12 @@ class EmployeeController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($id, Request $request)
     {
+        if ($id === 'me') {
+            return $this->me($request);
+        }
+
         $employee = Employee::with(['role:id,name', 'user:id,name,email,role_id'])->findOrFail($id);
         return response()->json($employee);
     }
@@ -297,5 +302,15 @@ class EmployeeController extends Controller
             Log::error('Employee Delete Failed', ['message' => $e->getMessage()]);
             return response()->json(['message' => 'Server error. Could not delete employee.'], 500);
         }
+    }
+
+    public function self(Request $request)
+    {
+        $user = $request->user(); // requires auth:api (JWT) to be working
+        $employee = Employee::with(['role:id,name', 'user:id,name,email,role_id'])
+            ->where('user_id', $user->id)
+            ->firstOrFail();
+
+        return response()->json($employee);
     }
 }
