@@ -5,12 +5,9 @@ class User {
 
     responseAfterLogin(res) {
         const access_token = res.data.access_token
-        const username = res.data.name
-        const userId = res.data.user_id
-
+        const userObj = res.data.user || {}
         if (Token.isValid(access_token)) {
-            AppStorage.store(access_token, username, userId)
-            axios.defaults.headers.common['Authorization'] = `Bearer ${access_token}`
+            AppStorage.store(access_token, userObj.name || '', userObj.role || null)
         }
     }
 

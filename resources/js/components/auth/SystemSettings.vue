@@ -1,144 +1,187 @@
 <template>
-    <div class="card">
-        <div class="card-header">
-            <h4 class="text-primary">System Settings</h4>
+    <div>
+        <div class="d-sm-flex align-items-center justify-content-between mb-4">
+            <h1 class="h3 mb-0 text-gray-800">System Settings</h1>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><router-link to="/home">Home</router-link></li>
+                <li class="breadcrumb-item active">Settings</li>
+            </ol>
         </div>
-        <div class="card-body">
-            <form @submit.prevent="saveSettings">
-                <!-- Company Name & VAT Number-->
-                <div class="form-group">
-                    <div class="form-row">
-                        <div class="col-md-6">
-                            <label>Company Name</label>
-                            <input type="text" v-model="form.company_name" class="form-control" />
+
+        <ul class="nav nav-tabs">
+            <li class="nav-item"><a href="#" class="nav-link" :class="{ active: tab === 'company' }"
+                    @click.prevent="tab = 'company'">Company</a></li>
+            <li class="nav-item"><a href="#" class="nav-link" :class="{ active: tab === 'simplepay' }"
+                    @click.prevent="tab = 'simplepay'">SimplePay</a></li>
+            <li class="nav-item"><a href="#" class="nav-link" :class="{ active: tab === 'email' }"
+                    @click.prevent="tab = 'email'">Email</a></li>
+            <li class="nav-item"><a href="#" class="nav-link" :class="{ active: tab === 'numbering' }"
+                    @click.prevent="tab = 'numbering'">Numbering</a></li>
+        </ul>
+
+        <div class="card mt-3">
+            <div class="card-body">
+                <form @submit.prevent="save" autocomplete="off">
+                    <!-- Company -->
+                    <div v-show="tab === 'company'">
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <label>Company Name</label>
+                                <input class="form-control" v-model="form.company.company_name">
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label>Logo URL</label>
+                                <input class="form-control" v-model="form.company.company_logo_url">
+                            </div>
                         </div>
-                        <div class="col-md-6">
-                            <label>VAT Number</label>
-                            <input type="text" v-model="form.vat_number" class="form-control" />
+                        <div class="form-row">
+                            <div class="form-group col-md-3">
+                                <label>Default Tax Rate (%)</label>
+                                <input type="number" min="0" step="0.01" class="form-control"
+                                    v-model.number="form.company.tax_rate">
+                            </div>
                         </div>
                     </div>
-                </div>
 
-                <!-- VAT Rate & Currency-->
-                <div class="form-group">
-                    <div class="form-row">
-                        <div class="col-md-6">
-                            <label>VAT Rate (%)</label>
-                            <input type="number" v-model="form.vat_rate" class="form-control" step="0.01" min="0" />
+                    <!-- SimplePay -->
+                    <div v-show="tab === 'simplepay'">
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <label>API Base URL</label>
+                                <input class="form-control" v-model="form.simplepay.base"
+                                    placeholder="https://api.payroll.simplepay.cloud/v1">
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label>API Key (secret)</label>
+                                <input class="form-control" v-model="form.simplepay.key" placeholder="••••••••">
+                                <small class="text-muted">Leave blank to keep existing.</small>
+                            </div>
                         </div>
-                        <div class="col-md-6">
-                            <label>Currency</label>
-                            <input type="text" v-model="form.currency" class="form-control" />
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Email & Phone-->
-                <div class="form-group">
-                    <div class="form-row">
-                        <div class="col-md-6">
-                            <label>Email</label>
-                            <input type="email" v-model="form.email" class="form-control" />
-                        </div>
-                        <div class="col-md-6">
-                            <label>Phone</label>
-                            <input type="text" v-model="form.phone" class="form-control" />
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Address -->
-                <div class="form-group">
-                    <label>Address</label>
-                    <textarea v-model="form.address" class="form-control"></textarea>
-                </div>
-
-                <!-- Footer Note -->
-                <div class="form-group">
-                    <label>Footer Note</label>
-                    <textarea v-model="form.footer_note" class="form-control"></textarea>
-                </div>
-
-                <!-- Logo Upload -->
-                <div class="form-group">
-                    <div class="form-row">
-                        <div class="col-md-7">
-                            <label>Company Logo</label>
-                            <input type="file" class="form-control" @change="handleLogoUpload" />
-                            <img v-if="preview" :src="preview" class="mt-2" style="height: 60px;" />
+                        <div class="form-row">
+                            <div class="form-group col-md-3">
+                                <label>Client ID</label>
+                                <input type="number" class="form-control" v-model.number="form.simplepay.client_id">
+                            </div>
+                            <div class="form-group col-md-3">
+                                <label>Wave ID (Monthly)</label>
+                                <input type="number" class="form-control" v-model.number="form.simplepay.wave_monthly">
+                            </div>
+                            <div class="form-group col-md-3">
+                                <label>Wave ID (Weekly)</label>
+                                <input type="number" class="form-control" v-model.number="form.simplepay.wave_weekly">
+                            </div>
                         </div>
                     </div>
-                </div>
 
-                <button type="submit" class="btn btn-primary" :disabled="loading">
-                    {{ loading ? 'Saving...' : 'Save Settings' }}
-                </button>
-            </form>
+                    <!-- Email -->
+                    <div v-show="tab === 'email'">
+                        <div class="form-row">
+                            <div class="form-group col-md-4">
+                                <label>SMTP Host</label>
+                                <input class="form-control" v-model="form.email.host">
+                            </div>
+                            <div class="form-group col-md-2">
+                                <label>Port</label>
+                                <input type="number" class="form-control" v-model.number="form.email.port">
+                            </div>
+                            <div class="form-group col-md-3">
+                                <label>Username</label>
+                                <input class="form-control" v-model="form.email.username">
+                            </div>
+                            <div class="form-group col-md-3">
+                                <label>Password (secret)</label>
+                                <input type="password" class="form-control" v-model="form.email.password"
+                                    placeholder="••••••••">
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <label>From Address</label>
+                                <input type="email" class="form-control" v-model="form.email.from"
+                                    placeholder="no-reply@company.com">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Numbering -->
+                    <div v-show="tab === 'numbering'">
+                        <div class="form-row">
+                            <div class="form-group col-md-3">
+                                <label>Invoice Prefix</label>
+                                <input class="form-control" v-model="form.numbering.invoice_prefix">
+                            </div>
+                            <div class="form-group col-md-3">
+                                <label>Quote Prefix</label>
+                                <input class="form-control" v-model="form.numbering.quote_prefix">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="d-flex align-items-center">
+                        <button class="btn btn-primary" :disabled="saving">
+                            <span v-if="saving" class="spinner-border spinner-border-sm mr-2"></span>
+                            Save Settings
+                        </button>
+                        <span v-if="saved" class="text-success ml-3">Saved</span>
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
 </template>
 
 <script>
+import Notification from '../../helpers/Notification'
+
 export default {
     data() {
         return {
+            tab: 'company',
+            saving: false,
+            saved: false,
             form: {
-                company_name: '',
-                vat_number: '',
-                vat_rate: 0,
-                currency: '',
-                email: '',
-                phone: '',
-                address: '',
-                footer_note: '',
-                logo: null,
-            },
-            preview: null,
-            settingsId: 1,
-            loading: false
-        };
+                company: { company_name: '', company_logo_url: '', tax_rate: null },
+                simplepay: { base: '', key: '', client_id: null, wave_monthly: null, wave_weekly: null },
+                email: { host: '', port: null, username: '', password: '', from: '' },
+                numbering: { invoice_prefix: 'INV', quote_prefix: 'QT' }
+            }
+        }
     },
-    created() {
-        this.loadSettings();
+    async created() {
+        if (!User.loggedIn()) return this.$router.push({ name: 'login' })
+        try {
+            const { data } = await axios.get('/api/settings')
+            // merge defaults with server values
+            this.form = {
+                company: { ...this.form.company, ...(data.company || {}) },
+                simplepay: { ...this.form.simplepay, ...(data.simplepay || {}) },
+                email: { ...this.form.email, ...(data.email || {}) },
+                numbering: { ...this.form.numbering, ...(data.numbering || {}) },
+            }
+        } catch (e) {
+            Notification.error('Failed to load settings')
+            console.error(e)
+        }
     },
     methods: {
-        loadSettings() {
-            axios.get('/api/settings')
-                .then(response => {
-                    this.form = response.data;
-                    this.settingsId = response.data.id;
-                    if (response.data.logo) {
-                        this.preview = '/' + response.data.logo;
-                    }
-                })
-                .catch(error => {
-                    console.error('Failed to load settings:', error);
-                    alert('Failed to load settings');
-                });
-        },
-        handleLogoUpload(event) {
-            let file = event.target.files[0];
-            let reader = new FileReader();
-            reader.onload = (e) => {
-                this.form.logo = e.target.result;
-                this.preview = e.target.result;
-            };
-            reader.readAsDataURL(file);
-        },
-        saveSettings() {
-            this.loading = true;
-            axios.put(`/api/settings/${this.settingsId}`, this.form)
-                .then(() => {
-                    alert('Settings saved successfully');
-                })
-                .catch((error) => {
-                    console.error('Save failed:', error);
-                    alert('Failed to save settings');
-                })
-                .finally(() => {
-                    this.loading = false;
-                });
+        async save() {
+            this.saving = true; this.saved = false
+            try {
+                await axios.put('/api/settings', this.form)
+                this.saved = true
+                Notification.success('Settings saved')
+                // Refresh public settings for UI elements
+                try {
+                    const { data } = await axios.get('/api/settings/public')
+                    localStorage.setItem('cfg', JSON.stringify(data))
+                } catch { }
+            } catch (e) {
+                Notification.error(e?.response?.data?.message || 'Failed to save')
+                console.error(e)
+            } finally {
+                this.saving = false
+            }
         }
     }
-};
+}
 </script>

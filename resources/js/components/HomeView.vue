@@ -104,7 +104,7 @@
                         <h6 class="m-0 font-weight-bold text-primary">Employees Added (last 6 months)</h6>
                     </div>
                     <div class="card-body">
-                        <CanvasJSChart :options="chartOptions" :style="{ width: '100%', height: '320px' }" />
+                        <div ref="empChart" style="width:100%; height:320px;"></div>
                     </div>
                 </div>
             </div>
@@ -210,6 +210,7 @@ export default {
     data() {
         return {
             loading: false,
+            chartStyles: { width: '100%', height: '320px' },
             dash: {
                 totals: { employees: 0, active: 0, active_pct: 0, linked: 0, not_linked: 0 },
                 recent: [],
@@ -222,40 +223,73 @@ export default {
             }
         }
     },
-    computed: {
-        chartOptions() {
-            const points = (this.dash.per_month || []).map(row => ({
-                x: new Date(row.month_start),
-                y: Number(row.cnt || 0)
-            }))
-            return {
-                animationEnabled: true,
-                axisX: { valueFormatString: 'MMM YYYY' },
-                axisY: { includeZero: true },
-                data: [{ type: 'column', dataPoints: points }]
-            }
-        }
-    },
     async created() {
         if (!User.loggedIn()) {
             this.$router.push({ name: '/' })
             return
         }
         await this.fetchDashboard()
+        this.updateTitle('Dashboard')
+    },
+    watch: {
+        'dash.per_month': {
+            deep: true,
+            immediate: true,
+            handler() {
+                this.renderEmpChart();
+            }
+        }
+    },
+    mounted() {
+        this.$nextTick(() => this.renderEmpChart());
     },
     methods: {
         async fetchDashboard() {
             this.loading = true
             try {
-                const { data } = await axios.get('/api/dashboard')
+                const { data } = await axios.get('/api/dashboard/summary')
                 if (data && data.totals) {
                     this.dash = { ...this.dash, ...data }
                 }
+                this.$nextTick(() => this.renderEmpChart());
             } catch (e) {
                 console.error(e)
             } finally {
                 this.loading = false
             }
+        },
+        renderEmpChart() {
+            const Chart = window.CanvasJS && window.CanvasJS.Chart
+            if (!Chart) {
+                console.warn('CanvasJS.Chart not available yet.')
+                return
+            }
+
+            const rows = Array.isArray(this.dash?.per_month) ? this.dash.per_month : []
+
+            const points = rows.map(r => ({
+                x: new Date(r.month_start),
+                y: Number(r.cnt || 0)
+            }))
+
+            const el = this.$refs.empChart
+            if (!el) {
+                console.warn('empChart ref not found')
+                return
+            }
+
+            if (!points.length) {
+                el.innerHTML = '<div class="text-muted">No employee additions in the last 6 months.</div>'
+                return
+            }
+
+            const chart = new Chart(el, {
+                animationEnabled: true,
+                axisX: { valueFormatString: 'MMM YYYY' },
+                axisY: { includeZero: true },
+                data: [{ type: 'column', dataPoints: points }]
+            })
+            chart.render()
         },
         formatMoney(n) {
             const v = Number(n || 0)

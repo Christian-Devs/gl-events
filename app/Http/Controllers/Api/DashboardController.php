@@ -9,6 +9,7 @@ use App\Model\Invoice;
 use App\Services\SimplePayClient;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Schema;
 
 class DashboardController extends Controller
 {
@@ -62,11 +63,11 @@ class DashboardController extends Controller
         $quotesPending = Quote::where('status', 'pending_approval')->count();
 
         // Option B (fallback): approved flag
-        if ($quotesPending === 0 && Schema()->hasColumn((new Quote)->getTable(), 'approved')) {
+        if ($quotesPending === 0 && Schema::hasColumn((new Quote)->getTable(), 'approved')) {
             $quotesPending = Quote::where('approved', false)->count();
         }
 
-        $quotesPendingList = Quote::select('id', 'number', 'client_name', 'total', 'created_at', 'status')
+        $quotesPendingList = Quote::select('id', 'quote_number', 'client_name', 'total', 'created_at', 'status')
             ->where('status', 'pending_approval')
             ->orderByDesc('created_at')
             ->limit(5)
@@ -87,16 +88,16 @@ class DashboardController extends Controller
 
         // Try to sum amount_due; fallback to total - paid_amount if amount_due missing
         $outstandingField = 'amount_due';
-        $hasAmountDue = Schema()->hasColumn((new Invoice)->getTable(), $outstandingField);
+        $hasAmountDue = Schema::hasColumn((new Invoice)->getTable(), $outstandingField);
 
         $invoicesUnpaidCount = (clone $invoicesUnpaidQuery)->count();
         $invoicesOutstanding = $hasAmountDue
             ? (clone $invoicesUnpaidQuery)->sum($outstandingField)
-            : (clone $invoicesUnpaidQuery)->sum(DB::raw('(total - COALESCE(paid_amount,0))'));
+            : (clone $invoicesUnpaidQuery)->sum('total');
 
-        $invoicesUnpaidList = Invoice::select('id', 'number', 'client_name', 'due_date', 'status')
+        $invoicesUnpaidList = Invoice::select('id', 'invoice_number', 'quote_id', 'due_date', 'status')
             ->when($hasAmountDue, fn($q) => $q->addSelect('amount_due'))
-            ->when(!$hasAmountDue, fn($q) => $q->addSelect(DB::raw('(total - COALESCE(paid_amount,0)) as amount_due')))
+            ->when(!$hasAmountDue, fn($q) => $q->addSelect('total'))
             ->whereIn('status', $unpaidStatuses)
             ->orderBy('due_date')      // earliest due first
             ->limit(5)
@@ -128,12 +129,5 @@ class DashboardController extends Controller
                 ],
             ],
         ]);
-    }
-}
-
-if (!function_exists('Schema')) {
-    function Schema()
-    {
-        return app('db.schema');
     }
 }

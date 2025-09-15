@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Model\Employee;
+use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -39,6 +40,20 @@ class AuthController extends Controller
             return response()->json(['error' => 'Unauthorized'], 401);
         }
 
+        $user = auth()->user();
+
+        if (Hash::check(config('auth.default_password'), $user->password)) {
+            $user->force_password_change = true;
+            $user->save();
+
+            return response()->json([
+                'message' => 'Password change required',
+                'force_password_change' => true,
+                'access_token' => $token,
+                'token_type'   => 'bearer',
+                'expires_in'   => auth()->factory()->getTTL() * 60,
+            ]);
+        }
         return $this->respondWithToken($token);
     }
 
@@ -52,12 +67,19 @@ class AuthController extends Controller
         $user = $request->user() ?: auth('api')->user();
         if (!$user) return response()->json(['message' => 'Unauthenticated'], 401);
 
+        // eager-load role to avoid N+1
+        $user->load('role');
+
         $employee = Employee::where('user_id', $user->id)->first();
 
         return response()->json([
-            'user'     => ['id' => $user->id, 'name' => $user->name, 'email' => $user->email],
-            'id'       => optional($employee)->id,
-            'employee' => $employee,
+            'user' => [
+                'id'    => $user->id,
+                'name'  => $user->name,
+                'email' => $user->email,
+                'role'  => optional($user->role)->name, // <-- add this
+            ],
+            'employee' => $employee ? ['id' => $employee->id] : null,
         ]);
     }
 
@@ -110,13 +132,35 @@ class AuthController extends Controller
      */
     protected function respondWithToken($token)
     {
+        $user = auth()->user()->load('role');
+
         return response()->json([
             'access_token' => $token,
-            'token_type' => 'bearer',
-            'expires_in' => auth()->factory()->getTTL() * 60,
-            'name' => auth()->user()->name,
-            'user_id' => auth()->user()->id,
-            'email' => auth()->user()->email,
+            'token_type'   => 'bearer',
+            'expires_in'   => auth()->factory()->getTTL() * 60,
+
+            // keep the old flat fields if you like, but add a unified 'user'
+            'user' => [
+                'id'    => $user->id,
+                'name'  => $user->name,
+                'email' => $user->email,
+                'role'  => optional($user->role)->name,
+            ],
         ]);
+    }
+
+    public function changePassword(Request $request)
+    {
+        $request->validate([
+            'user_id' => 'required|exists:users,id',
+            'password' => 'required|min:6|confirmed',
+        ]);
+
+        $user = User::find($request->user_id);
+        $user->password = Hash::make($request->password);
+        $user->force_password_change = false;
+        $user->save();
+
+        return response()->json(['message' => 'Password changed successfully']);
     }
 }

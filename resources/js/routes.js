@@ -6,6 +6,7 @@ let forget = require('./components/auth/ForgetView.vue').default;
 let home = require('./components/HomeView.vue').default;
 let logout = require('./components/auth/LogoutView.vue').default;
 let profile = require('./components/ProfileView.vue').default;
+let changePassword = require('./components/auth/ChangePasswordView.vue').default;
 
 let storeemployee = require('./components/employee/AddEmployeeView.vue').default;
 let employee = require('./components/employee/AllEmployeesView.vue').default;
@@ -43,12 +44,13 @@ let salariessreport = require('./components/reports/SalariesReport.vue').default
 let systemsettings = require('./components/auth/SystemSettings.vue').default;
 
 export const routes = [
-    { path: '/', component: login, name: '/' },
+    { path: '/', component: login, name: '/', meta: { auth: false } },
     { path: '/register', component: register, name: 'register' },
     { path: '/forgotPassword', component: forget, name: 'forgotPassword' },
     { path: '/logout', component: logout, name: 'logout' },
     { path: '/home', component: home, name: 'home' },
     { path: '/profile', component: profile, name: 'profile' },
+    { path: '/change-password', name: 'change-password', component: changePassword, meta: { guest: true } },
 
     { path: '/employees', component: employee, name: 'employees' },
     { path: '/add-employee', component: storeemployee, name: 'add-employee' },

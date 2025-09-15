@@ -5,7 +5,8 @@
                 <div class="card shadow-sm my-5">
                     <div class="card-header justify-content-center text-center" style="background-color: black">
                         <img src="backend/img/logo/logo.png">
-                        <h2 class="text-white mt-2" style="font-weight: bolder;">GL Events SA - Business Management System</h2>
+                        <h2 class="text-white mt-2" style="font-weight: bolder;">GL Events SA - Business Management
+                            System</h2>
                     </div>
                     <div class="card-body p-0">
                         <div class="row">
@@ -26,8 +27,17 @@
                                             </small>
                                         </div>
                                         <div class="form-group">
-                                            <input type="password" class="form-control" id="exampleInputPassword"
-                                                placeholder="Password" v-model="form.password" />
+                                            <div class="input-group">
+                                                <input :type="show1 ? 'text' : 'password'" class="form-control"
+                                                    v-model.trim="form.password" autocomplete="new-password"
+                                                    :disabled="submitting" minlength="6" required />
+                                                <div class="input-group-append">
+                                                    <button class="btn btn-outline-secondary" type="button"
+                                                        @click="show1 = !show1">
+                                                        <i :class="['fas', show1 ? 'fa-eye-slash' : 'fa-eye']"></i>
+                                                    </button>
+                                                </div>
+                                            </div>
                                             <small class="text-danger" v-if="errors.password">
                                                 {{ errors.password[0] }}
                                             </small>
@@ -66,6 +76,7 @@ export default {
         if (User.loggedIn()) {
             this.$router.push({ name: 'home' })
         }
+        this.updateTitle('Login')
     },
     data() {
         return {
@@ -73,6 +84,7 @@ export default {
                 email: null,
                 password: null
             },
+            show1: false,
             errors: {
 
             }
@@ -82,6 +94,15 @@ export default {
         login() {
             axios.post('api/auth/login', this.form)
                 .then(res => {
+                    const { access_token, force_password_change } = res.data;
+
+                    if (access_token) {
+                        localStorage.setItem('token', access_token);
+                    }
+                    if (force_password_change) {
+                        this.$router.push({ name: 'change-password' });
+                        return;
+                    }
                     User.responseAfterLogin(res)
                     Toast.fire({
                         icon: "success",

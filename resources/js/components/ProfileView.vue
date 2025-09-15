@@ -357,12 +357,11 @@ export default {
             this.$router.push({ name: '/' })
             return
         }
-
+        this.updateTitle('Profile')
         this.loading = true
         try {
             // 1) Get the current user's employee (authorised via JWT)
             const { data } = await axios.get('/api/employee/self')
-            console.log('Employee /self data', data)
             this.employeeId = data.id;
             const emp = data;
 

@@ -18,6 +18,8 @@ return [
         'passwords' => 'users',
     ],
 
+    'default_password' => env('DEFAULT_PASSWORD', 'defaultPass'),
+
     /*
     |--------------------------------------------------------------------------
     | Authentication Guards

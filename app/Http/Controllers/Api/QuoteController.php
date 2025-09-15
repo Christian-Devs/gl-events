@@ -30,9 +30,14 @@ class QuoteController extends Controller
      */
     public function store(Request $request)
     {
+        $latestQuote = Quote::orderBy('id', 'desc')->first();
+        $nextNumber = $latestQuote ? $latestQuote->id + 1 : 1;
+        $quoteNumber = 'QT-' . str_pad($nextNumber, 5, '0', STR_PAD_LEFT);
+
         $validated = $request->validate([
             'client_name' => 'required|string|max:255',
             'client_email' => 'nullable|email',
+            'quote_number' => $quoteNumber,
             'quote_date' => now(),
             'subtotal' => 'required|numeric|min:0',
             'vat' => 'nullable|numeric|min:0',

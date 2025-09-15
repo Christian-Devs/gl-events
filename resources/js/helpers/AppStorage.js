@@ -1,29 +1,39 @@
-class AppStorage{
+class AppStorage {
 
-    storeToken(token){
+    storeToken(token) {
         localStorage.setItem('token', token);
     }
 
-    storeUser(user){
+    storeUser(user) {
         localStorage.setItem('user', user);
     }
 
-    store(token,user){
-        this.storeToken(token);
-        this.storeUser(user);
+    storeRole(role) {
+        localStorage.setItem('role', role);
     }
 
-    clear(){
+    store(token, user, role = null) {
+        this.storeToken(token)
+        this.storeUser(user)
+        if (role) this.storeRole(role)
+    }
+
+    clear() {
         localStorage.removeItem('token', token);
         localStorage.removeItem('user', user);
+        localStorage.removeItem('role', role);
     }
 
-    getToken(){
-        localStorage.getItem('token');
+    getToken() {
+        return localStorage.getItem('token');
     }
 
-    getUser(){
-        localStorage.getItem('user');
+    getUser() {
+        return localStorage.getItem('user');
+    }
+
+    getRole() {
+        return localStorage.getItem('role');
     }
 }
 

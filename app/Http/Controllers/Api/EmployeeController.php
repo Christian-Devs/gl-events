@@ -99,6 +99,7 @@ class EmployeeController extends Controller
                     'name'     => $fullName,
                     'email'    => $validated['email'],
                     'password' => Hash::make('defaultPass'),
+                    'force_password_change' => $request->password === config('auth.default_password'),
                     'role_id'  => $validated['role_id'],
                 ]);
 
