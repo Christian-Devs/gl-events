@@ -38,6 +38,7 @@ return [
             'monthly'     => env('SIMPLEPAY_WAVE_ID_MONTHLY'),
             'weekly'      => env('SIMPLEPAY_WAVE_ID_WEEKLY'),
         ],
+        'banks' => json_decode(env('SIMPLEPAY_BANKS_JSON', '[]'), true),
     ],
 
 ];

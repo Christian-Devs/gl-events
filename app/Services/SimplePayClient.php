@@ -119,6 +119,11 @@ class SimplePayClient
         return null;
     }
 
+    public function listBanks(): array
+    {
+        return $this->get('banks');
+    }
+
     public function listLeaveTypes(int $clientId): array
     {
         return $this->get("clients/{$clientId}/leave_types");

@@ -4,6 +4,7 @@ use App\Http\Controllers\Api\DashboardController;
 use App\Http\Controllers\Api\EmployeeController;
 use App\Http\Controllers\Api\InvoiceController;
 use App\Http\Controllers\Api\JobcardController;
+use App\Http\Controllers\Api\MetaController;
 use App\Http\Controllers\Api\PaymentController;
 use App\Http\Controllers\Api\QuoteController;
 use App\Http\Controllers\Api\ReportController;
@@ -76,6 +77,11 @@ Route::middleware(['api', 'auth:api'])->group(function () {
         Route::post('/simplepay/employee/sync', [EmployeeSyncController::class, 'syncOne']);
         Route::get('/payslip', [PayslipController::class, 'show']);           // ?employee_id=&client_id=
         Route::get('/payslip/{id}/pdf', [PayslipController::class, 'pdf']);   // {id} = payslip_id
+
+        //get list of supported banks from SimplePay
+        Route::get('/banks', function () {
+            return response()->json(config('services.simplepay.banks') ?: []);
+        });
     });
 
     Route::get('/dashboard/summary', [DashboardController::class, 'summary'])->name('dashboard.summary');

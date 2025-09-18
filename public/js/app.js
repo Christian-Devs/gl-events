@@ -3008,6 +3008,7 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
+      banks: [],
       roles: [],
       errors: {},
       fullName: '',
@@ -3047,6 +3048,12 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
     axios.get('/api/roles').then(function (res) {
       _this.roles = res.data;
     })["catch"](function () {});
+    // fetch banks for dropdown
+    axios.get('/api/payroll/banks').then(function (res) {
+      _this.banks = Array.isArray(res.data) ? res.data : [];
+    })["catch"](function () {
+      _this.banks = [];
+    });
   },
   methods: {
     splitFullName: function splitFullName() {
@@ -3094,6 +3101,18 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
           }
         }, _callee, null, [[2, 9, 12, 15]]);
       }))();
+    }
+  },
+  watch: {
+    'form.payment_method': function formPayment_method(val) {
+      if (val !== 'eft_manual') {
+        this.form.bank_id = null;
+        this.form.bank_account_number = '';
+        this.form.bank_branch_code = '';
+        this.form.bank_account_type = '';
+        this.form.bank_holder_relationship = '';
+        this.form.bank_holder_name = '';
+      }
     }
   }
 });
@@ -3244,6 +3263,7 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
+      banks: [],
       roles: [],
       errors: {},
       errorText: '',
@@ -3294,16 +3314,21 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
           case 7:
             rolesRes = _context.sent;
             _this.roles = rolesRes.data || [];
-            _context.next = 13;
+            axios.get('/api/payroll/banks').then(function (res) {
+              _this.banks = Array.isArray(res.data) ? res.data : [];
+            })["catch"](function () {
+              _this.banks = [];
+            });
+            _context.next = 14;
             break;
-          case 11:
-            _context.prev = 11;
+          case 12:
+            _context.prev = 12;
             _context.t0 = _context["catch"](4);
-          case 13:
-            _context.prev = 13;
-            _context.next = 16;
+          case 14:
+            _context.prev = 14;
+            _context.next = 17;
             return axios.get("/api/employee/".concat(id));
-          case 16:
+          case 17:
             _yield$axios$get = _context.sent;
             data = _yield$axios$get.data;
             // Normalize dates and hydrate bank fields safely
@@ -3330,18 +3355,18 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
               bank_holder_relationship: data.bank_holder_relationship || '',
               bank_holder_name: data.bank_holder_name || ''
             };
-            _context.next = 26;
+            _context.next = 27;
             break;
-          case 22:
-            _context.prev = 22;
-            _context.t1 = _context["catch"](13);
+          case 23:
+            _context.prev = 23;
+            _context.t1 = _context["catch"](14);
             _this.errorText = 'Failed to load employee';
             console.error(_context.t1);
-          case 26:
+          case 27:
           case "end":
             return _context.stop();
         }
-      }, _callee, null, [[4, 11], [13, 22]]);
+      }, _callee, null, [[4, 12], [14, 23]]);
     }))();
   },
   methods: {
@@ -3385,6 +3410,18 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
           }
         }, _callee2, null, [[4, 11, 14, 17]]);
       }))();
+    }
+  },
+  watch: {
+    'form.payment_method': function formPayment_method(val) {
+      if (val !== 'eft_manual') {
+        this.form.bank_id = null;
+        this.form.bank_account_number = '';
+        this.form.bank_branch_code = '';
+        this.form.bank_account_type = '';
+        this.form.bank_holder_relationship = '';
+        this.form.bank_holder_name = '';
+      }
     }
   }
 });
@@ -7243,7 +7280,7 @@ var render = function render() {
     staticClass: "form-row"
   }, [_c("div", {
     staticClass: "col-md-6"
-  }, [_c("input", {
+  }, [_c("label", [_vm._v("First Name")]), _vm._v(" "), _c("input", {
     directives: [{
       name: "model",
       rawName: "v-model",
@@ -7253,7 +7290,7 @@ var render = function render() {
     staticClass: "form-control",
     attrs: {
       type: "text",
-      placeholder: "First name"
+      placeholder: "John"
     },
     domProps: {
       value: _vm.form.first_name
@@ -7268,7 +7305,7 @@ var render = function render() {
     staticClass: "text-danger"
   }, [_vm._v(_vm._s(_vm.errors.first_name[0]))]) : _vm._e()]), _vm._v(" "), _c("div", {
     staticClass: "col-md-6"
-  }, [_c("input", {
+  }, [_c("label", [_vm._v("Last Name")]), _vm._v(" "), _c("input", {
     directives: [{
       name: "model",
       rawName: "v-model",
@@ -7278,7 +7315,7 @@ var render = function render() {
     staticClass: "form-control",
     attrs: {
       type: "text",
-      placeholder: "Last name"
+      placeholder: "Doe"
     },
     domProps: {
       value: _vm.form.last_name
@@ -7297,7 +7334,7 @@ var render = function render() {
     staticClass: "form-row"
   }, [_c("div", {
     staticClass: "col-md-6"
-  }, [_c("input", {
+  }, [_c("label", [_vm._v("Email")]), _vm._v(" "), _c("input", {
     directives: [{
       name: "model",
       rawName: "v-model",
@@ -7307,7 +7344,7 @@ var render = function render() {
     staticClass: "form-control",
     attrs: {
       type: "email",
-      placeholder: "Email"
+      placeholder: "john@example.com"
     },
     domProps: {
       value: _vm.form.email
@@ -7322,7 +7359,7 @@ var render = function render() {
     staticClass: "text-danger"
   }, [_vm._v(_vm._s(_vm.errors.email[0]))]) : _vm._e()]), _vm._v(" "), _c("div", {
     staticClass: "col-md-6"
-  }, [_c("input", {
+  }, [_c("label", [_vm._v("Phone")]), _vm._v(" "), _c("input", {
     directives: [{
       name: "model",
       rawName: "v-model",
@@ -7332,7 +7369,7 @@ var render = function render() {
     staticClass: "form-control",
     attrs: {
       type: "text",
-      placeholder: "Phone"
+      placeholder: "+27 82 123 4567"
     },
     domProps: {
       value: _vm.form.phone
@@ -7351,7 +7388,7 @@ var render = function render() {
     staticClass: "form-row"
   }, [_c("div", {
     staticClass: "col-md-6"
-  }, [_c("input", {
+  }, [_c("label", [_vm._v("ID / Passport Number")]), _vm._v(" "), _c("input", {
     directives: [{
       name: "model",
       rawName: "v-model",
@@ -7376,7 +7413,7 @@ var render = function render() {
     staticClass: "text-danger"
   }, [_vm._v(_vm._s(_vm.errors.id_number[0]))]) : _vm._e()]), _vm._v(" "), _c("div", {
     staticClass: "col-md-3"
-  }, [_c("input", {
+  }, [_c("label", [_vm._v("Birthdate")]), _vm._v(" "), _c("input", {
     directives: [{
       name: "model",
       rawName: "v-model",
@@ -7385,8 +7422,7 @@ var render = function render() {
     }],
     staticClass: "form-control",
     attrs: {
-      type: "date",
-      placeholder: "Birthdate"
+      type: "date"
     },
     domProps: {
       value: _vm.form.birthdate
@@ -7401,7 +7437,7 @@ var render = function render() {
     staticClass: "text-danger"
   }, [_vm._v(_vm._s(_vm.errors.birthdate[0]))]) : _vm._e()]), _vm._v(" "), _c("div", {
     staticClass: "col-md-3"
-  }, [_c("input", {
+  }, [_c("label", [_vm._v("Start Date")]), _vm._v(" "), _c("input", {
     directives: [{
       name: "model",
       rawName: "v-model",
@@ -7410,8 +7446,7 @@ var render = function render() {
     }],
     staticClass: "form-control",
     attrs: {
-      type: "date",
-      placeholder: "Start date"
+      type: "date"
     },
     domProps: {
       value: _vm.form.start_date
@@ -7430,7 +7465,7 @@ var render = function render() {
     staticClass: "form-row"
   }, [_c("div", {
     staticClass: "col-md-4"
-  }, [_c("select", {
+  }, [_c("label", [_vm._v("Pay Frequency")]), _vm._v(" "), _c("select", {
     directives: [{
       name: "model",
       rawName: "v-model",
@@ -7454,7 +7489,7 @@ var render = function render() {
       disabled: "",
       value: ""
     }
-  }, [_vm._v("Pay frequency")]), _vm._v(" "), _c("option", {
+  }, [_vm._v("Select...")]), _vm._v(" "), _c("option", {
     attrs: {
       value: "monthly"
     }
@@ -7466,7 +7501,7 @@ var render = function render() {
     staticClass: "text-danger"
   }, [_vm._v(_vm._s(_vm.errors.pay_frequency[0]))]) : _vm._e()]), _vm._v(" "), _c("div", {
     staticClass: "col-md-4"
-  }, [_c("select", {
+  }, [_c("label", [_vm._v("Payment Method")]), _vm._v(" "), _c("select", {
     directives: [{
       name: "model",
       rawName: "v-model",
@@ -7490,7 +7525,7 @@ var render = function render() {
       disabled: "",
       value: ""
     }
-  }, [_vm._v("Payment method")]), _vm._v(" "), _c("option", {
+  }, [_vm._v("Select...")]), _vm._v(" "), _c("option", {
     attrs: {
       value: "cash"
     }
@@ -7506,7 +7541,7 @@ var render = function render() {
     staticClass: "text-danger"
   }, [_vm._v(_vm._s(_vm.errors.payment_method[0]))]) : _vm._e()]), _vm._v(" "), _c("div", {
     staticClass: "col-md-4"
-  }, [_c("select", {
+  }, [_c("label", [_vm._v("Employment Status")]), _vm._v(" "), _c("select", {
     directives: [{
       name: "model",
       rawName: "v-model",
@@ -7530,7 +7565,7 @@ var render = function render() {
       disabled: "",
       value: ""
     }
-  }, [_vm._v("Employment status")]), _vm._v(" "), _c("option", {
+  }, [_vm._v("Select...")]), _vm._v(" "), _c("option", {
     attrs: {
       value: "active"
     }
@@ -7546,7 +7581,7 @@ var render = function render() {
     staticClass: "form-row"
   }, [_c("div", {
     staticClass: "col-md-3"
-  }, [_vm._m(1), _vm._v(" "), _c("input", {
+  }, [_vm._m(1), _vm._v(" "), _c("select", {
     directives: [{
       name: "model",
       rawName: "v-model.number",
@@ -7557,27 +7592,36 @@ var render = function render() {
       }
     }],
     staticClass: "form-control",
-    attrs: {
-      type: "number",
-      placeholder: "Bank ID"
-    },
-    domProps: {
-      value: _vm.form.bank_id
-    },
     on: {
-      input: function input($event) {
-        if ($event.target.composing) return;
-        _vm.$set(_vm.form, "bank_id", _vm._n($event.target.value));
-      },
-      blur: function blur($event) {
-        return _vm.$forceUpdate();
+      change: function change($event) {
+        var $$selectedVal = Array.prototype.filter.call($event.target.options, function (o) {
+          return o.selected;
+        }).map(function (o) {
+          var val = "_value" in o ? o._value : o.value;
+          return _vm._n(val);
+        });
+        _vm.$set(_vm.form, "bank_id", $event.target.multiple ? $$selectedVal : $$selectedVal[0]);
       }
     }
-  }), _vm._v(" "), _vm.errors.bank_id ? _c("small", {
+  }, [_c("option", {
+    attrs: {
+      disabled: ""
+    },
+    domProps: {
+      value: null
+    }
+  }, [_vm._v("Select a bank")]), _vm._v(" "), _vm._l(_vm.banks, function (b) {
+    return _c("option", {
+      key: b.id,
+      domProps: {
+        value: b.id
+      }
+    }, [_vm._v(_vm._s(b.name))]);
+  })], 2), _vm._v(" "), _vm.errors.bank_id ? _c("small", {
     staticClass: "text-danger"
   }, [_vm._v(_vm._s(_vm.errors.bank_id[0]))]) : _vm._e()]), _vm._v(" "), _c("div", {
     staticClass: "col-md-3"
-  }, [_c("input", {
+  }, [_c("label", [_vm._v("Account Number")]), _vm._v(" "), _c("input", {
     directives: [{
       name: "model",
       rawName: "v-model",
@@ -7586,8 +7630,7 @@ var render = function render() {
     }],
     staticClass: "form-control",
     attrs: {
-      type: "text",
-      placeholder: "Account number"
+      type: "text"
     },
     domProps: {
       value: _vm.form.bank_account_number
@@ -7602,7 +7645,7 @@ var render = function render() {
     staticClass: "text-danger"
   }, [_vm._v(_vm._s(_vm.errors.bank_account_number[0]))]) : _vm._e()]), _vm._v(" "), _c("div", {
     staticClass: "col-md-3"
-  }, [_c("input", {
+  }, [_c("label", [_vm._v("Branch Code")]), _vm._v(" "), _c("input", {
     directives: [{
       name: "model",
       rawName: "v-model",
@@ -7612,7 +7655,6 @@ var render = function render() {
     staticClass: "form-control",
     attrs: {
       type: "text",
-      placeholder: "Branch code (6 digits)",
       maxlength: "6"
     },
     domProps: {
@@ -7630,7 +7672,7 @@ var render = function render() {
     staticClass: "text-danger"
   }, [_vm._v(_vm._s(_vm.errors.bank_branch_code[0]))]) : _vm._e()]), _vm._v(" "), _c("div", {
     staticClass: "col-md-3"
-  }, [_c("select", {
+  }, [_c("label", [_vm._v("Account Type")]), _vm._v(" "), _c("select", {
     directives: [{
       name: "model",
       rawName: "v-model",
@@ -7653,7 +7695,7 @@ var render = function render() {
     attrs: {
       value: ""
     }
-  }, [_vm._v("Account type (optional)")]), _vm._v(" "), _c("option", {
+  }, [_vm._v("Select...")]), _vm._v(" "), _c("option", {
     attrs: {
       value: "1"
     }
@@ -7677,7 +7719,7 @@ var render = function render() {
     staticClass: "form-row mt-2"
   }, [_c("div", {
     staticClass: "col-md-3"
-  }, [_c("select", {
+  }, [_c("label", [_vm._v("Account Owner")]), _vm._v(" "), _c("select", {
     directives: [{
       name: "model",
       rawName: "v-model",
@@ -7700,7 +7742,7 @@ var render = function render() {
     attrs: {
       value: ""
     }
-  }, [_vm._v("Owner (optional)")]), _vm._v(" "), _c("option", {
+  }, [_vm._v("Select...")]), _vm._v(" "), _c("option", {
     attrs: {
       value: "1"
     }
@@ -7714,7 +7756,7 @@ var render = function render() {
     }
   }, [_vm._v("Third party")])])]), _vm._v(" "), _c("div", {
     staticClass: "col-md-9"
-  }, [_c("input", {
+  }, [_c("label", [_vm._v("Third-party Holder Name")]), _vm._v(" "), _c("input", {
     directives: [{
       name: "model",
       rawName: "v-model",
@@ -7723,8 +7765,7 @@ var render = function render() {
     }],
     staticClass: "form-control",
     attrs: {
-      type: "text",
-      placeholder: "Third-party holder name (if 3)"
+      type: "text"
     },
     domProps: {
       value: _vm.form.bank_holder_name
@@ -7737,11 +7778,7 @@ var render = function render() {
     }
   })])])]) : _vm._e()]), _vm._v(" "), _c("div", {
     staticClass: "form-group"
-  }, [_c("div", {
-    staticClass: "form-row"
-  }, [_c("div", {
-    staticClass: "col-md-6"
-  }, [_c("select", {
+  }, [_c("label", [_vm._v("Role")]), _vm._v(" "), _c("select", {
     directives: [{
       name: "model",
       rawName: "v-model",
@@ -7771,10 +7808,10 @@ var render = function render() {
       domProps: {
         value: role.id
       }
-    }, [_vm._v("\n                            " + _vm._s(role.label || role.name) + "\n                          ")]);
+    }, [_vm._v("\n                        " + _vm._s(role.label || role.name) + "\n                      ")]);
   })], 2), _vm._v(" "), _vm.errors.role_id ? _c("small", {
     staticClass: "text-danger"
-  }, [_vm._v(_vm._s(_vm.errors.role_id[0]))]) : _vm._e()])])]), _vm._v(" "), _vm._m(2)])])])])])])])])]);
+  }, [_vm._v(_vm._s(_vm.errors.role_id[0]))]) : _vm._e()]), _vm._v(" "), _vm._m(2)])])])])])])])])]);
 };
 var staticRenderFns = [function () {
   var _vm = this,
@@ -7787,7 +7824,7 @@ var staticRenderFns = [function () {
 }, function () {
   var _vm = this,
     _c = _vm._self._c;
-  return _c("label", [_vm._v("Bank ID "), _c("span", {
+  return _c("label", [_vm._v("Bank "), _c("span", {
     staticClass: "text-danger"
   }, [_vm._v("*")])]);
 }, function () {
@@ -7931,7 +7968,7 @@ var render = function render() {
     staticClass: "form-row"
   }, [_c("div", {
     staticClass: "col-md-6"
-  }, [_c("input", {
+  }, [_c("label", [_vm._v("First Name")]), _vm._v(" "), _c("input", {
     directives: [{
       name: "model",
       rawName: "v-model",
@@ -7941,7 +7978,7 @@ var render = function render() {
     staticClass: "form-control",
     attrs: {
       type: "text",
-      placeholder: "First name"
+      placeholder: "John"
     },
     domProps: {
       value: _vm.form.first_name
@@ -7956,7 +7993,7 @@ var render = function render() {
     staticClass: "text-danger"
   }, [_vm._v(_vm._s(_vm.errors.first_name[0]))]) : _vm._e()]), _vm._v(" "), _c("div", {
     staticClass: "col-md-6"
-  }, [_c("input", {
+  }, [_c("label", [_vm._v("Last Name")]), _vm._v(" "), _c("input", {
     directives: [{
       name: "model",
       rawName: "v-model",
@@ -7966,7 +8003,7 @@ var render = function render() {
     staticClass: "form-control",
     attrs: {
       type: "text",
-      placeholder: "Last name"
+      placeholder: "Doe"
     },
     domProps: {
       value: _vm.form.last_name
@@ -7985,7 +8022,7 @@ var render = function render() {
     staticClass: "form-row"
   }, [_c("div", {
     staticClass: "col-md-6"
-  }, [_c("input", {
+  }, [_c("label", [_vm._v("Email")]), _vm._v(" "), _c("input", {
     directives: [{
       name: "model",
       rawName: "v-model",
@@ -7995,7 +8032,7 @@ var render = function render() {
     staticClass: "form-control",
     attrs: {
       type: "email",
-      placeholder: "Email"
+      placeholder: "john@example.com"
     },
     domProps: {
       value: _vm.form.email
@@ -8010,7 +8047,7 @@ var render = function render() {
     staticClass: "text-danger"
   }, [_vm._v(_vm._s(_vm.errors.email[0]))]) : _vm._e()]), _vm._v(" "), _c("div", {
     staticClass: "col-md-6"
-  }, [_c("input", {
+  }, [_c("label", [_vm._v("Phone")]), _vm._v(" "), _c("input", {
     directives: [{
       name: "model",
       rawName: "v-model",
@@ -8020,7 +8057,7 @@ var render = function render() {
     staticClass: "form-control",
     attrs: {
       type: "text",
-      placeholder: "Phone"
+      placeholder: "+27 82 123 4567"
     },
     domProps: {
       value: _vm.form.phone
@@ -8039,7 +8076,7 @@ var render = function render() {
     staticClass: "form-row"
   }, [_c("div", {
     staticClass: "col-md-6"
-  }, [_c("input", {
+  }, [_c("label", [_vm._v("ID / Passport Number")]), _vm._v(" "), _c("input", {
     directives: [{
       name: "model",
       rawName: "v-model",
@@ -8048,8 +8085,7 @@ var render = function render() {
     }],
     staticClass: "form-control",
     attrs: {
-      type: "text",
-      placeholder: "ID / Passport number"
+      type: "text"
     },
     domProps: {
       value: _vm.form.id_number
@@ -8064,7 +8100,7 @@ var render = function render() {
     staticClass: "text-danger"
   }, [_vm._v(_vm._s(_vm.errors.id_number[0]))]) : _vm._e()]), _vm._v(" "), _c("div", {
     staticClass: "col-md-3"
-  }, [_c("input", {
+  }, [_c("label", [_vm._v("Birthdate")]), _vm._v(" "), _c("input", {
     directives: [{
       name: "model",
       rawName: "v-model",
@@ -8073,8 +8109,7 @@ var render = function render() {
     }],
     staticClass: "form-control",
     attrs: {
-      type: "date",
-      placeholder: "Birthdate"
+      type: "date"
     },
     domProps: {
       value: _vm.form.birthdate
@@ -8089,7 +8124,7 @@ var render = function render() {
     staticClass: "text-danger"
   }, [_vm._v(_vm._s(_vm.errors.birthdate[0]))]) : _vm._e()]), _vm._v(" "), _c("div", {
     staticClass: "col-md-3"
-  }, [_c("input", {
+  }, [_c("label", [_vm._v("Start Date")]), _vm._v(" "), _c("input", {
     directives: [{
       name: "model",
       rawName: "v-model",
@@ -8098,8 +8133,7 @@ var render = function render() {
     }],
     staticClass: "form-control",
     attrs: {
-      type: "date",
-      placeholder: "Start date"
+      type: "date"
     },
     domProps: {
       value: _vm.form.start_date
@@ -8118,7 +8152,7 @@ var render = function render() {
     staticClass: "form-row"
   }, [_c("div", {
     staticClass: "col-md-4"
-  }, [_c("select", {
+  }, [_c("label", [_vm._v("Pay Frequency")]), _vm._v(" "), _c("select", {
     directives: [{
       name: "model",
       rawName: "v-model",
@@ -8142,7 +8176,7 @@ var render = function render() {
       disabled: "",
       value: ""
     }
-  }, [_vm._v("Pay frequency")]), _vm._v(" "), _c("option", {
+  }, [_vm._v("Select...")]), _vm._v(" "), _c("option", {
     attrs: {
       value: "monthly"
     }
@@ -8158,7 +8192,7 @@ var render = function render() {
     staticClass: "text-danger"
   }, [_vm._v(_vm._s(_vm.errors.pay_frequency[0]))]) : _vm._e()]), _vm._v(" "), _c("div", {
     staticClass: "col-md-4"
-  }, [_c("select", {
+  }, [_c("label", [_vm._v("Payment Method")]), _vm._v(" "), _c("select", {
     directives: [{
       name: "model",
       rawName: "v-model",
@@ -8182,7 +8216,7 @@ var render = function render() {
       disabled: "",
       value: ""
     }
-  }, [_vm._v("Payment method")]), _vm._v(" "), _c("option", {
+  }, [_vm._v("Select...")]), _vm._v(" "), _c("option", {
     attrs: {
       value: "cash"
     }
@@ -8198,7 +8232,7 @@ var render = function render() {
     staticClass: "text-danger"
   }, [_vm._v(_vm._s(_vm.errors.payment_method[0]))]) : _vm._e()]), _vm._v(" "), _c("div", {
     staticClass: "col-md-4"
-  }, [_c("select", {
+  }, [_c("label", [_vm._v("Employment Status")]), _vm._v(" "), _c("select", {
     directives: [{
       name: "model",
       rawName: "v-model",
@@ -8222,7 +8256,7 @@ var render = function render() {
       disabled: "",
       value: ""
     }
-  }, [_vm._v("Employment status")]), _vm._v(" "), _c("option", {
+  }, [_vm._v("Select...")]), _vm._v(" "), _c("option", {
     attrs: {
       value: "active"
     }
@@ -8238,7 +8272,7 @@ var render = function render() {
     staticClass: "form-row"
   }, [_c("div", {
     staticClass: "col-md-3"
-  }, [_vm._m(1), _vm._v(" "), _c("input", {
+  }, [_vm._m(1), _vm._v(" "), _c("select", {
     directives: [{
       name: "model",
       rawName: "v-model.number",
@@ -8249,27 +8283,36 @@ var render = function render() {
       }
     }],
     staticClass: "form-control",
-    attrs: {
-      type: "number",
-      placeholder: "Bank ID"
-    },
-    domProps: {
-      value: _vm.form.bank_id
-    },
     on: {
-      input: function input($event) {
-        if ($event.target.composing) return;
-        _vm.$set(_vm.form, "bank_id", _vm._n($event.target.value));
-      },
-      blur: function blur($event) {
-        return _vm.$forceUpdate();
+      change: function change($event) {
+        var $$selectedVal = Array.prototype.filter.call($event.target.options, function (o) {
+          return o.selected;
+        }).map(function (o) {
+          var val = "_value" in o ? o._value : o.value;
+          return _vm._n(val);
+        });
+        _vm.$set(_vm.form, "bank_id", $event.target.multiple ? $$selectedVal : $$selectedVal[0]);
       }
     }
-  }), _vm._v(" "), _vm.errors.bank_id ? _c("small", {
+  }, [_c("option", {
+    attrs: {
+      disabled: ""
+    },
+    domProps: {
+      value: null
+    }
+  }, [_vm._v("Select a bank")]), _vm._v(" "), _vm._l(_vm.banks, function (b) {
+    return _c("option", {
+      key: b.id,
+      domProps: {
+        value: b.id
+      }
+    }, [_vm._v(_vm._s(b.name))]);
+  })], 2), _vm._v(" "), _vm.errors.bank_id ? _c("small", {
     staticClass: "text-danger"
   }, [_vm._v(_vm._s(_vm.errors.bank_id[0]))]) : _vm._e()]), _vm._v(" "), _c("div", {
     staticClass: "col-md-3"
-  }, [_c("input", {
+  }, [_c("label", [_vm._v("Account Number")]), _vm._v(" "), _c("input", {
     directives: [{
       name: "model",
       rawName: "v-model",
@@ -8278,8 +8321,7 @@ var render = function render() {
     }],
     staticClass: "form-control",
     attrs: {
-      type: "text",
-      placeholder: "Account number"
+      type: "text"
     },
     domProps: {
       value: _vm.form.bank_account_number
@@ -8294,7 +8336,7 @@ var render = function render() {
     staticClass: "text-danger"
   }, [_vm._v(_vm._s(_vm.errors.bank_account_number[0]))]) : _vm._e()]), _vm._v(" "), _c("div", {
     staticClass: "col-md-3"
-  }, [_c("input", {
+  }, [_c("label", [_vm._v("Branch Code")]), _vm._v(" "), _c("input", {
     directives: [{
       name: "model",
       rawName: "v-model",
@@ -8304,7 +8346,6 @@ var render = function render() {
     staticClass: "form-control",
     attrs: {
       type: "text",
-      placeholder: "Branch code (6 digits)",
       maxlength: "6"
     },
     domProps: {
@@ -8322,7 +8363,7 @@ var render = function render() {
     staticClass: "text-danger"
   }, [_vm._v(_vm._s(_vm.errors.bank_branch_code[0]))]) : _vm._e()]), _vm._v(" "), _c("div", {
     staticClass: "col-md-3"
-  }, [_c("select", {
+  }, [_c("label", [_vm._v("Account Type")]), _vm._v(" "), _c("select", {
     directives: [{
       name: "model",
       rawName: "v-model",
@@ -8345,7 +8386,7 @@ var render = function render() {
     attrs: {
       value: ""
     }
-  }, [_vm._v("Account type (optional)")]), _vm._v(" "), _c("option", {
+  }, [_vm._v("Select...")]), _vm._v(" "), _c("option", {
     attrs: {
       value: "1"
     }
@@ -8369,7 +8410,7 @@ var render = function render() {
     staticClass: "form-row mt-2"
   }, [_c("div", {
     staticClass: "col-md-3"
-  }, [_c("select", {
+  }, [_c("label", [_vm._v("Account Owner")]), _vm._v(" "), _c("select", {
     directives: [{
       name: "model",
       rawName: "v-model",
@@ -8392,7 +8433,7 @@ var render = function render() {
     attrs: {
       value: ""
     }
-  }, [_vm._v("Owner (optional)")]), _vm._v(" "), _c("option", {
+  }, [_vm._v("Select...")]), _vm._v(" "), _c("option", {
     attrs: {
       value: "1"
     }
@@ -8406,7 +8447,7 @@ var render = function render() {
     }
   }, [_vm._v("Third party")])])]), _vm._v(" "), _c("div", {
     staticClass: "col-md-9"
-  }, [_c("input", {
+  }, [_c("label", [_vm._v("Third-party Holder Name")]), _vm._v(" "), _c("input", {
     directives: [{
       name: "model",
       rawName: "v-model",
@@ -8415,8 +8456,7 @@ var render = function render() {
     }],
     staticClass: "form-control",
     attrs: {
-      type: "text",
-      placeholder: "Third-party holder name (if 3)"
+      type: "text"
     },
     domProps: {
       value: _vm.form.bank_holder_name
@@ -8429,11 +8469,7 @@ var render = function render() {
     }
   })])])]) : _vm._e()]), _vm._v(" "), _c("div", {
     staticClass: "form-group"
-  }, [_c("div", {
-    staticClass: "form-row"
-  }, [_c("div", {
-    staticClass: "col-md-6"
-  }, [_c("select", {
+  }, [_c("label", [_vm._v("Role")]), _vm._v(" "), _c("select", {
     directives: [{
       name: "model",
       rawName: "v-model",
@@ -8463,10 +8499,10 @@ var render = function render() {
       domProps: {
         value: role.id
       }
-    }, [_vm._v("\n                                                        " + _vm._s(role.label || role.name) + "\n                                                    ")]);
+    }, [_vm._v("\n                                                " + _vm._s(role.label || role.name) + "\n                                            ")]);
   })], 2), _vm._v(" "), _vm.errors.role_id ? _c("small", {
     staticClass: "text-danger"
-  }, [_vm._v(_vm._s(_vm.errors.role_id[0]))]) : _vm._e()])])]), _vm._v(" "), _c("div", {
+  }, [_vm._v(_vm._s(_vm.errors.role_id[0]))]) : _vm._e()]), _vm._v(" "), _c("div", {
     staticClass: "form-group"
   }, [_c("button", {
     staticClass: "btn btn-primary btn-block",
@@ -8489,7 +8525,7 @@ var staticRenderFns = [function () {
 }, function () {
   var _vm = this,
     _c = _vm._self._c;
-  return _c("label", [_vm._v("Bank ID "), _c("span", {
+  return _c("label", [_vm._v("Bank "), _c("span", {
     staticClass: "text-danger"
   }, [_vm._v("*")])]);
 }];
@@ -84495,14 +84531,15 @@ __webpack_require__.r(__webpack_exports__);
 /*!**************************************************************!*\
   !*** ./resources/js/components/employee/AddEmployeeView.vue ***!
   \**************************************************************/
-/*! exports provided: default */
+/*! no static exports found */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _AddEmployeeView_vue_vue_type_template_id_008f59fe__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./AddEmployeeView.vue?vue&type=template&id=008f59fe */ "./resources/js/components/employee/AddEmployeeView.vue?vue&type=template&id=008f59fe");
 /* harmony import */ var _AddEmployeeView_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./AddEmployeeView.vue?vue&type=script&lang=js */ "./resources/js/components/employee/AddEmployeeView.vue?vue&type=script&lang=js");
-/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _AddEmployeeView_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__) if(["default"].indexOf(__WEBPACK_IMPORT_KEY__) < 0) (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _AddEmployeeView_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
 
 
@@ -84532,7 +84569,7 @@ component.options.__file = "resources/js/components/employee/AddEmployeeView.vue
 /*!**************************************************************************************!*\
   !*** ./resources/js/components/employee/AddEmployeeView.vue?vue&type=script&lang=js ***!
   \**************************************************************************************/
-/*! exports provided: default */
+/*! no static exports found */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
