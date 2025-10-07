@@ -20,8 +20,7 @@
         <div id="wrapper">
             <!-- Sidebar -->
             <nav id="sidebar"
-                v-show="$route.path === '/' || $route.path === '/register' || $route.path === '/forgotPassword' ? false : true"
-                style="display: none">
+                v-show="$route.path === '/' || $route.path === '/register' || $route.path === '/forgotPassword' ? false : true">
                 <ul class="navbar-nav sidebar sidebar-light accordion" id="accordionSidebar">
                     <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
                         <div class="sidebar-brand-icon">
@@ -167,8 +166,7 @@
                 <div id="content">
                     <!-- TopBar -->
                     <nav v-show="$route.path === '/' || $route.path === '/register' || $route.path === '/forgotPassword' ? false : true"
-                        class="navbar navbar-expand navbar-light bg-navbar topbar mb-4 static-top" id="topbar"
-                        style="display: none">
+                        class="navbar navbar-expand navbar-light bg-navbar topbar mb-4 static-top" id="topbar">
                         <button id="sidebarToggleTop" class="btn btn-link rounded-circle mr-3">
                             <i class="fa fa-bars"></i>
                         </button>
@@ -210,16 +208,6 @@
     <a class="scroll-to-top rounded" href="#page-top">
         <i class="fas fa-angle-up"></i>
     </a>
-
-
-
-    <script type="text/javascript">
-        let token = localStorage.getItem('token');
-        if (token) {
-            $("#sidebar").css("display", "");
-            $("#topbar").css("display", "");
-        }
-    </script>
 
     <script src="https://cdn.canvasjs.com/canvasjs.min.js"></script>
     <script src="{{ mix('js/app.js') }}"></script>

@@ -141,14 +141,6 @@ class InvoiceController extends Controller
         return response()->json(['message' => 'Invoice deleted']);
     }
 
-    public function downloadPdf($id)
-    {
-        $invoice = Invoice::with('items', 'quote')->findOrFail($id);
-        $pdf = Pdf::loadView('pdfs.invoice', compact('invoice'))->setPaper('a4');
-
-        return $pdf->download("Invoice_{$invoice->invoice_number}.pdf");
-    }
-
     public function sendInvoiceEmail($id)
     {
         $invoice = Invoice::with('items', 'quote')->findOrFail($id);
@@ -184,6 +176,4 @@ class InvoiceController extends Controller
             'payment' => $payment
         ], 201);
     }
-
-
 }

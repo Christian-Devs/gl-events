@@ -32,18 +32,6 @@
                                             </div>
                                         </div>
 
-                                        <!-- Dates -->
-                                        <div class="form-group">
-                                            <div class="form-row">
-                                                <div class="col-md-6">
-                                                    <input type="date" class="form-control" placeholder="Quote Date"
-                                                        v-model="form.quote_date">
-                                                    <small class="text-danger" v-if="errors.quote_date">{{
-                                                        errors.quote_date[0] }}</small>
-                                                </div>
-                                            </div>
-                                        </div>
-
                                         <!-- Notes -->
                                         <div class="form-group">
                                             <textarea class="form-control" placeholder="Notes..."

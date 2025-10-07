@@ -47,6 +47,10 @@
                                             class="btn btn-sm btn-primary ml-1">Edit</router-link>
                                         <button v-if="!quote.jobcard" @click="deleteQuote(quote.id)"
                                             class="btn btn-sm btn-danger ml-1">Delete</button>
+                                        <button class="btn btn-sm btn-outline-primary" @click="sendEmail(quote.id)"
+                                            data-bs-toggle="tooltip" data-bs-placement="top" title="Send via email">
+                                            <i class="fas fa-envelope"></i>
+                                        </button>
                                         <!-- Show Generate button if quote is approved and has no job card -->
                                         <router-link v-if="quote.status === 'approved' && !quote.jobcard"
                                             :to="{ name: 'add-jobcard', params: { quoteId: quote.id } }"
@@ -130,7 +134,16 @@ export default {
                     })
                     .catch(() => alert('Failed to delete quote.'));
             }
-        }
+        },
+        sendEmail(id) {
+            axios.post(`/api/quotes/${id}/send`)
+                .then(() => {
+                    Swal.fire('Success', 'Invoice emailed to client!', 'success');
+                })
+                .catch(() => {
+                    Swal.fire('Error', 'Failed to send email', 'error');
+                });
+        },
 
     },
     created() {

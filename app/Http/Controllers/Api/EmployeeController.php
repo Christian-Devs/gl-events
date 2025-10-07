@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Mail\LoginMail;
 use App\Model\Employee;
 use App\User;
 use App\Role;
@@ -16,6 +17,7 @@ use Illuminate\Validation\Rule;
 use Illuminate\Validation\ValidationException;
 use Throwable;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 use Symfony\Component\HttpFoundation\Response;
 
 class EmployeeController extends Controller
@@ -56,8 +58,9 @@ class EmployeeController extends Controller
      */
     public function store(Request $request)
     {
-        //dd($request->all());
         try {
+            $defaultPassword = env('DEFAULT_USER_PASSWORD', 'defaultPass');
+
             $validated = $request->validate([
                 'first_name'            => ['required', 'string', 'max:255'],
                 'last_name'             => ['required', 'string', 'max:255'],
@@ -73,16 +76,11 @@ class EmployeeController extends Controller
                 'birthdate'             => ['nullable', 'date'],
                 'start_date'            => ['required', 'date'],
                 'pay_frequency'         => ['required', Rule::in(['monthly', 'fortnightly', 'weekly'])],
-
-                // IMPORTANT: use SimplePay tokens (cash|cheque|eft_manual)
                 'payment_method'        => ['required', Rule::in(['cash', 'cheque', 'eft_manual'])],
-
                 'status'                => ['required', Rule::in(['active', 'terminated'])],
                 'simplepay_employee_id' => ['nullable', 'string', 'max:255'],
                 'external_reference'    => ['nullable', 'string', 'max:255'],
                 'role_id'               => ['required', Rule::exists('roles', 'id')],
-
-                // Bank fields (required only if eft_manual)
                 'bank_id'                 => ['nullable', 'integer', 'required_if:payment_method,eft_manual'],
                 'bank_account_number'     => ['nullable', 'string', 'min:4', 'required_if:payment_method,eft_manual'],
                 'bank_branch_code'        => ['nullable', 'string', 'size:6', 'required_if:payment_method,eft_manual'],
@@ -93,13 +91,14 @@ class EmployeeController extends Controller
 
             $fullName = trim($validated['first_name'] . ' ' . $validated['last_name']);
 
-            return DB::transaction(function () use ($validated, $request, $fullName) {
-
+            // create inside transaction and return data object (not an HTTP response)
+            $result = DB::transaction(function () use ($validated, $fullName, $defaultPassword) {
                 $user = User::create([
                     'name'     => $fullName,
                     'email'    => $validated['email'],
-                    'password' => Hash::make('defaultPass'),
-                    'force_password_change' => $request->password === config('auth.default_password'),
+                    'password' => Hash::make($defaultPassword),
+                    // set force_password_change true because we issued default password
+                    'force_password_change' => true,
                     'role_id'  => $validated['role_id'],
                 ]);
 
@@ -110,7 +109,7 @@ class EmployeeController extends Controller
                     'phone'                 => $validated['phone'],
                     'id_number'             => $validated['id_number'] ?? null,
                     'birthdate'             => $validated['birthdate'] ?? null,
-                    'start_date'            => $validated['start_date'], // <-- matches your DB
+                    'start_date'            => $validated['start_date'],
                     'pay_frequency'         => $validated['pay_frequency'],
                     'payment_method'        => $validated['payment_method'],
                     'status'                => $validated['status'],
@@ -118,23 +117,46 @@ class EmployeeController extends Controller
                     'external_reference'    => $validated['external_reference'] ?? null,
                     'role_id'               => $validated['role_id'],
                     'user_id'               => $user->id,
-                    'bank_id'                 => $validated['bank_id'] ?? null,
-                    'bank_account_type'       => $validated['bank_account_type'] ?? null,
-                    'bank_account_number'     => $validated['bank_account_number'] ?? null,
-                    'bank_branch_code'        => $validated['bank_branch_code'] ?? null,
+                    'bank_id'               => $validated['bank_id'] ?? null,
+                    'bank_account_type'     => $validated['bank_account_type'] ?? null,
+                    'bank_account_number'   => $validated['bank_account_number'] ?? null,
+                    'bank_branch_code'      => $validated['bank_branch_code'] ?? null,
                     'bank_holder_relationship' => $validated['bank_holder_relationship'] ?? null,
-                    'bank_holder_name'        => $validated['bank_holder_name'] ?? null,
+                    'bank_holder_name'      => $validated['bank_holder_name'] ?? null,
                 ]);
 
-                return response()->json([
-                    'message'  => 'Employee created successfully',
-                    'employee' => $employee->load(['role:id,name', 'user:id,name,email,role_id']),
-                ], 201);
+                // return models / objects so we can send mail after commit
+                return [
+                    'user' => $user,
+                    'employee' => $employee,
+                ];
             });
+
+            // after commit: try to send email, but do not fail user creation if mail fails
+            try {
+                $user = $result['user'];
+                $employee = $result['employee'];
+
+                // either send synchronously or queue:
+                // Mail::to($user->email)->send(new LoginMail($employee, $defaultPassword));
+                Mail::to($user->email)->queue(new LoginMail($employee, $defaultPassword));
+            } catch (\Throwable $mailEx) {
+                // log but don't abort creation
+                Log::error('Failed to send employee welcome email', [
+                    'email' => $result['user']->email ?? null,
+                    'error' => $mailEx->getMessage(),
+                ]);
+            }
+
+            // return success response
+            return response()->json([
+                'message' => 'Employee created successfully',
+                'employee' => $result['employee']->load(['role:id,name', 'user:id,name,email,role_id']),
+            ], 201);
         } catch (\Illuminate\Validation\ValidationException $ve) {
             return response()->json(['message' => 'Validation failed', 'errors' => $ve->errors()], 422);
         } catch (\Throwable $e) {
-            Log::error('Employee/User Creation Failed', ['message' => $e->getMessage()]);
+            Log::error('Employee/User Creation Failed', ['message' => $e->getMessage(), 'trace' => $e->getTraceAsString()]);
             return response()->json(['message' => 'Server error. Could not create employee.'], 500);
         }
     }

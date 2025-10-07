@@ -43,10 +43,6 @@
                     <button class="btn btn-sm btn-success" v-if="!invoice.payment" @click="generatePayment(invoice.id)">
                       <i class="fas fa-money-bill-wave"></i> Generate Payment
                     </button>
-                    <button class="btn btn-sm btn-outline-secondary" @click="downloadPdf(invoice.id)"
-                      data-bs-toggle="tooltip" data-bs-placement="top" title="Download PDF">
-                      <i class="fas fa-file-pdf"></i>
-                    </button>
                     <button class="btn btn-sm btn-outline-primary" @click="sendEmail(invoice.id)"
                       data-bs-toggle="tooltip" data-bs-placement="top" title="Send via email">
                       <i class="fas fa-envelope"></i>
@@ -104,9 +100,6 @@ export default {
         case 'overdue': return 'badge badge-danger';
         default: return 'badge badge-light';
       }
-    },
-    downloadPdf(id) {
-      window.open(`/api/invoices/${id}/download`, '_blank');
     },
     sendEmail(id) {
       axios.post(`/api/invoices/${id}/send`)

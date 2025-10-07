@@ -76,7 +76,8 @@
                         </button>
                     </div>
                     <div class="modal-body">
-                        <input type="email" v-model="emailAddress" class="form-control" placeholder="Enter email address" />
+                        <input type="email" v-model="emailAddress" class="form-control"
+                            placeholder="Enter email address" />
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-sm btn-secondary" data-dismiss="modal">Cancel</button>
@@ -94,6 +95,7 @@ import axios from 'axios';
 export default {
     data() {
         return {
+            emailAddress: '',
             summary: {},
             monthly: []
         };
@@ -111,8 +113,85 @@ export default {
             const date = new Date(year, month - 1);
             return date.toLocaleString('default', { month: 'long', year: 'numeric' });
         },
-        downloadReport() {
-            window.open('/api/reports/invoices/download', '_blank');
+        async downloadReport(type = 'jobcards') {
+            const url = `/api/reports/jobcards/download`;
+
+            try {
+                const res = await axios.get(url, { responseType: 'blob' });
+
+                console.log('[downloadReport] axios response status:', res.status);
+                console.log('[downloadReport] headers:', res.headers);
+
+                // If server returned JSON error wrapped as 200 (rare), try to detect it:
+                const contentType = (res.headers['content-type'] || '').toLowerCase();
+                if (!res || res.status !== 200 || !contentType.includes('pdf')) {
+                    // Try to decode body as text to show server message if it's JSON/text
+                    try {
+                        const text = await res.data.text ? await res.data.text() : null;
+                        console.warn('[downloadReport] Unexpected response (not PDF):', text);
+                        Notification.error('Server returned unexpected response when downloading report');
+                    } catch (inner) {
+                        Notification.error('Failed to download report (unexpected response)');
+                    }
+                    return;
+                }
+
+                // Get filename if provided
+                const disp = res.headers['content-disposition'] || '';
+                let filename = `${type}_report.pdf`;
+                const m = /filename[^;=\n]*=((['"]).*?\2|[^;\n]*)/.exec(disp);
+                if (m && m[1]) filename = m[1].replace(/['"]/g, '');
+
+                // Create blob and open in new tab (or download)
+                const blob = new Blob([res.data], { type: 'application/pdf' });
+                const blobUrl = window.URL.createObjectURL(blob);
+
+                // Option A: open in new tab / viewer
+                window.open(blobUrl, '_blank');
+
+                // Option B: force download instead
+                // const a = document.createElement('a');
+                // a.href = blobUrl;
+                // a.download = filename;
+                // document.body.appendChild(a);
+                // a.click();
+                // a.remove();
+
+                // revoke after a minute
+                setTimeout(() => window.URL.revokeObjectURL(blobUrl), 60_000);
+
+                Notification?.success?.('Report ready');
+
+            } catch (err) {
+                console.error('[downloadReport] error:', err);
+                // If server responded with JSON error (e.g. {message: '...'}), show it:
+                if (err?.response?.data) {
+                    try {
+                        // If response is blob but contains JSON, read it:
+                        if (err.response.data instanceof Blob) {
+                            const text = await err.response.data.text();
+                            const parsed = JSON.parse(text || '{}');
+                            if (parsed.message) {
+                                Notification.error(parsed.message);
+                                return;
+                            }
+                        }
+                    } catch (parseErr) {
+                        // ignore parse failure
+                    }
+                    const payload = err.response.data;
+                    const msg = payload.message || payload.error || 'Failed to download report';
+                    Notification.error(msg);
+                    // If it was an auth problem:
+                    if (err.response.status === 401) {
+                        this.$router.push({ name: '/' });
+                    }
+                    return;
+                }
+
+                // Fallback
+                Notification.error(err.message || 'Failed to download report');
+            }
         },
         openEmailModal() {
             this.emailAddress = '';

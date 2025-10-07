@@ -61,9 +61,10 @@ Route::middleware(['api', 'auth:api'])->group(function () {
     Route::get('/reports/jobcards',  [ReportController::class, 'jobcardsReport']);
     Route::get('/reports/salaries',  [ReportController::class, 'salariesReport']);
     Route::get('/reports/{type}/download',  [ReportController::class, 'downloadReportPdf']);
-    Route::get('/reports/{type}/email',  [ReportController::class, 'emailReport']);
+    Route::post('/reports/{type}/email',  [ReportController::class, 'emailReport']);
 
-    Route::get('/invoices/{id}/download', [InvoiceController::class, 'downloadPdf']);
+    Route::post('/quotes/{id}/send', [QuoteController::class, 'sendQuoteEmail']);
+
     Route::post('/invoices/{id}/send', [InvoiceController::class, 'sendInvoiceEmail']);
     Route::post('/invoices/{id}/generate-payment', [InvoiceController::class, 'generatePayment']);
     Route::prefix('payroll')->group(function () {

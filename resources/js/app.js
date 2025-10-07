@@ -100,6 +100,132 @@ async function bootstrapAuthContext() {
 }
 bootstrapAuthContext();
 
+/* ---------- AUTO-LOGOUT WITH WARNING POPUP ---------- *
+ * Insert this near the end of app.js (before new Vue(...).$mount('#app'))
+ * Uses: axios, Swal (sweetalert2), Toast (optional)
+ * Call startAutoLogout(minutes) to start (the snippet calls with 60 min by default)
+ ********************************************************/
+
+/* ---------- AUTO-LOGOUT WITH INACTIVITY GRACE PERIOD ---------- */
+(function () {
+    const INACTIVITY_BEFORE_START_MINUTES = 5; // start watcher after 5 minutes of inactivity
+    const AUTOLOGOUT_MINUTES = 60;             // total inactivity minutes before logout
+    const WARNING_SECONDS = 60;                // seconds before logout to show warning
+    const POLL_INTERVAL_MS = 10_000;           // check every 10 seconds
+
+    let lastActivityAt = Date.now();
+    let pollIntervalId = null;
+    let warningOpen = false;
+    let warningTimerInterval = null;
+
+    function refreshLastActivity() { lastActivityAt = Date.now(); }
+
+    ['mousemove', 'keydown', 'click', 'scroll', 'touchstart'].forEach(evt =>
+        window.addEventListener(evt, refreshLastActivity, { passive: true })
+    );
+
+    async function performLogout(reason = 'Logged out due to inactivity') {
+        try { await axios.post('/api/auth/logout'); } catch (e) { }
+        localStorage.removeItem('token');
+        localStorage.removeItem('user');
+        localStorage.removeItem('role');
+        delete axios.defaults.headers.common['Authorization'];
+
+        if (window.Toast) {
+            try { Toast.fire({ icon: 'info', title: reason }) } catch (e) { }
+        } else {
+            alert(reason);
+        }
+        window.location.href = '/';
+    }
+
+    function showWarningModal(secondsLeft, onStay, onLogout) {
+        if (warningOpen) return;
+        warningOpen = true;
+        const htmlId = 'auto-logout-countdown';
+        const html = `<div>You're about to be logged out due to inactivity.<br/>Signing out in <strong id="${htmlId}">${secondsLeft}</strong> seconds.</div>`;
+
+        Swal.fire({
+            title: 'Still there?',
+            html,
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Stay signed in',
+            cancelButtonText: 'Logout now',
+            allowOutsideClick: false,
+            allowEscapeKey: false,
+            showCloseButton: false,
+            didOpen: () => {
+                let secs = secondsLeft;
+                const elCounter = document.getElementById(htmlId);
+                warningTimerInterval = setInterval(() => {
+                    secs -= 1;
+                    if (elCounter) elCounter.textContent = String(secs);
+                    if (secs <= 0) {
+                        clearInterval(warningTimerInterval);
+                        warningTimerInterval = null;
+                        try { Swal.close(); } catch { }
+                        warningOpen = false;
+                        onLogout();
+                    }
+                }, 1000);
+            },
+            willClose: () => {
+                if (warningTimerInterval) { clearInterval(warningTimerInterval); warningTimerInterval = null; }
+                warningOpen = false;
+            }
+        }).then(result => {
+            if (result.isConfirmed) onStay();
+            else if (result.dismiss === Swal.DismissReason.cancel) onLogout();
+        }).catch(() => { warningOpen = false; });
+    }
+
+    function startAutoLogoutWithGrace(inactivityBeforeStartMinutes = INACTIVITY_BEFORE_START_MINUTES,
+        totalMinutes = AUTOLOGOUT_MINUTES,
+        warningSeconds = WARNING_SECONDS) {
+        if (pollIntervalId) clearInterval(pollIntervalId);
+        lastActivityAt = Date.now();
+
+        pollIntervalId = setInterval(async () => {
+            const token = localStorage.getItem('token');
+            if (!token) return;
+
+            const idleMs = Date.now() - lastActivityAt;
+            const idleMinutes = idleMs / 1000 / 60;
+
+            // only start full auto-logout countdown after initial grace period
+            if (idleMinutes < inactivityBeforeStartMinutes) return;
+
+            const timeoutMs = totalMinutes * 60 * 1000;
+            const timeLeftMs = timeoutMs - idleMs;
+
+            if (timeLeftMs <= 0) {
+                clearInterval(pollIntervalId);
+                await performLogout('You were logged out due to inactivity.');
+                return;
+            }
+
+            if (timeLeftMs <= warningSeconds * 1000 && !warningOpen) {
+                const secsLeft = Math.ceil(timeLeftMs / 1000);
+                showWarningModal(secsLeft,
+                    () => { refreshLastActivity(); if (!pollIntervalId) startAutoLogoutWithGrace(inactivityBeforeStartMinutes, totalMinutes, warningSeconds); },
+                    async () => { clearInterval(pollIntervalId); await performLogout('You were logged out due to inactivity.'); }
+                );
+            }
+        }, POLL_INTERVAL_MS);
+    }
+
+    window.resetAutoLogoutActivity = refreshLastActivity;
+    window.startAutoLogout = startAutoLogoutWithGrace;
+    window.stopAutoLogout = () => { if (pollIntervalId) clearInterval(pollIntervalId); };
+
+    // optionally, start automatically (or call after login)
+    startAutoLogoutWithGrace(INACTIVITY_BEFORE_START_MINUTES, AUTOLOGOUT_MINUTES, WARNING_SECONDS);
+})();
+
+
+
+
 /* ---------- GLOBAL HELPERS (for Blade + Vue) ---------- */
 Vue.mixin({
     methods: {

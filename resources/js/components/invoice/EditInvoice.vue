@@ -152,7 +152,7 @@ export default {
         status: 'draft',
         items: []
       },
-      invoice:{},
+      invoice: {},
       errors: {}
     }
   },
@@ -160,6 +160,7 @@ export default {
     axios.get(`/api/invoices/${this.$route.params.id}`)
       .then(res => {
         const invoice = res.data;
+        this.invoice = invoice;
         this.form = {
           invoice_number: invoice.invoice_number,
           invoice_date: invoice.invoice_date,

@@ -3,8 +3,12 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Mail\QuoteMail;
 use App\Model\Quote;
 use Illuminate\Http\Request;
+use Barryvdh\DomPDF\Facade\Pdf;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Mail;
 
 class QuoteController extends Controller
 {
@@ -37,8 +41,6 @@ class QuoteController extends Controller
         $validated = $request->validate([
             'client_name' => 'required|string|max:255',
             'client_email' => 'nullable|email',
-            'quote_number' => $quoteNumber,
-            'quote_date' => now(),
             'subtotal' => 'required|numeric|min:0',
             'vat' => 'nullable|numeric|min:0',
             'total' => 'required|numeric|min:0',
@@ -50,7 +52,17 @@ class QuoteController extends Controller
             'items.*.total' => 'required|numeric|min:0',
         ]);
 
-        $quote = Quote::create($validated);
+        $quote = Quote::create([
+            'quote_number' => $quoteNumber,
+            'quote_date' => now(),
+            'client_name' => $validated['client_name'],
+            'client_email' => $validated['client_email'] ?? null,
+            'subtotal' => $validated['subtotal'],
+            'vat' => $validated['vat'] ?? 0,
+            'total' => $validated['total'],
+            'notes' => $validated['notes'] ?? null,
+            'status' => 'pending',
+        ]);
 
         foreach ($validated['items'] as $item) {
             $quote->items()->create($item);
@@ -138,5 +150,17 @@ class QuoteController extends Controller
         $quote->delete();
 
         return response()->json(['message' => 'Quote deleted']);
+    }
+
+    public function sendQuoteEmail(Request $request, $id)
+    {
+        $quote = Quote::with('items')->find($id);
+
+        $pdf = Pdf::loadView('pdfs.quote', compact('quote'))->setPaper('a4');
+        $pdfContent = $pdf->output();
+
+        Mail::to($quote->client_email)->send(new QuoteMail($quote, $pdfContent));
+
+        return response()->json(['message' => 'Invoice emailed successfully']);
     }
 }

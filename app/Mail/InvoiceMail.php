@@ -23,10 +23,9 @@ class InvoiceMail extends Mailable
     public function build()
     {
         return $this->subject('Your Invoice from Laravel')
-            ->view('emails.invoice') // Your HTML email view
+            ->view('emails.invoice')
             ->attachData($this->pdfContent, 'invoice-' . $this->invoice->invoice_number . '.pdf', [
                 'mime' => 'application/pdf',
             ]);
     }
 }
-

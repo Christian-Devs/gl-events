@@ -122,13 +122,13 @@ export default {
     data() {
         return {
             form: {
-                company_name: null,
-                phone: null,
-                email: null,
-                contact_person: null,
-                address: null,
+                company_name: '',
+                phone: '',
+                email: '',
+                contact_person: '',
+                address: '',
                 vat_number: null,
-                notes: null
+                notes: ''
             },
             errors: {}
         }
@@ -139,7 +139,15 @@ export default {
         let id = this.$route.params.id;
         axios.get('/api/supplier/' + id)
             .then(({ data }) => {
-                this.form = data;
+                this.form = {
+                    company_name: data.company_name,
+                    phone: data.phone,
+                    email: data.email,
+                    contact_person: data.contact_person,
+                    address: data.address,
+                    vat_number: data.vat_number,
+                    notes: data.notes
+                };
             })
             .catch(console.log('error'))
     },
@@ -147,6 +155,7 @@ export default {
     methods: {
         supplierUpdate() {
             let id = this.$route.params.id;
+            console.log(this.form)
             axios.patch('/api/supplier/' + id, this.form)
                 .then(() => {
                     this.$router.push({ name: 'suppliers' })
