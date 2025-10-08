@@ -18,9 +18,11 @@
                       <input type="text" class="form-control" :value="quoteRef" disabled />
                     </div>
                     <div class="form-group">
+                      <label for="assigned_to">Assigned To</label>
                       <input type="text" class="form-control" placeholder="Assigned To" v-model="form.assigned_to" />
                     </div>
                     <div class="form-group">
+                      <label for="status">Status</label>
                       <select class="form-control" v-model="form.status">
                         <option value="open">Open</option>
                         <option value="in-progress">In Progress</option>
@@ -30,13 +32,16 @@
                     </div>
                     <div class="form-row">
                       <div class="col-md-6">
+                        <label for="start_date">Start Date</label>
                         <input type="date" class="form-control" placeholder="Start Date" v-model="form.start_date" />
                       </div>
                       <div class="col-md-6">
+                        <label for="due_date">Due Date</label>
                         <input type="date" class="form-control" placeholder="Due Date" v-model="form.due_date" />
                       </div>
                     </div>
                     <div class="form-group mt-3">
+                      <label for="notes">Notes</label>
                       <textarea class="form-control" rows="4" placeholder="Notes..." v-model="form.notes"></textarea>
                     </div>
                     <div class="form-group">

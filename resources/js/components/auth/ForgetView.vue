@@ -12,6 +12,8 @@
                                     </div>
                                     <form class="user">
                                         <div class="form-group">
+                                            <label for="exampleInputEmail">Enter Your Email Address To Reset
+                                                Password</label>
                                             <input type="email" class="form-control" id="exampleInputEmail"
                                                 aria-describedby="emailHelp" placeholder="Enter Existing Email Address">
                                         </div>

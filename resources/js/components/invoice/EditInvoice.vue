@@ -21,9 +21,11 @@
 
                 <div class="form-row">
                   <div class="col-md-6">
+                    <label for="invoice_date">Invoice Date</label>
                     <input type="date" class="form-control" v-model="form.invoice_date">
                   </div>
                   <div class="col-md-6">
+                    <label for="due_date">Due Date</label>
                     <input type="date" class="form-control" v-model="form.due_date">
                   </div>
                 </div>

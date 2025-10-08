@@ -25,17 +25,21 @@
             <div v-for="(item, index) in form.items" :key="index" class="border p-2 mb-2">
                 <div class="form-row">
                     <div class="col">
+                        <label for="description">Description</label>
                         <input v-model="item.description" class="form-control" placeholder="Description" required />
                     </div>
                     <div class="col">
+                        <label for="quantity">Quantity</label>
                         <input v-model.number="item.quantity" type="number" min="1" class="form-control"
                             @input="calculateTotals" placeholder="Qty" required />
                     </div>
                     <div class="col">
+                        <label for="unit_price">Unit Price</label>
                         <input v-model.number="item.unit_price" type="number" min="0" class="form-control"
                             @input="calculateTotals" placeholder="Unit Price" required />
                     </div>
                     <div class="col">
+                        <label for="total">Total</label>
                         <input v-model="item.total" class="form-control" readonly />
                     </div>
                     <div class="col-auto">

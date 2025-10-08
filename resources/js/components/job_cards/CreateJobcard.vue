@@ -23,12 +23,14 @@
                                         <div class="form-group">
                                             <div class="form-row">
                                                 <div class="col-md-6">
+                                                    <label for="assigned_to">Assigned To</label>
                                                     <input type="text" class="form-control" placeholder="Assigned To"
                                                         v-model="form.assigned_to">
                                                     <small class="text-danger" v-if="errors.assigned_to">{{
                                                         errors.assigned_to[0] }}</small>
                                                 </div>
                                                 <div class="col-md-6">
+                                                    <label for="status">Status</label>
                                                     <select class="form-control" v-model="form.status">
                                                         <option value="open">Open</option>
                                                         <option value="in-progress">In Progress</option>
@@ -36,7 +38,7 @@
                                                         <option value="cancelled">Cancelled</option>
                                                     </select>
                                                     <small class="text-danger" v-if="errors.status">{{ errors.status[0]
-                                                        }}</small>
+                                                    }}</small>
                                                 </div>
                                             </div>
                                         </div>
@@ -45,12 +47,14 @@
                                         <div class="form-group">
                                             <div class="form-row">
                                                 <div class="col-md-6">
+                                                    <label for="start_date">Start Date</label>
                                                     <input type="date" class="form-control" placeholder="Start Date"
                                                         v-model="form.start_date">
                                                     <small class="text-danger" v-if="errors.start_date">{{
                                                         errors.start_date[0] }}</small>
                                                 </div>
                                                 <div class="col-md-6">
+                                                    <label for="due_date">Due Date</label>
                                                     <input type="date" class="form-control" placeholder="Due Date"
                                                         v-model="form.due_date">
                                                     <small class="text-danger" v-if="errors.due_date">{{
@@ -61,6 +65,7 @@
 
                                         <!-- Notes -->
                                         <div class="form-group">
+                                            <label for="notes">Notes</label>
                                             <textarea class="form-control" rows="4" placeholder="Notes..."
                                                 v-model="form.notes"></textarea>
                                             <small class="text-danger" v-if="errors.notes">{{ errors.notes[0] }}</small>

@@ -17,6 +17,7 @@
                                         <div class="form-group">
                                             <div class="form-row">
                                                 <div class="col-md-6">
+                                                    <label>Company Name</label>
                                                     <input type="text" class="form-control" id="exampleInputFirstName"
                                                         placeholder="Enter Supplier Name" v-model="form.company_name">
                                                     <small class="text-danger" v-if="errors.company_name">
@@ -24,6 +25,7 @@
                                                     </small>
                                                 </div>
                                                 <div class="col-md-6">
+                                                    <label>VAT Number</label>
                                                     <input type="text" class="form-control" id="exampleInputPassword"
                                                         placeholder="Enter VAT Number" v-model="form.vat_number">
                                                     <small class="text-danger" v-if="errors.vat_number">
@@ -37,6 +39,7 @@
                                         <div class="form-group">
                                             <div class="form-row">
                                                 <div class="col-md-6">
+                                                    <label>Phone</label>
                                                     <input type="text" class="form-control" id="exampleInputPassword"
                                                         placeholder="Enter Phone Number" v-model="form.phone">
                                                     <small class="text-danger" v-if="errors.phone">
@@ -44,6 +47,7 @@
                                                     </small>
                                                 </div>
                                                 <div class="col-md-6">
+                                                    <label>Email</label>
                                                     <input type="email" class="form-control" id="exampleInputEmail"
                                                         aria-describedby="emailHelp" placeholder="Enter Email Address"
                                                         v-model="form.email">
@@ -57,6 +61,7 @@
                                         <div class="form-group">
                                             <div class="form-row">
                                                 <div class="col-md-6">
+                                                    <label>Contact Person</label>
                                                     <input type="text" class="form-control" id="exampleInputEmail"
                                                         aria-describedby="emailHelp"
                                                         placeholder="Enter Contact Person Name"
@@ -71,6 +76,7 @@
                                         <div class="form-group">
                                             <div class="form-row">
                                                 <div class="col-md-12">
+                                                    <label>Address</label>
                                                     <input type="text" class="form-control"
                                                         id="exampleInputPasswordRepeat" placeholder="Enter Address"
                                                         v-model="form.address">
@@ -84,6 +90,7 @@
                                         <div class="form-group">
                                             <div class="form-row">
                                                 <div class="col-md-12">
+                                                    <label>Notes</label>
                                                     <textarea class="form-control" id="exampleInputPasswordRepeat"
                                                         placeholder="Notes..." v-model="form.notes"></textarea>
                                                     <small class="text-danger" v-if="errors.notes">

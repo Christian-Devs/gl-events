@@ -18,12 +18,14 @@
                                         <div class="form-group">
                                             <div class="form-row">
                                                 <div class="col-md-6">
+                                                    <label for="client_name">Client Name</label>
                                                     <input type="text" class="form-control" placeholder="Client Name"
                                                         v-model="form.client_name">
                                                     <small class="text-danger" v-if="errors.client_name">{{
                                                         errors.client_name[0] }}</small>
                                                 </div>
                                                 <div class="col-md-6">
+                                                    <label for="client_email">Client Email</label>
                                                     <input type="email" class="form-control" placeholder="Client Email"
                                                         v-model="form.client_email">
                                                     <small class="text-danger" v-if="errors.client_email">{{
@@ -34,6 +36,7 @@
 
                                         <!-- Notes -->
                                         <div class="form-group">
+                                            <label for="notes">Notes</label>
                                             <textarea class="form-control" placeholder="Notes..."
                                                 v-model="form.notes"></textarea>
                                             <small class="text-danger" v-if="errors.notes">{{ errors.notes[0] }}</small>
@@ -44,20 +47,24 @@
                                             <label class="font-weight-bold">Quote Line Items</label>
                                             <div v-for="(item, index) in form.items" :key="index" class="form-row mb-2">
                                                 <div class="col-md-4">
+                                                    <label for="description">Description</label>
                                                     <input class="form-control" v-model="item.description"
                                                         placeholder="Description">
                                                 </div>
                                                 <div class="col-md-2">
+                                                    <label for="quantity">Quantity</label>
                                                     <input class="form-control" type="number"
                                                         v-model.number="item.quantity" placeholder="Qty"
                                                         @input="calculateTotals">
                                                 </div>
                                                 <div class="col-md-2">
+                                                    <label for="unit_price">Unit Price</label>
                                                     <input class="form-control" type="number"
                                                         v-model.number="item.unit_price" placeholder="Price"
                                                         @input="calculateTotals">
                                                 </div>
                                                 <div class="col-md-2">
+                                                    <label for="total">Total</label>
                                                     <input class="form-control" :value="item.total.toFixed(2)" readonly>
                                                 </div>
                                                 <div class="col-md-2">
@@ -73,14 +80,17 @@
                                         <div class="form-group">
                                             <div class="form-row">
                                                 <div class="col-md-4">
+                                                    <label for="subtotal">Subtotal</label>
                                                     <input class="form-control" placeholder="Subtotal"
                                                         :value="form.subtotal.toFixed(2)" readonly />
                                                 </div>
                                                 <div class="col-md-4">
+                                                    <label for="vat">VAT</label>
                                                     <input class="form-control" placeholder="VAT"
                                                         v-model.number="form.vat" @input="calculateTotals" />
                                                 </div>
                                                 <div class="col-md-4">
+                                                    <label for="total">Total</label>
                                                     <input class="form-control" placeholder="Total"
                                                         :value="form.total.toFixed(2)" readonly />
                                                 </div>
